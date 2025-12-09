@@ -1,10 +1,13 @@
-import { gameState } from './state/GameState.js';
 import { combatSystem } from './systems/CombatSystem.js';
 import { inventorySystem } from './systems/InventorySystem.js';
 import { uiManager } from './ui/UIManager.js';
+import { authManager } from './ui/AuthManager.js';
 import { bus } from './utils/EventBus.js';
 
 console.log("Initializing Game Modules...");
+
+// Initialize Auth
+authManager.init();
 
 // Coordinator Logic
 bus.on('UI_REQUEST_START_FIGHT', () => {

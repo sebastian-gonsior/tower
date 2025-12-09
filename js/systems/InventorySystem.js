@@ -1,5 +1,4 @@
 import { gameState } from '../state/GameState.js';
-import { ItemFactory } from '../models/ItemFactory.js';
 import { bus } from '../utils/EventBus.js';
 
 export class InventorySystem {
@@ -15,31 +14,17 @@ export class InventorySystem {
     }
 
     initStarterItems() {
-        const stash = gameState.stashSlots;
-        
-        stash[0] = ItemFactory.createSword();
-        stash[9] = ItemFactory.createSword();
-        
-        stash[1] = ItemFactory.createWhetstone();
-        stash[3] = ItemFactory.createWhetstone();
-        stash[4] = ItemFactory.createWhetstone();
-        
-        stash[2] = ItemFactory.createGloves();
-        stash[10] = ItemFactory.createGloves();
-        stash[11] = ItemFactory.createGloves();
-
-        stash[5] = ItemFactory.createLuckyCharm();
-        stash[6] = ItemFactory.createLuckyCharm();
-        stash[7] = ItemFactory.createLuckyCharm();
-        stash[8] = ItemFactory.createLuckyCharm();
-        
-        // No need to emit here if we do this before UI init, but for safety:
-        // We are directly mutating the array here which is accessible via reference.
-        // Ideally we use gameState methods, but initial setup is fine.
+        // Stash starts empty as requested
     }
 
     moveItem(sourceType, sourceIndex, targetType, targetIndex) {
         if (sourceType === targetType && sourceIndex === targetIndex) return;
+
+        // Prevent moving items from/to enemy slots (Boss items are restricted)
+        if (sourceType === 'enemy' || targetType === 'enemy') {
+            console.warn("Interaction with enemy items is restricted.");
+            return;
+        }
 
         const sourceArray = gameState.getArray(sourceType);
         const targetArray = gameState.getArray(targetType);
@@ -58,7 +43,6 @@ export class InventorySystem {
 
     returnAllItemsToStash() {
         this.returnItemsFromSource(gameState.activeSlots, 'active');
-        this.returnItemsFromSource(gameState.enemySlots, 'enemy');
     }
 
     returnItemsFromSource(sourceArray, sourceType) {

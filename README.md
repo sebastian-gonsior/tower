@@ -1,6 +1,6 @@
-# Oaken Tower Clone
+#  Tower
 
-This is a simple browser-based game clone as requested.
+This is a simple browser-based game.
 
 ## How to Play
 1. Open `index.html` in your web browser.

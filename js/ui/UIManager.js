@@ -19,7 +19,11 @@ export class UIManager {
             goldDisplay: document.getElementById('gold-display'),
             shopOverlay: document.getElementById('shop-overlay'),
             shopItems: document.getElementById('shop-items'),
-            nextLevelBtn: document.getElementById('next-level-btn')
+            nextLevelBtn: document.getElementById('next-level-btn'),
+            playerNameDisplay: document.getElementById('player-name-display'),
+            enemyNameDisplay: document.getElementById('enemy-name-display'),
+            livesDisplay: document.getElementById('lives-display'),
+            shopGoldDisplay: document.getElementById('shop-gold-display')
         };
         
         this.init();
@@ -47,12 +51,16 @@ export class UIManager {
         });
         bus.on('GOLD_UPDATED', () => this.updateStats());
         bus.on('LEVEL_UPDATED', () => this.updateStats());
+        bus.on('LIVES_UPDATED', () => this.updateStats());
         bus.on('FIGHT_RESULT', (result) => this.handleFightResult(result));
+        bus.on('PLAYER_READY', () => {
+            this.updatePlayerName();
+            this.openShop(true);
+        });
     }
 
     setupGlobalListeners() {
         this.elements.startFightBtn.onclick = () => bus.emit('UI_REQUEST_START_FIGHT');
-        this.elements.nextLevelBtn.onclick = () => this.startNextLevel();
     }
 
     generateSlots() {
@@ -81,25 +89,56 @@ export class UIManager {
         this.renderSlots();
         this.updateHealthUI();
         this.updateStats();
+        this.updatePlayerName();
+        this.updateEnemyName();
     }
 
     updateStats() {
         if (this.elements.levelDisplay) this.elements.levelDisplay.innerText = gameState.level;
         if (this.elements.goldDisplay) this.elements.goldDisplay.innerText = gameState.gold;
+        if (this.elements.livesDisplay) this.elements.livesDisplay.innerText = gameState.lives;
+        if (this.elements.shopGoldDisplay) this.elements.shopGoldDisplay.innerText = `Gold: ${gameState.gold}`;
+    }
+
+    updatePlayerName() {
+        if (this.elements.playerNameDisplay) {
+            this.elements.playerNameDisplay.innerText = gameState.playerName || 'Player';
+        }
+    }
+    
+    updateEnemyName() {
+        if (this.elements.enemyNameDisplay) {
+            this.elements.enemyNameDisplay.innerText = gameState.enemy.name || 'Enemy';
+        }
     }
 
     handleFightResult(result) {
         if (result === 'VICTORY') {
-            this.openShop();
+            this.openShop(false);
         } else {
-            alert("DEFEAT! Try again.");
-            gameState.reset();
+            gameState.removeLife();
+            if (gameState.lives > 0) {
+                alert(`DEFEAT! You received 100g. Lives remaining: ${gameState.lives}. Try again.`);
+                gameState.reset();
+                this.openShop(true);
+            } else {
+                alert("GAME OVER! You ran out of lives.");
+                location.reload();
+            }
         }
     }
 
-    openShop() {
+    openShop(isStart = false) {
         this.populateShop();
         this.elements.shopOverlay.classList.remove('hidden');
+        
+        if (isStart) {
+            this.elements.nextLevelBtn.innerText = "Ready to Fight";
+            this.elements.nextLevelBtn.onclick = () => this.closeShop();
+        } else {
+            this.elements.nextLevelBtn.innerText = "Start Next Level";
+            this.elements.nextLevelBtn.onclick = () => this.startNextLevel();
+        }
     }
 
     closeShop() {
@@ -126,7 +165,11 @@ export class UIManager {
                 <div class="shop-item-price">${item.price}g</div>
             `;
             el.title = item.description || item.name;
-            el.onclick = () => this.handleBuy(item);
+            el.onclick = () => {
+                if (this.handleBuy(item)) {
+                    el.remove();
+                }
+            };
             this.elements.shopItems.appendChild(el);
         });
     }
@@ -151,11 +194,14 @@ export class UIManager {
                 else if (templateItem.name === "Lucky Charm") newItem = ItemFactory.createLuckyCharm();
                 
                 gameState.updateSlot('stash', stashIndex, newItem);
+                return true;
             } else {
                 alert("Stash is full!");
+                return false;
             }
         } else {
             alert("Not enough gold!");
+            return false;
         }
     }
 
@@ -192,15 +238,7 @@ export class UIManager {
         const div = document.createElement('div');
         div.className = 'item';
 
-        let tooltip = item.description || item.name;
-        if (item.type === 'sword') {
-            const effectiveCooldown = item.cooldown / (1 + buffs.speedBonus);
-            const attackSpeedDisplay = Number((effectiveCooldown / 1000).toFixed(2));
-            
-            const effectiveCritChance = item.critChance + buffs.critChance;
-            tooltip = `Damage: ${item.damage}\nKrit (%): ${Math.round(effectiveCritChance * 100)}\nAttackspeed: ${attackSpeedDisplay}`;
-        }
-        div.title = tooltip;
+        div.title = this.generateTooltip(item, buffs);
 
         div.innerHTML = `
             ${item.icon}
@@ -210,52 +248,80 @@ export class UIManager {
         return div;
     }
 
+    generateTooltip(item, buffs) {
+        if (item.type === 'sword') {
+            const effectiveCooldown = item.cooldown / (1 + buffs.speedBonus);
+            const attackSpeedDisplay = Number((effectiveCooldown / 1000).toFixed(2));
+            
+            const effectiveCritChance = item.critChance + buffs.critChance;
+            return `Damage: ${item.damage}\nKrit (%): ${Math.round(effectiveCritChance * 100)}\nAttackspeed: ${attackSpeedDisplay}`;
+        }
+        return item.description || item.name;
+    }
+
     updateHealthUI() {
         const playerPct = (gameState.player.hp / gameState.player.maxHp) * 100;
         this.elements.playerHpBar.style.width = `${playerPct}%`;
-        this.elements.playerHpText.innerText = `${Math.ceil(gameState.player.hp)}`;
+        
+        let playerText = `${Math.ceil(gameState.player.hp)}`;
+        if (gameState.player.shield > 0) {
+            playerText += ` (+${Math.ceil(gameState.player.shield)} Shield)`;
+        }
+        this.elements.playerHpText.innerText = playerText;
 
         const enemyPct = (gameState.enemy.hp / gameState.enemy.maxHp) * 100;
         this.elements.enemyHpBar.style.width = `${enemyPct}%`;
-        this.elements.enemyHpText.innerText = `${Math.ceil(gameState.enemy.hp)}`;
+        
+        let enemyText = `${Math.ceil(gameState.enemy.hp)}`;
+        if (gameState.enemy.shield > 0) {
+            enemyText += ` (+${Math.ceil(gameState.enemy.shield)} Shield)`;
+        }
+        this.elements.enemyHpText.innerText = enemyText;
     }
 
     update() {
-        // Cooldown overlays
-        const drawOverlay = (container, type) => {
-            // Recalculate buffs locally or get from somewhere. 
-            // Ideally we cache buffs or pass them.
-            // For simplicity re-calc.
-            // Wait, visuals for enemy slots should use enemy buffs?
-            // Original code used player buffs (activeSlots) for logic but what about overlay?
-            // Original code:
-            // drawOverlay calculated buffs locally:
-            // "slots.forEach(item => ... if item.name == Gloves ...)"
-            // It only checked Gloves (speed bonus).
-            
-            // I will just use BuffSystem for the specific container
-            const arr = gameState.getArray(type);
-            const buffs = BuffSystem.calculateBuffs(arr);
+        // Calculate buffs including stacking speed from combat state
+        const playerBuffs = BuffSystem.calculateBuffs(gameState.activeSlots);
+        playerBuffs.speedBonus += (gameState.combatState.playerStackingSpeed || 0);
+        playerBuffs.critChance += (gameState.combatState.playerStackingCrit || 0);
 
-            Array.from(container.children).forEach((slotEl, index) => {
-                const item = arr[index];
-                if (item) {
-                    const overlay = slotEl.querySelector('.cooldown-overlay');
-                    if (overlay && item.cooldown > 0) {
+        const enemyBuffs = BuffSystem.calculateBuffs(gameState.enemySlots);
+        enemyBuffs.speedBonus += (gameState.combatState.enemyStackingSpeed || 0);
+        enemyBuffs.critChance += (gameState.combatState.enemyStackingCrit || 0);
+
+        this.updateSlotVisuals(this.elements.activeSlots, 'active', playerBuffs);
+        this.updateSlotVisuals(this.elements.enemySlots, 'enemy', enemyBuffs);
+    }
+
+    updateSlotVisuals(container, type, buffs) {
+        const arr = gameState.getArray(type);
+        Array.from(container.children).forEach((slotEl, index) => {
+            const item = arr[index];
+            if (item) {
+                // Update Overlay
+                const overlay = slotEl.querySelector('.cooldown-overlay');
+                if (overlay) {
+                    if (item.cooldown > 0) {
                         let maxCd = item.cooldown;
-                        if (item.type === 'sword') maxCd = item.cooldown / (1 + buffs.speedBonus);
+                        // Apply speed bonus to swords and shields
+                        if (item.type === 'sword' || item.type === 'shield') {
+                            maxCd = item.cooldown / (1 + buffs.speedBonus);
+                        }
                         
-                        const pct = (item.currentCooldown / maxCd) * 100;
+                        const pct = maxCd > 0 ? (item.currentCooldown / maxCd) * 100 : 0;
                         overlay.style.height = `${pct}%`;
-                    } else if (overlay) {
-                         overlay.style.height = '0%';
+                    } else {
+                        overlay.style.height = '0%';
                     }
                 }
-            });
-        };
 
-        drawOverlay(this.elements.activeSlots, 'active');
-        drawOverlay(this.elements.enemySlots, 'enemy');
+                // Update Tooltip
+                const itemEl = slotEl.querySelector('.item');
+                if (itemEl) {
+                    itemEl.title = this.generateTooltip(item, buffs);
+                }
+            }
+        });
     }
 
     handleDragStart(e, type, index) {
