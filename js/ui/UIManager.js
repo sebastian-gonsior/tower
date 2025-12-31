@@ -151,6 +151,7 @@ export class UIManager {
         // Items to sell.
         const items = [
             ItemFactory.createSword(),
+            ItemFactory.createKillSword(),
             ItemFactory.createWhetstone(),
             ItemFactory.createGloves(),
             ItemFactory.createLuckyCharm()
@@ -189,6 +190,7 @@ export class UIManager {
                 
                 let newItem;
                 if (templateItem.name === "Sword") newItem = ItemFactory.createSword();
+                if (templateItem.name === "Kill Sword") newItem = ItemFactory.createKillSword();
                 else if (templateItem.name === "Whetstone") newItem = ItemFactory.createWhetstone();
                 else if (templateItem.name === "Gloves") newItem = ItemFactory.createGloves();
                 else if (templateItem.name === "Lucky Charm") newItem = ItemFactory.createLuckyCharm();

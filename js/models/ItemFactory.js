@@ -4,6 +4,10 @@ export class ItemFactory {
     static createSword() {
         return new Item("Sword", "⚔️", 25, 3000, 'sword', 0.1, 0);
     }
+
+    static createKillSword() {
+        return new Item("Kill Sword", "⚔️", 250, 10, 'sword', 0.5, 10);
+    }
     
     static createWhetstone() {
         const item = new Item("Whetstone", "🪨", 0, 0, 'accessory', 0, 50);
@@ -23,7 +27,7 @@ export class ItemFactory {
         return item;
     }
     static createZeladSword() {
-        return new Item("Zelad Sword", "🗡️", 40, 2500, 'sword', 0.15, 0);
+        return new Item("Zelad Sword", "🗡️", 40, 1000, 'sword', 0.15, 0);
     }
 
     static createDragonShield() {
@@ -36,8 +40,8 @@ export class ItemFactory {
         const item = new Item("Rage Stone", "🔴", 0, 0, 'accessory', 0, 0);
         item.description = "Atk Spd, Dmg, Crit +1% per attack";
         item.onAttackEffect = [
-            { type: 'speed_stack', value: 0.1 },
-            { type: 'damage_stack', value: 0.1 },
+            { type: 'speed_stack', value: 1.25 },
+            { type: 'damage_stack', value: 2.25 },
             { type: 'crit_stack', value: 0.1 }
         ];
         return item;
