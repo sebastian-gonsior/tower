@@ -1,49 +1,41 @@
 import { Item } from './Item.js';
+import { dataManager } from '../managers/DataManager.js';
 
+/**
+ * ItemFactory - Creates item instances from templates.
+ * 
+ * Star Level System:
+ * - Items can be created with a specific star level (0-10)
+ * - 3 identical items (same templateId + starLevel) can be fused into a higher star item
+ * - Each star level doubles the item's stats
+ */
 export class ItemFactory {
-    static createSword() {
-        return new Item("Sword", "⚔️", 25, 3000, 'sword', 0.1, 0);
-    }
-
-    static createKillSword() {
-        return new Item("Kill Sword", "⚔️", 250, 10, 'sword', 0.5, 10);
+    /**
+     * Create an item from a template ID.
+     * @param {string} id - The template ID from items.json
+     * @param {number} starLevel - Star level (0-10), default 0
+     * @returns {Item|null} The created item or null if template not found
+     */
+    static createItem(id, starLevel = 0) {
+        const template = dataManager.getItemTemplate(id);
+        if (!template) {
+            console.error(`Item template not found: ${id}`);
+            return null;
+        }
+        return new Item(template, starLevel);
     }
     
-    static createWhetstone() {
-        const item = new Item("Whetstone", "🪨", 0, 0, 'accessory', 0, 50);
-        item.description = "Swords Crit Dmg -> 250%";
-        return item;
-    }
-
-    static createGloves() {
-        const item = new Item("Gloves", "🧤", 0, 0, 'accessory', 0, 50);
-        item.description = "Swords Attack Speed +80%";
-        return item;
-    }
-
-    static createLuckyCharm() {
-        const item = new Item("Lucky Charm", "🍀", 0, 0, 'accessory', 0, 50);
-        item.description = "Swords Crit Chance +25%";
-        return item;
-    }
-    static createZeladSword() {
-        return new Item("Zelad Sword", "🗡️", 40, 1000, 'sword', 0.15, 0);
-    }
-
-    static createDragonShield() {
-        const item = new Item("Dragon Shield", "🛡️", 0, 1000, 'shield', 0, 0);
-        item.description = "Adds 20 Shield per Sword Attack";
-        return item;
-    }
-
-    static createRageStone() {
-        const item = new Item("Rage Stone", "🔴", 0, 0, 'accessory', 0, 0);
-        item.description = "Atk Spd, Dmg, Crit +1% per attack";
-        item.onAttackEffect = [
-            { type: 'speed_stack', value: 1.25 },
-            { type: 'damage_stack', value: 2.25 },
-            { type: 'crit_stack', value: 0.1 }
-        ];
-        return item;
+    /**
+     * Create an upgraded (fused) item from an existing item.
+     * Used when 3 identical items are combined.
+     * @param {Item} sourceItem - The source item to upgrade
+     * @returns {Item|null} A new item with starLevel + 1
+     */
+    static createUpgradedItem(sourceItem) {
+        if (!sourceItem || sourceItem.starLevel >= 10) {
+            console.warn("Cannot upgrade item: max star level reached or invalid item");
+            return null;
+        }
+        return this.createItem(sourceItem.templateId, sourceItem.starLevel + 1);
     }
 }

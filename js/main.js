@@ -3,21 +3,33 @@ import { inventorySystem } from './systems/InventorySystem.js';
 import { uiManager } from './ui/UIManager.js';
 import { authManager } from './ui/AuthManager.js';
 import { bus } from './utils/EventBus.js';
+import { dataManager } from './managers/DataManager.js';
+import { gameState } from './state/GameState.js';
+import { soundManager } from './managers/SoundManager.js';
 
 console.log("Initializing Game Modules...");
 
-// Initialize Auth
-authManager.init();
-
 // Coordinator Logic
 bus.on('UI_REQUEST_START_FIGHT', () => {
+    // Initialize sound on first user interaction (browser requirement)
+    soundManager.init();
+    gameState.startFight();
     combatSystem.startFight();
 });
 
 bus.on('FIGHT_ENDED', () => {
-    // Delay slightly or just do it immediately? Original was immediate.
+    combatSystem.endFight();
     inventorySystem.returnAllItemsToStash();
-    // gameState.reset(); // Removed to allow Shop/NextLevel flow to control reset
+});
+
+bus.on('FIGHT_VICTORY', () => {
+    combatSystem.endFight();
+    setTimeout(() => gameState.handleWin(), 2000);
+});
+
+bus.on('FIGHT_DEFEAT', () => {
+    combatSystem.endFight();
+    setTimeout(() => gameState.handleLoss(), 2000);
 });
 
 // Game Loop
@@ -34,5 +46,17 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
-// Start Loop
-requestAnimationFrame(gameLoop);
+// Start sequence
+async function start() {
+    const success = await dataManager.loadData();
+    if (success) {
+        gameState.init();
+        // Initialize Auth after data is loaded so that auto-login can properly start the game
+        authManager.init();
+        requestAnimationFrame(gameLoop);
+    } else {
+        alert("Failed to load game data!");
+    }
+}
+
+start();

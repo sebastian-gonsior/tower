@@ -56,6 +56,7 @@ class AuthManager {
         this.charCreationScreen.classList.add('hidden');
         this.gameView.classList.remove('hidden');
         console.log(`Game started for ${gameState.playerName} (${gameState.email})`);
+        gameState.startGame(gameState.playerName);
         bus.emit('PLAYER_READY');
     }
 
