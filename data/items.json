@@ -1,0 +1,138 @@
+[
+  {
+    "id": "dagger_common",
+    "name": "Rusty Dagger",
+    "type": "weapon",
+    "subtype": "dagger",
+    "set": "rogue",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "damage": 5,
+      "cooldown": 1.0
+    },
+    "effects": {
+      "poison": { "chance": 0.2, "duration": 15, "damagePerTick": 2 }
+    },
+    "price": 10
+  },
+  {
+    "id": "sword_common",
+    "name": "Iron Sword",
+    "type": "weapon",
+    "subtype": "sword",
+    "set": "warrior",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "damage": 10,
+      "cooldown": 2.0
+    },
+    "effects": {
+      "bleed": { "chance": 0.2, "duration": 10, "damagePerTick": 2 }
+    },
+    "price": 15
+  },
+  {
+    "id": "axe_rare",
+    "name": "Heavy Axe",
+    "type": "weapon",
+    "subtype": "axe",
+    "set": "warrior",
+    "rarity": "rare",
+    "minLevel": 3,
+    "stats": {
+      "damage": 25,
+      "cooldown": 3.0,
+      "critChance": 0.1
+    },
+    "effects": {
+      "bleed": { "chance": 0.4, "duration": 10, "damagePerTick": 5 }
+    },
+    "price": 50
+  },
+  {
+    "id": "shield_common",
+    "name": "Wooden Shield",
+    "type": "shield",
+    "set": "general",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "block": 5,
+      "cooldown": 5.0
+    },
+    "price": 10
+  },
+  {
+    "id": "relic_speed",
+    "name": "Wind Feather",
+    "type": "relic",
+    "set": "general",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "attackSpeed": 0.1
+    },
+    "price": 25
+  },
+  {
+    "id": "relic_multihit",
+    "name": "Echo Stone",
+    "type": "relic",
+    "set": "general",
+    "rarity": "rare",
+    "minLevel": 4,
+    "effects": {
+      "multihit": { "chance": 0.1, "count": 2 }
+    },
+    "price": 60
+  },
+  {
+    "id": "dagger_epic",
+    "name": "Shadow fang",
+    "type": "weapon",
+    "subtype": "dagger",
+    "set": "rogue",
+    "rarity": "epic",
+    "minLevel": 7,
+    "stats": {
+      "damage": 15,
+      "cooldown": 0.8
+    },
+    "effects": {
+      "poison": { "chance": 0.5, "duration": 15, "damagePerTick": 10 },
+      "shadow": { "chance": 0.2, "duration": 10, "damagePerTick": 15 }
+    },
+    "price": 200
+  },
+  {
+    "id": "wand_holy",
+    "name": "Cleric's Wand",
+    "type": "weapon",
+    "subtype": "wand",
+    "set": "general",
+    "rarity": "uncommon",
+    "minLevel": 2,
+    "stats": {
+      "damage": 8,
+      "cooldown": 2.5
+    },
+    "effects": {
+      "holy": { "chance": 0.2, "heal": 5 }
+    },
+    "price": 40
+  },
+  {
+    "id": "ring_frost",
+    "name": "Frost Ring",
+    "type": "relic",
+    "set": "general",
+    "rarity": "epic",
+    "minLevel": 6,
+    "effects": {
+      "frozen": { "chance": 0.15, "duration": 5 }
+    },
+    "price": 150
+  }
+]

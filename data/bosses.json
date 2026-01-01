@@ -1,0 +1,72 @@
+[
+  {
+    "level": 1,
+    "name": "Rat King",
+    "hp": 500,
+    "introText": "A giant rat blocks your path, squeaking menacingly.",
+    "items": ["dagger_common"]
+  },
+  {
+    "level": 2,
+    "name": "Bandit Leader",
+    "hp": 1200,
+    "introText": "He wants your gold and your life.",
+    "items": ["sword_common", "shield_common"]
+  },
+  {
+    "level": 3,
+    "name": "Forest Guardian",
+    "hp": 2500,
+    "introText": "The trees whisper warnings as the Guardian approaches.",
+    "items": ["axe_rare", "relic_speed"]
+  },
+  {
+    "level": 4,
+    "name": "Stone Golem",
+    "hp": 5000,
+    "introText": "A massive pile of rocks begins to move.",
+    "items": ["shield_common", "shield_common", "sword_common"]
+  },
+  {
+    "level": 5,
+    "name": "Cursed Knight",
+    "hp": 10000,
+    "introText": "Armor animated by dark magic.",
+    "items": ["axe_rare", "shield_common", "relic_multihit"]
+  },
+  {
+    "level": 6,
+    "name": "Broodmother",
+    "hp": 25000,
+    "introText": "Thousands of eyes stare at you from the darkness.",
+    "items": ["dagger_epic", "relic_speed", "relic_speed"]
+  },
+  {
+    "level": 7,
+    "name": "Frost Giant",
+    "hp": 50000,
+    "introText": "The air freezes as he steps forward.",
+    "items": ["ring_frost", "axe_rare", "shield_common"]
+  },
+  {
+    "level": 8,
+    "name": "Inferno Demon",
+    "hp": 100000,
+    "introText": "Flames engulf the arena.",
+    "items": ["sword_common", "dagger_epic", "relic_multihit", "relic_speed"]
+  },
+  {
+    "level": 9,
+    "name": "Void Walker",
+    "hp": 250000,
+    "introText": "He walks between dimensions.",
+    "items": ["dagger_epic", "wand_holy", "relic_multihit", "relic_speed"]
+  },
+  {
+    "level": 10,
+    "name": "The Tower Master",
+    "hp": 1000000,
+    "introText": "The final challenge awaits.",
+    "items": ["dagger_epic", "axe_rare", "relic_multihit", "relic_multihit", "ring_frost", "relic_speed"]
+  }
+]
