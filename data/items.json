@@ -12,7 +12,7 @@
       "cooldown": 1.0
     },
     "effects": {
-      "poison": { "chance": 0.2, "duration": 15, "damagePerTick": 2 }
+      "poison": { "chance": 0.2, "duration": 15, "damagePerTick": 200 }
     },
     "price": 10
   },
