@@ -131,8 +131,12 @@
     "set": "general",
     "rarity": "epic",
     "minLevel": 6,
+    "stats": {
+      "damage": 80,
+      "cooldown": 2.5
+    },
     "effects": {
-      "frozen": { "chance": 0.15, "duration": 5 }
+      "frozen": { "chance": 1, "duration": 12 }
     },
     "price": 150
   }
