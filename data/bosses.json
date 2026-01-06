@@ -2,7 +2,7 @@
   {
     "level": 1,
     "name": "Rat King",
-    "hp": 500,
+    "hp": 100,
     "introText": "A giant rat blocks your path, squeaking menacingly.",
     "items": ["dagger_common"]
   },
