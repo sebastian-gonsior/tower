@@ -22,7 +22,7 @@ export class Item {
         
         // Star level (0-10): each star doubles stats
         this.starLevel = Math.min(10, Math.max(0, starLevel));
-        this.statMultiplier = Math.pow(2, this.starLevel);
+        this.statMultiplier = Math.pow(4, this.starLevel);
         
         // Base stats (before star multiplier)
         this.baseStats = data.stats || {};
@@ -55,7 +55,7 @@ export class Item {
         if (scaled.damage) scaled.damage = Math.floor(scaled.damage * this.statMultiplier);
         if (scaled.block) scaled.block = Math.floor(scaled.block * this.statMultiplier);
         if (scaled.attackSpeed) scaled.attackSpeed = scaled.attackSpeed * this.statMultiplier;
-        // critChance doesn't scale (would be too OP)
+        if (scaled.critChance) scaled.critChance = scaled.critChance * this.statMultiplier;
         return scaled;
     }
     
