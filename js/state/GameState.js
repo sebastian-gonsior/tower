@@ -380,12 +380,12 @@ class GameState {
         }
 
         // Place upgraded item, preferring stash
-        let placementIndex = this.stashSlots.findIndex(s => s === null);
-        let placementType = 'stash';
+        let placementIndex = this.activeSlots.findIndex(s => s === null);
+        let placementType = 'active';
 
         if (placementIndex === -1) {
-            placementIndex = this.activeSlots.findIndex(s => s === null);
-            placementType = 'active';
+            placementIndex = this.stashSlots.findIndex(s => s === null);
+            placementType = 'stash';
         }
 
         if (placementIndex === -1) {
