@@ -965,6 +965,18 @@ body {
     border: 2px solid #ba68c8;
 }
 
+.item.rarity-legendary {
+    background: linear-gradient(135deg, #ff8f00 0%, #ffc107 50%, #ff8f00 100%);
+    border: 2px solid #fff176;
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
+}
+
+.rarity-text-legendary {
+    color: #ffd54f !important;
+    text-shadow: 0 0 5px rgba(255, 213, 79, 0.5);
+    font-weight: bold;
+}
+
 /* Castbar - horizontal bar below item showing attack progress */
 .castbar-container {
     position: absolute;

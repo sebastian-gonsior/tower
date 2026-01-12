@@ -240,17 +240,17 @@ export class CombatSystem {
         for (const [type, data] of Object.entries(effects)) {
             if (!data || typeof data !== 'object') continue;
 
-            // Gold on hit - gives gold to the attacker
-            if (type === 'goldOnHit') {
+            // Gold on hit - gives gold to the attacker if it's the player
+            if (type === 'goldOnHit' && sourceType === 'player') {
                 if (data.chance && Math.random() < data.chance) {
                     const goldAmount = data.amount || 1;
                     gameState.gold += goldAmount;
                     bus.emit('GOLD_UPDATED', gameState.gold);
 
-                    // Show floating text directly for gold
+                    // Show floating text directly for gold on the player gaining it
                     bus.emit('SHOW_FLOATING_TEXT', {
-                        target: 'player', // Or 'gold' specific target type? 'player' anchors to player panel
-                        damage: `+${goldAmount}g`,
+                        target: sourceType,
+                        damage: `${goldAmount}g`,
                         isCrit: true, // Make it pop
                         critType: 'gold', // Custom styling
                         sourceType: 'gold'

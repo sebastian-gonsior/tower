@@ -516,7 +516,12 @@ export class UIManager {
 
         if (isCrit) {
             const hasPlus = String(val).startsWith('+');
-            text = (sideClass === 'gain' && !hasPlus) ? `+${val}!` : `${val}!`;
+            const hasMinus = String(val).startsWith('-');
+            if (sideClass === 'gain') {
+                text = (hasPlus ? val : `+${val}`) + '!';
+            } else {
+                text = (hasMinus ? val : `-${val}`) + '!';
+            }
             if (critType !== 'gold') colorClass = 'crit-text';
         }
 

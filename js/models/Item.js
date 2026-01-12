@@ -17,7 +17,6 @@ export class Item {
         this.subtype = data.subtype; // 'sword', 'axe', 'dagger'
         this.set = data.set;
         this.rarity = data.rarity;
-        this.level = data.minLevel;
         this.price = data.price;
 
         // Star level (0-10): each star doubles stats

@@ -9,6 +9,14 @@ export const GAME_CONFIG = {
     stashCount: 24
 };
 
+export const RARITY_CONFIG = {
+    1: { common: 1.0, uncommon: 0.2, rare: 0.05, epic: 0.02, legendary: 0.01 },
+    2: { common: 1.0, uncommon: 0.4, rare: 0.1, epic: 0.05, legendary: 0.02 },
+    3: { common: 1.0, uncommon: 0.4, rare: 0.1, epic: 0.1, legendary: 0.02 },
+    4: { common: 1.0, uncommon: 0.4, rare: 0.2, epic: 0.2, legendary: 0.1 },
+    5: { common: 1.0, uncommon: 0.5, rare: 0.4, epic: 0.3, legendary: 0.1 }
+};
+
 /**
  * Game Phases - The game follows a structured phase system (per game.md manifesto):
  *
@@ -171,15 +179,42 @@ class GameState {
         this.shopItems = [];
         const allItems = dataManager.getAllItems();
 
-        const availableItems = allItems.filter(item => {
-            return item.minLevel <= this.level + 1; // Example logic
-        });
+        // Get rarity chances for current level (capped at lvl 5)
+        const currentLevel = Math.min(this.level, 5);
+        const chances = RARITY_CONFIG[currentLevel] || RARITY_CONFIG[1];
 
         // Pick 6 random items
         for (let i = 0; i < 6; i++) {
+            // Roll for rarity (Highest to lowest)
+            let rolledRarity = 'common';
+            if (Math.random() < chances.legendary) rolledRarity = 'legendary';
+            else if (Math.random() < chances.epic) rolledRarity = 'epic';
+            else if (Math.random() < chances.rare) rolledRarity = 'rare';
+            else if (Math.random() < chances.uncommon) rolledRarity = 'uncommon';
+            else rolledRarity = 'common';
+
+            // Filter items by rolled rarity
+            let availableItems = allItems.filter(item => item.rarity === rolledRarity);
+
+            // Fallback: If no items found for this rarity, try lower rarities until we find one
+            if (availableItems.length === 0) {
+                const rarities = ['legendary', 'epic', 'rare', 'uncommon', 'common'];
+                const startIndex = rarities.indexOf(rolledRarity);
+                for (let j = startIndex + 1; j < rarities.length; j++) {
+                    availableItems = allItems.filter(item => item.rarity === rarities[j]);
+                    if (availableItems.length > 0) break;
+                }
+            }
+
             if (availableItems.length > 0) {
-                const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
-                this.shopItems.push(ItemFactory.createItem(randomItem.id));
+                const randomItemTemplate = availableItems[Math.floor(Math.random() * availableItems.length)];
+                this.shopItems.push(ItemFactory.createItem(randomItemTemplate.id));
+            } else {
+                // Extreme fallback: just pick any item if even common is empty (should not happen)
+                if (allItems.length > 0) {
+                    const randomItemTemplate = allItems[Math.floor(Math.random() * allItems.length)];
+                    this.shopItems.push(ItemFactory.createItem(randomItemTemplate.id));
+                }
             }
         }
         bus.emit('SHOP_UPDATED', this.shopItems);

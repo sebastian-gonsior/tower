@@ -6,7 +6,6 @@
     "subtype": "dagger",
     "set": "rogue",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
       "damage": 5,
       "cooldown": 1.0
@@ -28,7 +27,6 @@
     "subtype": "dagger",
     "set": "rogue",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
       "damage": 5,
       "cooldown": 1.0
@@ -54,7 +52,6 @@
     "subtype": "dagger",
     "set": "rogue",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
       "damage": 3,
       "cooldown": 1.0
@@ -74,7 +71,6 @@
     "subtype": "sword",
     "set": "warrior",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
       "damage": 10,
       "cooldown": 2.0
@@ -95,7 +91,6 @@
     "subtype": "axe",
     "set": "warrior",
     "rarity": "rare",
-    "minLevel": 3,
     "stats": {
       "damage": 25,
       "cooldown": 3.0,
@@ -116,10 +111,15 @@
     "type": "shield",
     "set": "general",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
-      "block": 5,
+      "block": 100,
       "cooldown": 5.0
+    },
+    "effects": {
+      "goldOnHit": {
+        "chance": 1.0,
+        "amount": 2
+      }
     },
     "price": 10
   },
@@ -129,7 +129,6 @@
     "type": "relic",
     "set": "general",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
       "attackSpeed": 0.1
     },
@@ -141,7 +140,6 @@
     "type": "relic",
     "set": "general",
     "rarity": "common",
-    "minLevel": 1,
     "stats": {
       "critChance": 0.02
     },
@@ -153,7 +151,6 @@
     "type": "relic",
     "set": "general",
     "rarity": "rare",
-    "minLevel": 4,
     "effects": {
       "multihit": {
         "chance": 0.1,
@@ -169,7 +166,6 @@
     "subtype": "dagger",
     "set": "rogue",
     "rarity": "epic",
-    "minLevel": 7,
     "stats": {
       "damage": 15,
       "cooldown": 3.0
@@ -195,7 +191,6 @@
     "subtype": "wand",
     "set": "general",
     "rarity": "uncommon",
-    "minLevel": 2,
     "stats": {
       "damage": 8,
       "cooldown": 2.5
