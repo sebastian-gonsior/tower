@@ -8,7 +8,7 @@
     "rarity": "common",
     "stats": {
       "damage": 5,
-      "cooldown": 1.0
+      "cooldown": 3.0
     },
     "effects": {
       "poison": {
@@ -29,7 +29,7 @@
     "rarity": "common",
     "stats": {
       "damage": 5,
-      "cooldown": 1.0
+      "cooldown": 3.0
     },
     "effects": {
       "poison": {
@@ -54,7 +54,7 @@
     "rarity": "common",
     "stats": {
       "damage": 3,
-      "cooldown": 1.0
+      "cooldown": 3.0
     },
     "effects": {
       "goldOnHit": {
@@ -73,7 +73,7 @@
     "rarity": "common",
     "stats": {
       "damage": 10,
-      "cooldown": 2.0
+      "cooldown": 3.0
     },
     "effects": {
       "bleed": {
@@ -113,7 +113,7 @@
     "rarity": "common",
     "stats": {
       "block": 100,
-      "cooldown": 5.0
+      "cooldown": 3.0
     },
     "effects": {
       "goldOnHit": {
@@ -141,7 +141,7 @@
     "set": "general",
     "rarity": "common",
     "stats": {
-      "critChance": 0.02
+      "critChance": 0.1
     },
     "price": 25
   },
@@ -174,15 +174,15 @@
       "poison": {
         "chance": 0.8,
         "duration": 15,
-        "damagePerTick": 10
+        "damagePerTick": 30
       },
       "shadow": {
         "chance": 0.8,
         "duration": 10,
-        "damagePerTick": 15
+        "damagePerTick": 45
       }
     },
-    "price": 200
+    "price": 120
   },
   {
     "id": "wand_holy",
@@ -193,7 +193,7 @@
     "rarity": "uncommon",
     "stats": {
       "damage": 8,
-      "cooldown": 2.5
+      "cooldown": 5
     },
     "effects": {
       "holy": {
