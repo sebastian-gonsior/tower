@@ -291,7 +291,7 @@ export class CombatSystem {
 
                     if (currentStacks + 1 >= 10) {
                         const timerKey = targetType === 'enemy' ? 'enemyFrozenTimer' : 'playerFrozenTimer';
-                        gameState.combatState[timerKey] = 10000; // 1 second
+                        gameState.combatState[timerKey] = 1000; // 1 second
 
                         // Consume all frozen stacks
                         for (let i = targetDebuffs.length - 1; i >= 0; i--) {

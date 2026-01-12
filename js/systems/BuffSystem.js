@@ -27,13 +27,15 @@ export class BuffSystem {
             multihitChance: 0,
             multihitCount: 0
         };
-        
+
         slots.forEach(item => {
             if (item) {
-                // Base stats
-                if (item.stats.attackSpeed) stats.speedBonus += item.stats.attackSpeed;
-                if (item.stats.critChance) stats.critChance += item.stats.critChance;
-                
+                // Global stats from Relics only
+                if (item.type === 'relic') {
+                    if (item.stats.attackSpeed) stats.speedBonus += item.stats.attackSpeed;
+                    if (item.stats.critChance) stats.critChance += item.stats.critChance;
+                }
+
                 // Effects that act as buffs
                 if (item.effects && item.effects.multihit) {
                     stats.multihitChance += item.effects.multihit.chance;

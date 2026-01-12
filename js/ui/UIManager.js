@@ -64,7 +64,11 @@ export class UIManager {
             enemySprite: document.querySelector('.enemy-sprite'),
 
             // Tooltip
-            itemTooltip: document.getElementById('item-tooltip')
+            itemTooltip: document.getElementById('item-tooltip'),
+
+            // Panels for state effects
+            playerPanel: document.querySelector('.player-panel'),
+            enemyPanel: document.querySelector('.enemy-panel')
         };
 
         this.init();
@@ -130,9 +134,9 @@ export class UIManager {
         bus.on('PHASE_CHANGED', (phase) => this.handlePhaseChange(phase));
         bus.on('SLOTS_UPDATED', () => this.renderSlots());
         bus.on('HP_UPDATED', () => this.updateHealthUI());
-        bus.on('DAMAGE_DEALT', (data) => this.showFloatingText(data));
+        bus.on('DAMAGE_DEALT', (data) => this.showFloatingText({ ...data, type: 'damage' }));
         bus.on('SHOW_FLOATING_TEXT', (data) => this.showFloatingText(data));
-        bus.on('HEAL_APPLIED', (data) => this.showHealText(data));
+        bus.on('HEAL_APPLIED', (data) => this.showFloatingText({ ...data, type: 'heal' }));
         bus.on('GOLD_UPDATED', () => this.updateStats());
         bus.on('LEVEL_UPDATED', () => this.updateStats());
         bus.on('LIVES_UPDATED', () => this.updateStats());
@@ -492,22 +496,28 @@ export class UIManager {
     }
 
     showFloatingText(data) {
-        // data: { target, damage, isCrit, critType, sourceType, sourceItem, debuffType }
-        const { target, damage, isCrit, critType, sourceType, debuffType } = data;
+        // data: { target, damage, amount, type, isCrit, critType, sourceType, debuffType }
+        const { target, damage, amount, type, isCrit, critType, sourceType, debuffType } = data;
 
-        let text = `-${damage}`;
-        let colorClass = 'damage-text';
-        let fontSize = '16px';
+        let text = '';
+        let colorClass = '';
+        let sideClass = 'damage'; // Default to damage side
+
+        const val = amount || damage;
+        if (type === 'heal' || amount !== undefined || (isCrit && critType === 'gold')) {
+            text = (type === 'heal' || amount !== undefined) ? `+${val}` : `${val}`;
+            colorClass = (isCrit && critType === 'gold') ? 'gold-text' : 'heal-text';
+            sideClass = 'gain';
+        } else {
+            text = `-${val}`;
+            colorClass = 'damage-text';
+            sideClass = 'damage';
+        }
 
         if (isCrit) {
-            text = `${damage}!`; // Removed critType from text to keep it clean, or could add it
-            colorClass = 'crit-text';
-
-            if (critType === 'gold') {
-                text = damage; // Keep original text for gold (e.g. "+2g")
-                colorClass = 'gold-text';
-                fontSize = '20px';
-            }
+            const hasPlus = String(val).startsWith('+');
+            text = (sideClass === 'gain' && !hasPlus) ? `+${val}!` : `${val}!`;
+            if (critType !== 'gold') colorClass = 'crit-text';
         }
 
         if (sourceType === 'debuff') {
@@ -515,48 +525,31 @@ export class UIManager {
         }
 
         // Find position
-        const panelId = target === 'player' ? 'player-hp-bar' : 'enemy-hp-bar'; // Anchor to HP bar
-        const anchor = document.getElementById(panelId);
-
-        if (anchor) {
-            const rect = anchor.getBoundingClientRect();
-            // Random offset
-            const offsetX = (Math.random() - 0.5) * 40;
-            const offsetY = (Math.random() - 0.5) * 20;
-
-            const el = document.createElement('div');
-            el.className = `floating-text ${colorClass}`;
-            if (isCrit) el.classList.add('crit');
-
-            el.innerText = text;
-
-            // Allow CSS to handle animation, but set initial pos
-            el.style.left = `${rect.left + rect.width / 2 + offsetX}px`;
-            el.style.top = `${rect.top + offsetY}px`;
-
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 1000); // Cleanup after animation
-        }
-    }
-
-    showHealText(data) {
-        const { target, amount } = data;
         const panelId = target === 'player' ? 'player-hp-bar' : 'enemy-hp-bar';
         const anchor = document.getElementById(panelId);
 
         if (anchor) {
             const rect = anchor.getBoundingClientRect();
+
+            // Initial positioning: Damage starts slightly left, Gains start slightly right
+            const sideOffset = sideClass === 'damage' ? -40 : 40;
+            const randomX = (Math.random() - 0.5) * 40;
+            const randomY = (Math.random() - 0.5) * 40;
+
             const el = document.createElement('div');
-            el.className = 'floating-text heal-text';
-            el.innerText = `+${amount}`;
-            el.style.color = '#4caf50'; // Green
-            el.style.left = `${rect.left + rect.width / 2}px`;
-            el.style.top = `${rect.top}px`;
+            el.className = `floating-text ${colorClass} ${sideClass}`;
+            if (isCrit) el.classList.add('crit');
+
+            el.innerText = text;
+            el.style.left = `${rect.left + rect.width / 2 + sideOffset + randomX}px`;
+            el.style.top = `${rect.top + randomY}px`;
 
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 1000);
+            setTimeout(() => el.remove(), 1200); // 1.2s to match gain animation
         }
     }
+
+
 
     update() {
         this.updateCooldowns();
@@ -626,6 +619,18 @@ export class UIManager {
 
         renderDebuffContainer(this.elements.playerDebuffs, gameState.combatState.playerDebuffs);
         renderDebuffContainer(this.elements.enemyDebuffs, gameState.combatState.enemyDebuffs);
+
+        // Toggle Frozen visual state on panels (Ice Lock)
+        // Only trigger if the target is literally "Ice Locked" (frozenTimer > 0)
+        const isPlayerFrozen = (gameState.combatState.playerFrozenTimer || 0) > 0;
+        const isEnemyFrozen = (gameState.combatState.enemyFrozenTimer || 0) > 0;
+
+        if (this.elements.playerPanel) {
+            this.elements.playerPanel.classList.toggle('state-frozen', isPlayerFrozen);
+        }
+        if (this.elements.enemyPanel) {
+            this.elements.enemyPanel.classList.toggle('state-frozen', isEnemyFrozen);
+        }
     }
 
     renderBuffs() {
@@ -642,13 +647,34 @@ export class UIManager {
             const buffs = BuffSystem.calculateBuffs(slots);
 
             Object.entries(buffs).forEach(([key, value]) => {
-                if (value > 0 || (key === 'critDmg' && value > 1.5)) {
-                    // Simple buff icon
+                if (value > 0 || (key === 'critDmg' && value > 2.0)) {
                     if (buffIcons[key]) {
                         const el = document.createElement('div');
                         el.className = `buff-icon buff-${key}`;
-                        el.innerHTML = `<span class="buff-emoji">${buffIcons[key]}</span>`;
-                        el.title = `${key}: ${value}`;
+
+                        let displayValue = '';
+                        let title = '';
+
+                        if (key === 'speedBonus') {
+                            displayValue = `+${Math.round(value * 100)}%`;
+                            title = `Haste: ${displayValue}`;
+                        } else if (key === 'critChance') {
+                            displayValue = `${Math.round(value * 100)}%`;
+                            title = `Global Crit: ${displayValue}`;
+                        } else if (key === 'multihitChance') {
+                            const count = buffs.multihitCount || 0;
+                            displayValue = `${Math.round(value * 100)}% x${count}`;
+                            title = `Global Multihit: ${Math.round(value * 100)}% chance for x${count} hits`;
+                        } else if (key === 'critDmg') {
+                            displayValue = `x${value.toFixed(1)}`;
+                            title = `Crit Damage: ${displayValue}`;
+                        }
+
+                        el.innerHTML = `
+                            <span class="buff-emoji">${buffIcons[key]}</span>
+                            <span class="buff-value">${displayValue}</span>
+                        `;
+                        el.title = title;
                         container.appendChild(el);
                     }
                 }
@@ -750,6 +776,7 @@ export class UIManager {
                 else if (type === 'curse') text = `Curse: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
                 else if (type === 'frozen') text = `Freeze Chance (${Math.round((data.chance || 1) * 100)}%)`;
                 else if (type === 'holy') text = `Heal Chance (${Math.round((data.chance || 1) * 100)}%)`;
+                else if (type === 'multihit') text = `Multihit: x${data.count}${chanceText}`;
                 else {
                     // Start with basic Name
                     text = `${type.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} Effect`;
@@ -760,6 +787,7 @@ export class UIManager {
                     if (data.damagePerTick) details.push(`Dmg: ${data.damagePerTick}`);
                     if (data.duration) details.push(`Dur: ${data.duration}s`);
                     if (data.factor) details.push(`Factor: ${data.factor}`);
+                    if (data.count) details.push(`Count: ${data.count}`);
 
                     if (details.length > 0) {
                         text += ` [${details.join(', ')}]`;

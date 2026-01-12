@@ -38,7 +38,7 @@ export class Item {
         this.currentCooldown = 0;
 
         // Apply star multiplier to effects
-        this.effects = this.applyStarMultiplierToEffects(this.baseEffects);
+        this.effects = this.applyStarMultiplierToEffects(this.baseEffects, this.statMultiplier, this.starLevel);
 
         this.description = this.generateDescription();
 
@@ -68,10 +68,26 @@ export class Item {
      * Apply star level multiplier to effect damage values.
      * damagePerTick and heal scale with stars. Chances and durations do not.
      */
-    applyStarMultiplierToEffects(baseEffects, customMult = null) {
+    /**
+     * Apply star level multiplier to effect values.
+     * Most effects (damage, heal, count) scale with stars.
+     * Multihit is a special case: chance * mult, count + starLevel.
+     */
+    applyStarMultiplierToEffects(baseEffects, customMult = null, targetStarLevel = null) {
         const mult = customMult !== null ? customMult : this.statMultiplier;
+        const level = targetStarLevel !== null ? targetStarLevel : this.starLevel;
         const scaled = JSON.parse(JSON.stringify(baseEffects)); // Deep copy
+
         for (const [key, effect] of Object.entries(scaled)) {
+            if (key === 'multihit') {
+                // Special scaling for multihit as requested:
+                // Chance scales multiplicatively (chance * mult)
+                // Count scales linearly (count + starLevel)
+                effect.chance = effect.chance * mult;
+                effect.count = effect.count + level;
+                continue; // Skip generic scaling below
+            }
+
             if (effect.damagePerTick) {
                 effect.damagePerTick = Math.floor(effect.damagePerTick * mult);
             }
@@ -92,7 +108,7 @@ export class Item {
         return {
             starLevel: targetLevel,
             stats: this.applyStarMultiplier(this.baseStats, mult),
-            effects: this.applyStarMultiplierToEffects(this.baseEffects, mult)
+            effects: this.applyStarMultiplierToEffects(this.baseEffects, mult, targetLevel)
         };
     }
 
@@ -131,7 +147,7 @@ export class Item {
             // Pretty print effects
             if (key === 'poison') parts.push(`Poison: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'bleed') parts.push(`Bleed: ${val.damagePerTick}dmg/${val.duration}s`);
-            else if (key === 'multihit') parts.push(`Multihit: ${(val.chance * 100).toFixed(0)}%`);
+            else if (key === 'multihit') parts.push(`Multihit: x${val.count} (${(val.chance * 100).toFixed(0)}%)`);
             else if (key === 'holy') parts.push(`Holy: ${val.heal} heal`);
             else if (key === 'fire') parts.push(`Fire: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'shadow') parts.push(`Shadow: ${val.damagePerTick}dmg/${val.duration}s`);

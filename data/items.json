@@ -136,6 +136,18 @@
     "price": 25
   },
   {
+    "id": "relic_crit_common",
+    "name": "Lucky Clover",
+    "type": "relic",
+    "set": "general",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "critChance": 0.02
+    },
+    "price": 25
+  },
+  {
     "id": "relic_multihit",
     "name": "Echo Stone",
     "type": "relic",
