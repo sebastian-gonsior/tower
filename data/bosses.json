@@ -117,5 +117,155 @@
       "relic_multihit",
       "relic_speed"
     ]
+  },
+  {
+    "level": 11,
+    "name": "The Tower Master - Rank 1",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 1,
+    "introText": "The Tower Master returns, stronger than before.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 12,
+    "name": "The Tower Master - Rank 2",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 2,
+    "introText": "You've only scratched the surface of his power.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 13,
+    "name": "The Tower Master - Rank 3",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 3,
+    "introText": "His equipment begins to glow with power.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 14,
+    "name": "The Tower Master - Rank 4",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 4,
+    "introText": "The tower trembles under his footsteps.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 15,
+    "name": "The Tower Master - Rank 5",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 5,
+    "introText": "Halfway to true mastery.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 16,
+    "name": "The Tower Master - Rank 6",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 6,
+    "introText": "He is becoming one with the tower.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 17,
+    "name": "The Tower Master - Rank 7",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 7,
+    "introText": "The air crackles with energy around him.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 18,
+    "name": "The Tower Master - Rank 8",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 8,
+    "introText": "Only a true hero can withstand this power.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 19,
+    "name": "The Tower Master - Rank 9",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 9,
+    "introText": "Almost unbeatable. Almost.",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
+  },
+  {
+    "level": 20,
+    "name": "The Tower Master - Final Form",
+    "icon": "🐉",
+    "hp": 1000000,
+    "itemStarLevel": 10,
+    "introText": "The ultimate test of your strength. This is it!",
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
   }
 ]

@@ -153,9 +153,10 @@ class GameState {
 
             this.enemySlots.fill(null);
             if (bossData.items) {
+                const itemStarLevel = bossData.itemStarLevel || 0;
                 bossData.items.forEach((itemId, idx) => {
                     if (idx < this.enemySlots.length) {
-                        this.enemySlots[idx] = ItemFactory.createItem(itemId);
+                        this.enemySlots[idx] = ItemFactory.createItem(itemId, itemStarLevel);
                     }
                 });
             }
@@ -304,7 +305,7 @@ class GameState {
         // Award 100 gold on victory
         this.addGold(100);
 
-        if (this.level >= 10) {
+        if (this.level >= 20) {
             this.setPhase(PHASES.VICTORY);
         } else {
             this.level++;
