@@ -96,6 +96,10 @@ class GameState {
         this.activeSlots.fill(null);
         this.stashSlots.fill(null);
 
+        // Reset Max HP
+        this.player.maxHp = GAME_CONFIG.playerMaxHp;
+        this.player.hp = GAME_CONFIG.playerMaxHp;
+
         this.startRound();
     }
 
@@ -278,6 +282,13 @@ class GameState {
         } else if (target === 'enemy') {
             this.enemy.hp = Math.max(0, Math.min(value, this.enemy.maxHp));
         }
+        bus.emit('HP_UPDATED');
+    }
+
+    updateMaxHp(targetType, amount) {
+        const target = targetType === 'enemy' ? this.enemy : this.player;
+        target.maxHp += amount;
+        target.hp += amount; // Also heal for the same amount
         bus.emit('HP_UPDATED');
     }
 

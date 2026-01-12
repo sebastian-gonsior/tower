@@ -93,6 +93,9 @@ export class Item {
             if (effect.heal) {
                 effect.heal = Math.floor(effect.heal * mult);
             }
+            if (effect.maxHpGain) {
+                effect.maxHpGain = Math.floor(effect.maxHpGain * mult);
+            }
         }
         return scaled;
     }
@@ -147,7 +150,11 @@ export class Item {
             if (key === 'poison') parts.push(`Poison: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'bleed') parts.push(`Bleed: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'multihit') parts.push(`Multihit: x${val.count} (${(val.chance * 100).toFixed(0)}%)`);
-            else if (key === 'holy') parts.push(`Holy: ${val.heal} heal`);
+            else if (key === 'holy') {
+                let desc = `Holy: ${val.heal} heal`;
+                if (val.maxHpGain) desc += ` & +${val.maxHpGain} MaxHP`;
+                parts.push(desc);
+            }
             else if (key === 'fire') parts.push(`Fire: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'shadow') parts.push(`Shadow: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'curse') parts.push(`Curse: ${val.damagePerTick}dmg/${val.duration}s`);

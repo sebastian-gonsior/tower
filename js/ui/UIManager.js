@@ -780,7 +780,10 @@ export class UIManager {
                 else if (type === 'shadow') text = `Shadow: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
                 else if (type === 'curse') text = `Curse: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
                 else if (type === 'frozen') text = `Freeze Chance (${Math.round((data.chance || 1) * 100)}%)`;
-                else if (type === 'holy') text = `Heal Chance (${Math.round((data.chance || 1) * 100)}%)`;
+                else if (type === 'holy') {
+                    text = `Heal: ${data.heal}${chanceText}`;
+                    if (data.maxHpGain) text += ` & +${data.maxHpGain} MaxHP`;
+                }
                 else if (type === 'multihit') text = `Multihit: x${data.count}${chanceText}`;
                 else {
                     // Start with basic Name

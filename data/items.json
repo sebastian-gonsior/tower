@@ -198,7 +198,8 @@
     "effects": {
       "holy": {
         "chance": 1,
-        "heal": 250
+        "heal": 250,
+        "maxHpGain": 25
       },
       "frozen": {
         "chance": 1,

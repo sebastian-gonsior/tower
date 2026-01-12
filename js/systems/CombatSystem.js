@@ -273,6 +273,9 @@ export class CombatSystem {
             else if (type === 'holy') {
                 if (data.chance && Math.random() < data.chance) {
                     this.applyHeal(sourceType, data.heal || 0);
+                    if (data.maxHpGain) {
+                        this.applyMaxHpGain(sourceType, data.maxHpGain);
+                    }
                 }
             }
             else if (type === 'frozen') {
@@ -350,6 +353,19 @@ export class CombatSystem {
         bus.emit('HEAL_APPLIED', {
             target: targetType,
             amount: amount
+        });
+    }
+
+    applyMaxHpGain(targetType, amount) {
+        if (amount <= 0) return;
+        gameState.updateMaxHp(targetType, amount);
+
+        bus.emit('SHOW_FLOATING_TEXT', {
+            target: targetType,
+            damage: `+${amount} MaxHP`,
+            isCrit: true,
+            critType: 'heal',
+            sourceType: 'heal'
         });
     }
 
