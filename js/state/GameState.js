@@ -296,6 +296,7 @@ class GameState {
         if (type === 'active') return this.activeSlots;
         if (type === 'enemy') return this.enemySlots;
         if (type === 'stash') return this.stashSlots;
+        if (type === 'shop') return this.shopItems;
         return null;
     }
 
@@ -304,6 +305,23 @@ class GameState {
         if (arr) {
             arr[index] = item;
             bus.emit('SLOTS_UPDATED');
+        }
+    }
+
+    upgradeItem(type, index) {
+        const arr = this.getArray(type);
+        if (!arr || !arr[index]) return;
+
+        const currentItem = arr[index];
+        if (currentItem.starLevel >= 10) return;
+
+        const upgradedItem = ItemFactory.createItem(currentItem.templateId, currentItem.starLevel + 1);
+        if (upgradedItem) {
+            arr[index] = upgradedItem;
+            bus.emit('SLOTS_UPDATED');
+            if (type === 'shop') {
+                bus.emit('SHOP_UPDATED', this.shopItems);
+            }
         }
     }
 

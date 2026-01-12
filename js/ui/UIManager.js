@@ -71,6 +71,8 @@ export class UIManager {
             enemyPanel: document.querySelector('.enemy-panel')
         };
 
+        this.pressedKeys = new Set();
+        this.cheatUsed = false;
         this.init();
     }
 
@@ -128,6 +130,32 @@ export class UIManager {
                 }
             }
         });
+
+        // Add A cheat listeners
+        document.addEventListener('keydown', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'a') {
+                if (!e.repeat) {
+                    this.pressedKeys.add(key);
+                    this.cheatUsed = false;
+                }
+            }
+        });
+        document.addEventListener('keyup', (e) => {
+            const key = e.key.toLowerCase();
+            if (key === 'a') {
+                this.pressedKeys.delete(key);
+            }
+        });
+
+        // Prevention: Clear keys if window loses focus (prevents "stuck" keys)
+        window.addEventListener('blur', () => {
+            this.pressedKeys.clear();
+        });
+    }
+
+    isCheatActive() {
+        return this.pressedKeys.has('a') && !this.cheatUsed;
     }
 
     setupEventBusListeners() {
@@ -364,6 +392,13 @@ export class UIManager {
 
             el.onclick = () => {
                 this.hideTooltip(); // Close tooltip on click
+
+                if (this.isCheatActive()) {
+                    gameState.upgradeItem('shop', index);
+                    this.cheatUsed = true;
+                    return;
+                }
+
                 if (gameState.buyItem(index)) {
                     this.updateShopUI();
                     this.update();
@@ -454,6 +489,12 @@ export class UIManager {
 
     handleSlotClick(type, index) {
         this.hideTooltip(); // Close tooltip on click
+
+        if (this.isCheatActive()) {
+            gameState.upgradeItem(type, index);
+            this.cheatUsed = true;
+            return;
+        }
 
         if (gameState.phase !== PHASES.EQUIP) {
             return;
