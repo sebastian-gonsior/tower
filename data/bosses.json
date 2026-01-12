@@ -2,71 +2,120 @@
   {
     "level": 1,
     "name": "Rat King",
+    "icon": "🐀",
     "hp": 100,
     "introText": "A giant rat blocks your path, squeaking menacingly.",
-    "items": ["dagger_common"]
+    "items": [
+      "dagger_common"
+    ]
   },
   {
     "level": 2,
     "name": "Bandit Leader",
+    "icon": "🗡️",
     "hp": 1200,
     "introText": "He wants your gold and your life.",
-    "items": ["sword_common", "shield_common"]
+    "items": [
+      "sword_common",
+      "shield_common"
+    ]
   },
   {
     "level": 3,
     "name": "Forest Guardian",
+    "icon": "🌳",
     "hp": 2500,
     "introText": "The trees whisper warnings as the Guardian approaches.",
-    "items": ["axe_rare", "relic_speed"]
+    "items": [
+      "axe_rare",
+      "relic_speed"
+    ]
   },
   {
     "level": 4,
     "name": "Stone Golem",
+    "icon": "🗿",
     "hp": 5000,
     "introText": "A massive pile of rocks begins to move.",
-    "items": ["shield_common", "shield_common", "sword_common"]
+    "items": [
+      "shield_common",
+      "shield_common",
+      "sword_common"
+    ]
   },
   {
     "level": 5,
     "name": "Cursed Knight",
+    "icon": "⚔️",
     "hp": 10000,
     "introText": "Armor animated by dark magic.",
-    "items": ["axe_rare", "shield_common", "relic_multihit"]
+    "items": [
+      "axe_rare",
+      "shield_common",
+      "relic_multihit"
+    ]
   },
   {
     "level": 6,
     "name": "Broodmother",
+    "icon": "🕷️",
     "hp": 25000,
     "introText": "Thousands of eyes stare at you from the darkness.",
-    "items": ["dagger_epic", "relic_speed", "relic_speed"]
+    "items": [
+      "dagger_epic",
+      "relic_speed",
+      "relic_speed"
+    ]
   },
   {
     "level": 7,
     "name": "Frost Giant",
+    "icon": "🥶",
     "hp": 50000,
     "introText": "The air freezes as he steps forward.",
-    "items": ["ring_frost", "axe_rare", "shield_common"]
+    "items": [
+      "axe_rare",
+      "shield_common"
+    ]
   },
   {
     "level": 8,
     "name": "Inferno Demon",
+    "icon": "👹",
     "hp": 100000,
     "introText": "Flames engulf the arena.",
-    "items": ["sword_common", "dagger_epic", "relic_multihit", "relic_speed"]
+    "items": [
+      "sword_common",
+      "dagger_epic",
+      "relic_multihit",
+      "relic_speed"
+    ]
   },
   {
     "level": 9,
     "name": "Void Walker",
+    "icon": "👻",
     "hp": 250000,
     "introText": "He walks between dimensions.",
-    "items": ["dagger_epic", "wand_holy", "relic_multihit", "relic_speed"]
+    "items": [
+      "dagger_epic",
+      "wand_holy",
+      "relic_multihit",
+      "relic_speed"
+    ]
   },
   {
     "level": 10,
     "name": "The Tower Master",
+    "icon": "🐉",
     "hp": 1000000,
     "introText": "The final challenge awaits.",
-    "items": ["dagger_epic", "axe_rare", "relic_multihit", "relic_multihit", "ring_frost", "relic_speed"]
+    "items": [
+      "dagger_epic",
+      "axe_rare",
+      "relic_multihit",
+      "relic_multihit",
+      "relic_speed"
+    ]
   }
 ]

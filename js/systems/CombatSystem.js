@@ -132,12 +132,33 @@ export class CombatSystem {
     }
 
     performAttack(item, targetType, sourceType, buffs, effectiveCritChance) {
+        // Visual: Trigger Attack Animation (Lunge)
+        const isPlayer = sourceType === 'player';
+        const panelSelector = isPlayer ? '.player-panel' : '.enemy-panel';
+        const panel = document.querySelector(panelSelector);
+
+        if (panel) {
+            const animClass = isPlayer ? 'anim-lunge-right' : 'anim-shake'; // Enemies just shake for attack for now
+
+            // Remove class to reset animation if it's currently running
+            panel.classList.remove('anim-lunge-right');
+            // Force reflow
+            void panel.offsetWidth;
+
+            if (isPlayer) {
+                panel.classList.add('anim-lunge-right');
+            } else {
+                // For enemy attack, maybe just a small bounce or nothing special yet
+                // The implementation plan mentioned "Lunge", let's just do lunge right for player only
+            }
+        }
+
         let hits = 1;
         if (buffs.multihitCount > 0 && Math.random() < buffs.multihitChance) {
             hits = buffs.multihitCount;
         }
 
-        for(let i=0; i<hits; i++) {
+        for (let i = 0; i < hits; i++) {
             this.resolveHit(item, targetType, sourceType, buffs, effectiveCritChance);
         }
     }
@@ -174,7 +195,7 @@ export class CombatSystem {
         if (damage > 0) this.applyDamage(targetType, damage);
 
         if (item.effects) {
-            this.applyEffects(item.effects, targetType, sourceType);
+            this.applyEffects(item.effects, targetType, sourceType, damage);
         }
 
         // Handle Shield Items
@@ -204,7 +225,7 @@ export class CombatSystem {
     /**
      * Apply effects from an item hit.
      */
-    applyEffects(effects, targetType, sourceType) {
+    applyEffects(effects, targetType, sourceType, damageDealt = 0) {
         const targetDebuffs = targetType === 'enemy' ? gameState.combatState.enemyDebuffs : gameState.combatState.playerDebuffs;
 
         const defaultDurations = {
@@ -216,10 +237,40 @@ export class CombatSystem {
             frozen: 5
         };
 
-        for(const [type, data] of Object.entries(effects)) {
+        for (const [type, data] of Object.entries(effects)) {
             if (!data || typeof data !== 'object') continue;
 
-            if (type === 'holy') {
+            // Gold on hit - gives gold to the attacker
+            if (type === 'goldOnHit') {
+                if (data.chance && Math.random() < data.chance) {
+                    const goldAmount = data.amount || 1;
+                    gameState.gold += goldAmount;
+                    bus.emit('GOLD_UPDATED', gameState.gold);
+
+                    // Show floating text directly for gold
+                    bus.emit('SHOW_FLOATING_TEXT', {
+                        target: 'player', // Or 'gold' specific target type? 'player' anchors to player panel
+                        damage: `+${goldAmount}g`,
+                        isCrit: true, // Make it pop
+                        critType: 'gold', // Custom styling
+                        sourceType: 'gold'
+                    });
+
+                    console.log(`[GOLD ON HIT] +${goldAmount} gold! Total: ${gameState.gold}`);
+                }
+            }
+            else if (type === 'lifesteal') {
+                if (Math.random() < (data.chance ?? 1.0)) {
+                    // Factor defaults to 1.0 (100% of damage)
+                    const factor = data.factor !== undefined ? data.factor : 1.0;
+                    const healAmount = Math.ceil(damageDealt * factor);
+                    if (healAmount > 0) {
+                        this.applyHeal(sourceType, healAmount);
+                        console.log(`[LIFESTEAL] Healed ${sourceType} for ${healAmount} (${factor * 100}% of ${damageDealt} dmg)`);
+                    }
+                }
+            }
+            else if (type === 'holy') {
                 if (data.chance && Math.random() < data.chance) {
                     this.applyHeal(sourceType, data.heal || 0);
                 }
@@ -261,13 +312,15 @@ export class CombatSystem {
                 const perStackDamage = data.damagePerTick || 0;
                 const chance = data.chance ?? 1.0;
 
-                // Always refresh duration if debuff exists (keeps it alive as long as you keep hitting)
-                if (existingDebuff) {
-                    existingDebuff.duration = duration;
-                }
 
-                // Independent chance to add a stack on this hit
+
+                // Independent chance to apply/refresh/stack on this hit
                 if (chance > 0 && Math.random() < chance) {
+                    // Refresh duration if exists
+                    if (existingDebuff) {
+                        existingDebuff.duration = duration;
+                    }
+
                     if (!existingDebuff) {
                         existingDebuff = {
                             type: type,
@@ -302,7 +355,7 @@ export class CombatSystem {
 
     processDebuffs(targetType, deltaTime) {
         const debuffs = targetType === 'enemy' ? gameState.combatState.enemyDebuffs : gameState.combatState.playerDebuffs;
-        for(let i = debuffs.length - 1; i >= 0; i--) {
+        for (let i = debuffs.length - 1; i >= 0; i--) {
             const debuff = debuffs[i];
             debuff.duration -= deltaTime;
 
@@ -311,6 +364,18 @@ export class CombatSystem {
                 if (debuff.tickTimer >= 1000) {
                     debuff.tickTimer -= 1000;
                     this.applyDamage(targetType, debuff.damagePerTick);
+
+                    // Emit damage event for UI
+                    bus.emit('DAMAGE_DEALT', {
+                        target: targetType,
+                        damage: debuff.damagePerTick,
+                        isCrit: false,
+                        critType: "",
+                        sourceItem: null,
+                        sourceType: 'debuff',
+                        debuffType: debuff.type
+                    });
+
                     this.checkDefeat(targetType);
                 }
             }
@@ -324,6 +389,23 @@ export class CombatSystem {
 
     applyDamage(targetType, damage) {
         const target = targetType === 'enemy' ? gameState.enemy : gameState.player;
+
+        // Visual: Trigger Hit Reaction (Shake + Flash)
+        const panelSelector = targetType === 'enemy' ? '.enemy-panel' : '.player-panel';
+        const panel = document.querySelector(panelSelector);
+        if (panel) {
+            panel.classList.remove('anim-shake');
+            panel.classList.remove('hit-flash');
+            void panel.offsetWidth; // Force reflow
+            panel.classList.add('anim-shake');
+            panel.classList.add('hit-flash');
+
+            // Remove flash after short delay (CSS transition handles fade, but class needs removal)
+            setTimeout(() => {
+                panel.classList.remove('hit-flash');
+            }, 150);
+        }
+
         let remainingDamage = damage;
 
         if (target.shield > 0) {

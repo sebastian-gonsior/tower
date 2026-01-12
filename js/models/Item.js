@@ -19,63 +19,83 @@ export class Item {
         this.rarity = data.rarity;
         this.level = data.minLevel;
         this.price = data.price;
-        
+
         // Star level (0-10): each star doubles stats
         this.starLevel = Math.min(10, Math.max(0, starLevel));
         this.statMultiplier = Math.pow(4, this.starLevel);
-        
+
         // Base stats (before star multiplier)
         this.baseStats = data.stats || {};
         this.baseEffects = JSON.parse(JSON.stringify(data.effects || {})); // Deep copy
-        
+
         // Apply star multiplier to stats
         this.stats = this.applyStarMultiplier(this.baseStats);
         this.damage = this.stats.damage || 0;
         this.critChance = this.stats.critChance || 0;
-        
+
         // Cooldown in MS. JSON has seconds. (Cooldown does NOT scale with stars)
         this.cooldown = (this.baseStats.cooldown || 0) * 1000;
         this.currentCooldown = 0;
-        
+
         // Apply star multiplier to effects
         this.effects = this.applyStarMultiplierToEffects(this.baseEffects);
-        
+
         this.description = this.generateDescription();
-        
+
         // Icon (placeholder logic based on type/subtype)
         this.icon = this.getIcon();
     }
-    
+
     /**
      * Apply star level multiplier to stats.
      * Damage, block, and attackSpeed scale with stars. Cooldown and chances do not.
      */
-    applyStarMultiplier(baseStats) {
+    /**
+     * Apply star level multiplier to stats.
+     * Damage, block, and attackSpeed scale with stars. Cooldown and chances do not.
+     */
+    applyStarMultiplier(baseStats, customMult = null) {
+        const mult = customMult !== null ? customMult : this.statMultiplier;
         const scaled = { ...baseStats };
-        if (scaled.damage) scaled.damage = Math.floor(scaled.damage * this.statMultiplier);
-        if (scaled.block) scaled.block = Math.floor(scaled.block * this.statMultiplier);
-        if (scaled.attackSpeed) scaled.attackSpeed = scaled.attackSpeed * this.statMultiplier;
-        if (scaled.critChance) scaled.critChance = scaled.critChance * this.statMultiplier;
+        if (scaled.damage) scaled.damage = Math.floor(scaled.damage * mult);
+        if (scaled.block) scaled.block = Math.floor(scaled.block * mult);
+        if (scaled.attackSpeed) scaled.attackSpeed = scaled.attackSpeed * mult;
+        if (scaled.critChance) scaled.critChance = scaled.critChance * mult;
         return scaled;
     }
-    
+
     /**
      * Apply star level multiplier to effect damage values.
      * damagePerTick and heal scale with stars. Chances and durations do not.
      */
-    applyStarMultiplierToEffects(baseEffects) {
+    applyStarMultiplierToEffects(baseEffects, customMult = null) {
+        const mult = customMult !== null ? customMult : this.statMultiplier;
         const scaled = JSON.parse(JSON.stringify(baseEffects)); // Deep copy
         for (const [key, effect] of Object.entries(scaled)) {
             if (effect.damagePerTick) {
-                effect.damagePerTick = Math.floor(effect.damagePerTick * this.statMultiplier);
+                effect.damagePerTick = Math.floor(effect.damagePerTick * mult);
             }
             if (effect.heal) {
-                effect.heal = Math.floor(effect.heal * this.statMultiplier);
+                effect.heal = Math.floor(effect.heal * mult);
             }
         }
         return scaled;
     }
-    
+
+    getPreview(targetLevel) {
+        if (targetLevel > 10) return null;
+        // Multiplier = 4^level (based on current logic: 0->1, 1->4, etc.)
+        // Wait, current logic in constructor: Math.pow(4, this.starLevel)
+        // If starLevel is 0, mult is 1. If 1, mult is 4.
+        const mult = Math.pow(4, targetLevel);
+
+        return {
+            starLevel: targetLevel,
+            stats: this.applyStarMultiplier(this.baseStats, mult),
+            effects: this.applyStarMultiplierToEffects(this.baseEffects, mult)
+        };
+    }
+
     /**
      * Get star display string (e.g., "★★★" for 3 stars)
      */
@@ -83,7 +103,7 @@ export class Item {
         if (this.starLevel === 0) return '';
         return '★'.repeat(this.starLevel);
     }
-    
+
     getIcon() {
         if (this.subtype === 'sword') return "⚔️";
         if (this.subtype === 'axe') return "🪓";
@@ -93,36 +113,36 @@ export class Item {
         if (this.type === 'relic') return "💍";
         return "📦";
     }
-    
+
     generateDescription() {
         let parts = [];
-        
+
         // Show star level if upgraded
         if (this.starLevel > 0) {
             parts.push(`${this.getStarDisplay()} (x${this.statMultiplier} stats)`);
         }
-        
+
         if (this.damage > 0) parts.push(`Dmg: ${this.damage}`);
-        if (this.cooldown > 0) parts.push(`CD: ${this.cooldown/1000}s`);
+        if (this.cooldown > 0) parts.push(`CD: ${this.cooldown / 1000}s`);
         if (this.stats.block) parts.push(`Block: ${this.stats.block}`);
         if (this.stats.attackSpeed) parts.push(`Speed: +${(this.stats.attackSpeed * 100).toFixed(0)}%`);
-        
+
         for (const [key, val] of Object.entries(this.effects)) {
-             // Pretty print effects
-             if (key === 'poison') parts.push(`Poison: ${val.damagePerTick}dmg/${val.duration}s`);
-             else if (key === 'bleed') parts.push(`Bleed: ${val.damagePerTick}dmg/${val.duration}s`);
-             else if (key === 'multihit') parts.push(`Multihit: ${(val.chance*100).toFixed(0)}%`);
-             else if (key === 'holy') parts.push(`Holy: ${val.heal} heal`);
-             else if (key === 'fire') parts.push(`Fire: ${val.damagePerTick}dmg/${val.duration}s`);
-             else if (key === 'shadow') parts.push(`Shadow: ${val.damagePerTick}dmg/${val.duration}s`);
-             else if (key === 'curse') parts.push(`Curse: ${val.damagePerTick}dmg/${val.duration}s`);
-             else if (key === 'frozen') parts.push(`Frozen: ${(val.chance*100).toFixed(0)}% chance`);
-             else parts.push(`${key.toUpperCase()}`);
+            // Pretty print effects
+            if (key === 'poison') parts.push(`Poison: ${val.damagePerTick}dmg/${val.duration}s`);
+            else if (key === 'bleed') parts.push(`Bleed: ${val.damagePerTick}dmg/${val.duration}s`);
+            else if (key === 'multihit') parts.push(`Multihit: ${(val.chance * 100).toFixed(0)}%`);
+            else if (key === 'holy') parts.push(`Holy: ${val.heal} heal`);
+            else if (key === 'fire') parts.push(`Fire: ${val.damagePerTick}dmg/${val.duration}s`);
+            else if (key === 'shadow') parts.push(`Shadow: ${val.damagePerTick}dmg/${val.duration}s`);
+            else if (key === 'curse') parts.push(`Curse: ${val.damagePerTick}dmg/${val.duration}s`);
+            else if (key === 'frozen') parts.push(`Frozen: ${(val.chance * 100).toFixed(0)}% chance`);
+            else parts.push(`${key.toUpperCase()}`);
         }
-        
+
         return parts.join('\n');
     }
-    
+
     /**
      * Get display name with star indicator
      */

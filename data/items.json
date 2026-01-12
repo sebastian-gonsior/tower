@@ -12,9 +12,60 @@
       "cooldown": 1.0
     },
     "effects": {
-      "poison": { "chance": 0.8, "duration": 15, "damagePerTick": 2 }
+      "poison": {
+        "chance": 0.8,
+        "duration": 15,
+        "damagePerTick": 2
+      }
     },
     "price": 10
+  },
+  {
+    "id": "dagger_vampire",
+    "name": "Vampire Dagger",
+    "icon": "💀",
+    "type": "weapon",
+    "subtype": "dagger",
+    "set": "rogue",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "damage": 5,
+      "cooldown": 1.0
+    },
+    "effects": {
+      "poison": {
+        "chance": 0.8,
+        "duration": 15,
+        "damagePerTick": 2
+      },
+      "lifesteal": {
+        "chance": 1.0,
+        "factor": 0.5
+      }
+    },
+    "price": 10
+  },
+  {
+    "id": "dagger_gold",
+    "name": "Gold Dagger",
+    "icon": "🗡️",
+    "type": "weapon",
+    "subtype": "dagger",
+    "set": "rogue",
+    "rarity": "common",
+    "minLevel": 1,
+    "stats": {
+      "damage": 3,
+      "cooldown": 1.0
+    },
+    "effects": {
+      "goldOnHit": {
+        "chance": 1.0,
+        "amount": 2
+      }
+    },
+    "price": 15
   },
   {
     "id": "sword_common",
@@ -29,7 +80,11 @@
       "cooldown": 2.0
     },
     "effects": {
-      "bleed": { "chance": 0.6, "duration": 10, "damagePerTick": 2 }
+      "bleed": {
+        "chance": 0.6,
+        "duration": 10,
+        "damagePerTick": 2
+      }
     },
     "price": 15
   },
@@ -47,7 +102,11 @@
       "critChance": 0.1
     },
     "effects": {
-      "bleed": { "chance": 0.6, "duration": 10, "damagePerTick": 5 }
+      "bleed": {
+        "chance": 0.6,
+        "duration": 10,
+        "damagePerTick": 5
+      }
     },
     "price": 50
   },
@@ -84,7 +143,10 @@
     "rarity": "rare",
     "minLevel": 4,
     "effects": {
-      "multihit": { "chance": 0.1, "count": 2 }
+      "multihit": {
+        "chance": 0.1,
+        "count": 2
+      }
     },
     "price": 60
   },
@@ -101,8 +163,16 @@
       "cooldown": 3.0
     },
     "effects": {
-      "poison": { "chance": 0.8, "duration": 15, "damagePerTick": 10 },
-      "shadow": { "chance": 0.8, "duration": 10, "damagePerTick": 15 }
+      "poison": {
+        "chance": 0.8,
+        "duration": 15,
+        "damagePerTick": 10
+      },
+      "shadow": {
+        "chance": 0.8,
+        "duration": 10,
+        "damagePerTick": 15
+      }
     },
     "price": 200
   },
@@ -119,25 +189,15 @@
       "cooldown": 2.5
     },
     "effects": {
-      "holy": { "chance": 1, "heal": 250 },
-      "frozen": { "chance": 1, "duration": 5 }
+      "holy": {
+        "chance": 1,
+        "heal": 250
+      },
+      "frozen": {
+        "chance": 1,
+        "duration": 5
+      }
     },
     "price": 40
-  },
-  {
-    "id": "ring_frost",
-    "name": "Frost Ring",
-    "type": "relic",
-    "set": "general",
-    "rarity": "epic",
-    "minLevel": 6,
-    "stats": {
-      "damage": 80,
-      "cooldown": 2.5
-    },
-    "effects": {
-      "frozen": { "chance": 1, "duration": 12 }
-    },
-    "price": 150
   }
 ]

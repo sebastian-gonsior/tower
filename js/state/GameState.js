@@ -1,7 +1,13 @@
-import { GAME_CONFIG } from '../config.js';
 import { bus } from '../utils/EventBus.js';
 import { ItemFactory } from '../models/ItemFactory.js';
 import { dataManager } from '../managers/DataManager.js';
+
+export const GAME_CONFIG = {
+    playerMaxHp: 1000,
+    enemyMaxHp: 1510000,
+    slotsCount: 6,
+    stashCount: 24
+};
 
 /**
  * Game Phases - The game follows a structured phase system (per game.md manifesto):
@@ -65,11 +71,15 @@ class GameState {
     }
 
     startGame(name) {
-        if (!name || name.trim() === "") {
+        if (name) {
+            this.playerName = name;
+        }
+
+        if (!this.playerName || this.playerName.trim() === "") {
             console.error("Invalid Name");
             return;
         }
-        this.playerName = name;
+
         this.level = 1;
         this.gold = 100;
         this.lives = 3;
@@ -127,6 +137,7 @@ class GameState {
         const bossData = dataManager.getBoss(this.level);
         if (bossData) {
             this.enemy.name = bossData.name;
+            this.enemy.icon = bossData.icon || '👹';
             this.enemy.maxHp = bossData.hp;
             this.enemy.hp = bossData.hp;
             this.enemy.shield = 0;
@@ -143,6 +154,7 @@ class GameState {
         } else {
             console.error("No boss found for level " + this.level);
             this.enemy.name = "Unknown Boss";
+            this.enemy.icon = '❓';
             this.enemy.maxHp = 1000 * this.level;
             this.enemy.hp = this.enemy.maxHp;
         }
@@ -164,7 +176,7 @@ class GameState {
         });
 
         // Pick 6 random items
-        for(let i=0; i<6; i++) {
+        for (let i = 0; i < 6; i++) {
             if (availableItems.length > 0) {
                 const randomItem = availableItems[Math.floor(Math.random() * availableItems.length)];
                 this.shopItems.push(ItemFactory.createItem(randomItem.id));
@@ -191,7 +203,7 @@ class GameState {
 
     buyItem(shopIndex) {
         const item = this.shopItems[shopIndex];
-        if (!item) return;
+        if (!item) return false;
 
         if (this.gold >= item.price) {
             // Find empty stash slot
@@ -199,7 +211,7 @@ class GameState {
             if (emptyIdx !== -1) {
                 this.gold -= item.price;
                 this.stashSlots[emptyIdx] = item;
-                // Remove from shop? Or keep? Usually shop items are single purchase per slot.
+                // Remove from shop? Or keep? usually shop items are single purchase per slot.
                 this.shopItems[shopIndex] = null;
 
                 bus.emit('GOLD_UPDATED', this.gold);
@@ -207,12 +219,15 @@ class GameState {
                 bus.emit('SHOP_UPDATED', this.shopItems);
 
                 // Check for item fusion after buying
-                // 3 identical items (same templateId + starLevel) will auto-fuse
                 this.checkAndPerformFusion();
+
+                return true;
             } else {
                 console.log("Stash full");
+                return false;
             }
         }
+        return false;
     }
 
     resetCooldowns() {

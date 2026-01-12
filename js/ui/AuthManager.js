@@ -1,85 +1,88 @@
 import { gameState } from '../state/GameState.js';
-import { bus } from '../utils/EventBus.js';
+import { uiManager } from './UIManager.js';
 
-class AuthManager {
+export class AuthManager {
     constructor() {
-        this.registrationScreen = document.getElementById('registration-screen');
-        this.charCreationScreen = document.getElementById('character-creation-screen');
-        this.gameView = document.getElementById('game-view');
+        this.init();
+    }
 
-        this.regEmailInput = document.getElementById('reg-email');
-        this.regBtn = document.getElementById('reg-btn');
+    init() {
+        // Check for existing save
+        const savedName = localStorage.getItem('tower_char_name');
 
-        this.charNameInput = document.getElementById('char-name');
-        this.createCharBtn = document.getElementById('create-char-btn');
+        // Show Welcome Screen
+        uiManager.showScreen('screen-welcome');
+
+        if (savedName) {
+            this.showWelcomeBack(savedName);
+        } else {
+            this.showNewEntry();
+        }
 
         this.setupListeners();
     }
 
     setupListeners() {
-        this.regBtn.addEventListener('click', () => this.handleRegistration());
-        this.createCharBtn.addEventListener('click', () => this.handleCharacterCreation());
-    }
+        // New Character Entry
+        if (uiManager.elements.createCharBtn) {
+            uiManager.elements.createCharBtn.onclick = () => this.handleNewEntry();
+        }
 
-    init() {
-        // Check localStorage
-        const savedEmail = localStorage.getItem('tower_email');
-        const savedName = localStorage.getItem('tower_char_name');
+        // Resume Game
+        if (uiManager.elements.resumeBtn) {
+            uiManager.elements.resumeBtn.onclick = () => this.handleResume();
+        }
 
-        if (savedEmail) {
-            gameState.email = savedEmail;
-            if (savedName) {
-                gameState.playerName = savedName;
-                this.startGame();
-            } else {
-                this.showCharacterCreation();
-            }
-        } else {
-            this.showRegistration();
+        // Reset Save
+        if (uiManager.elements.resetSaveBtn) {
+            uiManager.elements.resetSaveBtn.onclick = () => this.handleReset();
         }
     }
 
-    showRegistration() {
-        this.registrationScreen.classList.remove('hidden');
-        this.charCreationScreen.classList.add('hidden');
-        this.gameView.classList.add('hidden');
+    showWelcomeBack(name) {
+        if (uiManager.elements.loginForm) uiManager.elements.loginForm.classList.add('hidden');
+        if (uiManager.elements.welcomeBackForm) uiManager.elements.welcomeBackForm.classList.remove('hidden');
+        if (uiManager.elements.welcomeCharName) uiManager.elements.welcomeCharName.innerText = name;
     }
 
-    showCharacterCreation() {
-        this.registrationScreen.classList.add('hidden');
-        this.charCreationScreen.classList.remove('hidden');
-        this.gameView.classList.add('hidden');
+    showNewEntry() {
+        if (uiManager.elements.welcomeBackForm) uiManager.elements.welcomeBackForm.classList.add('hidden');
+        if (uiManager.elements.loginForm) uiManager.elements.loginForm.classList.remove('hidden');
+        if (uiManager.elements.charName) uiManager.elements.charName.value = '';
+    }
+
+    handleNewEntry() {
+        const nameInput = uiManager.elements.charName;
+        const name = nameInput.value.trim();
+
+        if (name) {
+            gameState.playerName = name;
+            localStorage.setItem('tower_char_name', name);
+            this.startGame();
+        } else {
+            alert("Please sign the guestbook (enter a name)!");
+        }
+    }
+
+    handleResume() {
+        const savedName = localStorage.getItem('tower_char_name');
+        if (savedName) {
+            gameState.playerName = savedName;
+            this.startGame();
+        } else {
+            this.handleReset(); // Error state, fallback
+        }
+    }
+
+    handleReset() {
+        localStorage.removeItem('tower_char_name');
+        // also clear other save data if we had it
+        this.showNewEntry();
     }
 
     startGame() {
-        this.registrationScreen.classList.add('hidden');
-        this.charCreationScreen.classList.add('hidden');
-        this.gameView.classList.remove('hidden');
-        console.log(`Game started for ${gameState.playerName} (${gameState.email})`);
-        gameState.startGame(gameState.playerName);
-        bus.emit('PLAYER_READY');
-    }
-
-    handleRegistration() {
-        const email = this.regEmailInput.value.trim();
-        if (email && email.includes('@')) { // Basic validation
-            localStorage.setItem('tower_email', email);
-            gameState.email = email;
-            this.showCharacterCreation();
-        } else {
-            alert('Please enter a valid email address.');
-        }
-    }
-
-    handleCharacterCreation() {
-        const name = this.charNameInput.value.trim();
-        if (name) {
-            localStorage.setItem('tower_char_name', name);
-            gameState.playerName = name;
-            this.startGame();
-        } else {
-            alert('Please enter a character name.');
-        }
+        // Start the game loop / enter shop
+        gameState.startGame();
     }
 }
 
