@@ -298,8 +298,6 @@ export class CombatSystem {
             critType: critType,
             sourceItem: item
         });
-
-        this.checkDefeat(targetType);
     }
 
     /**
@@ -472,8 +470,6 @@ export class CombatSystem {
                         sourceType: 'debuff',
                         debuffType: debuff.type
                     });
-
-                    this.checkDefeat(targetType);
                 }
             }
 
@@ -561,6 +557,7 @@ export class CombatSystem {
         }
 
         gameState.updateHp(targetType, target.hp - remainingDamage);
+        this.checkDefeat(targetType);
     }
 
     applyShield(targetType, amount) {
