@@ -1,6 +1,7 @@
 import { bus } from '../utils/EventBus.js';
 import { ItemFactory } from '../models/ItemFactory.js';
 import { dataManager } from '../managers/DataManager.js';
+import { globalBuffSystem } from '../systems/GlobalBuffSystem.js';
 
 export const GAME_CONFIG = {
     playerMaxHp: 1000,
@@ -37,6 +38,7 @@ export const PHASES = {
     BOSS_INTRO: 'BOSS_INTRO',
     EQUIP: 'EQUIP',
     COMBAT: 'COMBAT',
+    REWARDS: 'REWARDS',
     GAME_OVER: 'GAME_OVER',
     VICTORY: 'VICTORY'
 };
@@ -44,8 +46,8 @@ export const PHASES = {
 class GameState {
     constructor() {
         this.player = { hp: GAME_CONFIG.playerMaxHp, maxHp: GAME_CONFIG.playerMaxHp, shield: 0, maxShield: 0 };
-        this.playerName = "Player"; // Default
-        this.enemy = { hp: 100, maxHp: 100, shield: 0, maxShield: 0, name: "Enemy" };
+        this.playerName = "Adventurer"; // Default changed (Tracer)
+        this.enemy = { hp: 100, maxHp: 100, shield: 0, maxShield: 0, name: "Unknown Entity" }; // Default changed (Tracer)
 
         this.gold = 100;
         this.level = 1;
@@ -79,6 +81,7 @@ class GameState {
     }
 
     startGame(name) {
+        console.log(`[DEBUG] GameState.startGame called with name: ${name}`);
         if (name) {
             this.playerName = name;
         }
@@ -104,6 +107,7 @@ class GameState {
     }
 
     startRound() {
+        console.log("[DEBUG] GameState.startRound called");
         this.resetPlayerStats();
         this.configureBoss();
         this.generateShop();
@@ -146,8 +150,10 @@ class GameState {
     }
 
     configureBoss() {
+        console.log(`[DEBUG] configureBoss called for Level ${this.level}`);
         const bossData = dataManager.getBoss(this.level);
         if (bossData) {
+            console.log(`[DEBUG] Boss found: ${bossData.name}`);
             this.enemy.name = bossData.name;
             this.enemy.icon = bossData.icon || '👹';
             this.enemy.maxHp = bossData.hp;
@@ -332,15 +338,74 @@ class GameState {
 
     handleWin() {
         // Award 100 gold on victory
-        this.addGold(100);
+        let winGold = 100;
+
+        // Process Income Buff (INCOME_25)
+        if (globalBuffSystem.hasBuff('INCOME_25')) {
+            winGold += 25;
+            console.log("Income buff applied: +25g");
+        }
+
+        this.addGold(winGold);
+        this.levelComplete = true;
 
         if (this.level >= 20) {
             this.setPhase(PHASES.VICTORY);
         } else {
+            // Go to rewards phase
+            this.setPhase(PHASES.REWARDS);
+        }
+    }
+
+    handleLoss() {
+        console.log(`[DEBUG] handleLoss called. Current Lives: ${this.lives}`);
+        // Award 50 gold on loss (consolation)
+        this.addGold(50);
+
+        this.lives--;
+        bus.emit('LIVES_UPDATED', this.lives);
+        console.log(`[DEBUG] Lives decreased to: ${this.lives}`);
+
+        if (this.lives <= 0) {
+            console.log("[DEBUG] No lives left. Phase -> GAME_OVER");
+            this.setPhase(PHASES.GAME_OVER);
+        } else {
+            console.log("[DEBUG] Lives remain. Retrying level (Skipping Rewards)...");
+            // Direct retry
+            this.startRound();
+        }
+    }
+
+    selectReward(buffId) {
+        if (!buffId) return;
+
+        console.log(`Applying reward: ${buffId}`);
+        globalBuffSystem.addBuff(buffId);
+
+        // Apply Instant Effects
+        if (buffId === 'GOLD_INSTANT_200') {
+            this.addGold(200);
+        } else if (buffId === 'MAXHP_3500') {
+            // Fix MaxHP set
+            this.player.maxHp = 3500;
+            this.player.hp = 3500; // Heal to full
+            bus.emit('HP_UPDATED');
+        } else if (buffId === 'MAXHP_PCT_10') {
+            const added = Math.floor(this.player.maxHp * 0.10);
+            this.updateMaxHp('player', added);
+        } else if (buffId === 'HP_2000') {
+            this.updateMaxHp('player', 2000);
+        } else if (buffId === 'GOLD_1000') {
+            this.addGold(1000);
+        }
+
+        // Advance Game Logic or Retry
+        if (this.levelComplete) {
             this.level++;
-            // Advance to next boss WITHOUT regenerating shop
-            // Shop items persist between rounds - only regenerate on game start or loss
             this.advanceToNextBoss();
+        } else {
+            console.log("Retrying level with new buff...");
+            this.startRound();
         }
     }
 
@@ -355,18 +420,7 @@ class GameState {
         this.setPhase(PHASES.SHOPPING);
     }
 
-    handleLoss() {
-        // Award 50 gold on loss (consolation)
-        this.addGold(50);
 
-        this.lives--;
-        bus.emit('LIVES_UPDATED', this.lives);
-        if (this.lives <= 0) {
-            this.setPhase(PHASES.GAME_OVER);
-        } else {
-            this.startRound();
-        }
-    }
 
     // ==================== ITEM FUSION SYSTEM ====================
     /**

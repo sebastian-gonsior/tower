@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tower</title>
+    <title>Tower of Ascension</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -81,6 +82,8 @@
                 </div>
                 <div class="hud-center">
                     <span class="floor-badge">FLOOR <span id="level-display">1</span></span>
+                    <div id="combat-timer" class="combat-timer hidden">03:00</div>
+                    <button id="surrender-btn" class="btn surrender-btn hidden">🏳️ Surrender</button>
                 </div>
                 <div class="hud-right">
                     <span class="hud-stat">❤️ <span id="lives-display">3</span></span>
@@ -102,6 +105,12 @@
                         </div>
                     </div>
 
+                    <!-- Buffs & Blessings Row (Above Health Bar) -->
+                    <div class="buffs-section">
+                        <div class="buffs-row" id="player-buffs"></div>
+                        <div class="blessings-row" id="player-blessings"></div>
+                    </div>
+
                     <!-- HP Bar - Full Width -->
                     <div class="hp-section">
                         <div class="hp-bar-wrapper">
@@ -112,9 +121,8 @@
                         </div>
                     </div>
 
-                    <!-- Buffs & Debuffs Row -->
+                    <!-- Debuffs Row (Below Health Bar) -->
                     <div class="status-effects">
-                        <div class="buffs-row" id="player-buffs"></div>
                         <div class="debuffs-row" id="player-debuffs"></div>
                     </div>
 
@@ -122,6 +130,19 @@
                     <div class="inventory-section">
                         <h4 class="section-label">Equipment</h4>
                         <div class="slots-container" id="active-slots"></div>
+                    </div>
+
+                    <!-- Damage Meter -->
+                    <div class="meter-section">
+                        <div class="meter-header">
+                            <div class="meter-tabs">
+                                <span class="meter-tab active" data-target="player" data-mode="damage">Damage</span>
+                                <span class="meter-tab" data-target="player" data-mode="healing">Heal</span>
+                                <span class="meter-tab" data-target="player" data-mode="gold">Gold</span>
+                            </div>
+                            <span id="player-dps">0 DPS</span>
+                        </div>
+                        <div class="combat-meter" id="player-meter"></div>
                     </div>
                 </div>
 
@@ -143,6 +164,11 @@
                         </div>
                     </div>
 
+                    <!-- Buffs Row (Above Health Bar) -->
+                    <div class="buffs-section">
+                        <div class="buffs-row" id="enemy-buffs"></div>
+                    </div>
+
                     <!-- HP Bar - Full Width -->
                     <div class="hp-section">
                         <div class="hp-bar-wrapper">
@@ -153,9 +179,8 @@
                         </div>
                     </div>
 
-                    <!-- Buffs & Debuffs Row -->
+                    <!-- Debuffs Row (Below Health Bar) -->
                     <div class="status-effects">
-                        <div class="buffs-row" id="enemy-buffs"></div>
                         <div class="debuffs-row" id="enemy-debuffs"></div>
                     </div>
 
@@ -163,6 +188,19 @@
                     <div class="inventory-section">
                         <h4 class="section-label">Equipment</h4>
                         <div class="slots-container" id="enemy-slots"></div>
+                    </div>
+
+                    <!-- Damage Meter -->
+                    <div class="meter-section">
+                        <div class="meter-header">
+                            <div class="meter-tabs">
+                                <span class="meter-tab active" data-target="enemy" data-mode="damage">Damage</span>
+                                <span class="meter-tab" data-target="enemy" data-mode="healing">Heal</span>
+                                <span class="meter-tab" data-target="enemy" data-mode="gold">Gold</span>
+                            </div>
+                            <span id="enemy-dps">0 DPS</span>
+                        </div>
+                        <div class="combat-meter" id="enemy-meter"></div>
                     </div>
                 </div>
             </div>
@@ -184,6 +222,24 @@
                 </div>
             </div>
         </section>
+
+        <!-- SCREEN 4: REWARDS (Victory and Blessing) -->
+        <section id="screen-rewards" class="screen hidden">
+            <div class="rewards-container">
+                <h1 class="victory-title">VICTORY!</h1>
+                <p class="victory-subtitle">The Boss has been slain.</p>
+                <h2 class="choose-blessing">CHOOSE YOUR BLESSING</h2>
+
+                <div class="reward-cards-container" id="reward-choices">
+                    <!-- Cards injected globally by JS -->
+                </div>
+
+                <div class="rewards-footer">
+                    <div class="stat-item">💛 Lives: <span id="reward-lives">3</span></div>
+                    <div class="stat-item">💰 Gold: <span id="reward-gold">0</span></div>
+                    <div class="stat-item">📈 Income: <span id="reward-income">+0</span></div>
+                </div>
+            </div>
         </section>
     </div>
 

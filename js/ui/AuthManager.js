@@ -82,7 +82,8 @@ export class AuthManager {
 
     startGame() {
         // Start the game loop / enter shop
-        gameState.startGame();
+        console.log(`[DEBUG] AuthManager.startGame calling gameState.startGame(${gameState.playerName})`);
+        gameState.startGame(gameState.playerName);
     }
 }
 

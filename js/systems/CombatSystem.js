@@ -2,6 +2,7 @@ import { gameState, PHASES } from '../state/GameState.js';
 import { BuffSystem } from './BuffSystem.js';
 import { bus } from '../utils/EventBus.js';
 import { soundManager } from '../managers/SoundManager.js';
+import { globalBuffSystem } from '../systems/GlobalBuffSystem.js';
 
 /**
  * CombatSystem - Handles all combat mechanics for the game.
@@ -37,6 +38,18 @@ export class CombatSystem {
     startFight() {
         console.log("Fight Started!");
         this.isFighting = true;
+
+        // Initialize Boss Timer (3 minutes = 180 seconds)
+        // Since all levels are effectively "bosses", we apply this to every fight.
+        gameState.combatState.combatTimer = 180;
+
+        // Global Buffs: Shield Start
+        if (globalBuffSystem.hasBuff('SHIELD_ON_START')) {
+            gameState.player.shield = gameState.player.maxHp;
+            bus.emit('HP_UPDATED');
+            console.log("[BUFF] Shield on Start Applied");
+        }
+
         // Initial cooldowns
         this.applyInitialCooldown(gameState.activeSlots);
         this.applyInitialCooldown(gameState.enemySlots);
@@ -64,10 +77,37 @@ export class CombatSystem {
     update(deltaTime) {
         if (!this.isFighting || gameState.phase !== PHASES.COMBAT) return;
 
+        // Boss Timer Logic
+        if (gameState.combatState.combatTimer > 0) {
+            gameState.combatState.combatTimer -= (deltaTime / 1000); // Convert ms to seconds
+
+            // Emit timer update for UI
+            bus.emit('COMBAT_TIMER_UPDATE', Math.ceil(gameState.combatState.combatTimer));
+
+            if (gameState.combatState.combatTimer <= 0) {
+                gameState.combatState.combatTimer = 0;
+                console.log("Boss timer ran out! Defeat triggered.");
+                bus.emit('FIGHT_DEFEAT');
+                return; // Stop processing this frame
+            }
+        }
+
         // Process Player Slots
         const playerBuffs = BuffSystem.calculateBuffs(gameState.activeSlots);
         playerBuffs.speedBonus += gameState.combatState.playerStackingSpeed || 0;
         playerBuffs.critChance += gameState.combatState.playerStackingCrit || 0;
+
+        // Global Stat Buffs
+        if (globalBuffSystem.hasBuff('SPEED_PCT_10')) playerBuffs.speedBonus += 0.10;
+        if (globalBuffSystem.hasBuff('CRIT_PCT_10')) playerBuffs.critChance += 0.10;
+        // Global Stat Buffs
+        if (globalBuffSystem.hasBuff('SPEED_PCT_10')) playerBuffs.speedBonus += 0.10;
+        if (globalBuffSystem.hasBuff('CRIT_PCT_10')) playerBuffs.critChance += 0.10;
+        // Old multihit chance buf removed
+
+        // Pass global fixed buffs logic via separate mechanism or handle in logic loop?
+        // Let's handle it inside performAttack for clean separation or add a property 'extraHits'
+        // playerBuffs.extraHits = 0; if (globalBuffSystem.hasBuff('MULTIHIT_PLUS_1')) playerBuffs.extraHits += 1;
 
         this.processSlots(gameState.activeSlots, 'enemy', playerBuffs, deltaTime);
         this.processDebuffs('player', deltaTime);
@@ -154,9 +194,24 @@ export class CombatSystem {
         }
 
         let hits = 1;
-        if (buffs.multihitCount > 0 && Math.random() < buffs.multihitChance) {
+
+        // Multihit Rework: Always trigger if count > 0 (effectively 'hits = count')
+        // Also handling global +1 hit buff
+
+        // Base hits from item attributes (if item gives x2 multihit)
+        if (buffs.multihitCount > 0) {
             hits = buffs.multihitCount;
         }
+
+        // Global Buffs adding extra hits
+        if (sourceType === 'player' && globalBuffSystem.hasBuff('MULTIHIT_PLUS_1')) {
+            hits += 1;
+        }
+
+        // Apply
+        // If hits stayed 1, and no buffs, it is 1. 
+        // If item had hits:2, hits=2. + Global=3.
+        // If item had hits:0 (normal), hits=1. + Global=2. Correct.
 
         for (let i = 0; i < hits; i++) {
             this.resolveHit(item, targetType, sourceType, buffs, effectiveCritChance);
@@ -164,6 +219,8 @@ export class CombatSystem {
     }
 
     resolveHit(item, targetType, sourceType, buffs, critChance) {
+        if (!this.isFighting) return;
+
         let damage = item.damage;
 
         let critMult = 1;
@@ -173,13 +230,24 @@ export class CombatSystem {
         if (Math.random() < critChance) {
             isCrit = true;
             critMult = 2; // Normal Crit
+
+            // Global Buff: Lethality (3x Crit Damage)
+            if (sourceType === 'player' && globalBuffSystem.hasBuff('CRIT_DMG_3X')) {
+                critMult = 3;
+            }
+
             critType = "Crit";
 
             if (Math.random() < 0.2) {
                 critMult = 3; // SuperCrit
+                // Lethality buff boosts SuperCrit to 4x? User said "crit damage x3.0". Let's apply it to base crit only for now or scale it.
+                // Assuming "Normal Crit becomes 3x".
+                if (sourceType === 'player' && globalBuffSystem.hasBuff('CRIT_DMG_3X')) critMult = 4;
+
                 critType = "SuperCrit";
                 if (Math.random() < 0.2) {
                     critMult = 5; // HyperCrit
+                    if (sourceType === 'player' && globalBuffSystem.hasBuff('CRIT_DMG_3X')) critMult = 6;
                     critType = "HyperCrit";
                 }
             }
@@ -196,6 +264,18 @@ export class CombatSystem {
 
         if (item.effects) {
             this.applyEffects(item.effects, targetType, sourceType, damage);
+        }
+
+        // Global Buffs on HIT
+        if (sourceType === 'player') {
+            if (globalBuffSystem.hasBuff('LIFELEECH_PCT_10')) {
+                const leech = Math.ceil(damage * 0.10);
+                if (leech > 0) this.applyHeal('player', leech);
+            }
+            if (globalBuffSystem.hasBuff('MAXHP_ON_HIT_1PCT')) {
+                const gain = Math.ceil(gameState.player.maxHp * 0.01);
+                if (gain > 0) this.applyMaxHpGain('player', gain);
+            }
         }
 
         // Handle Shield Items
@@ -251,6 +331,7 @@ export class CombatSystem {
                     bus.emit('SHOW_FLOATING_TEXT', {
                         target: sourceType,
                         damage: `${goldAmount}g`,
+                        amount: goldAmount, // Pass numeric value for meter
                         isCrit: true, // Make it pop
                         critType: 'gold', // Custom styling
                         sourceType: 'gold'
@@ -405,6 +486,7 @@ export class CombatSystem {
 
     applyDamage(targetType, damage) {
         const target = targetType === 'enemy' ? gameState.enemy : gameState.player;
+        const attackerType = targetType === 'enemy' ? 'player' : 'enemy';
 
         // Visual: Trigger Hit Reaction (Shake + Flash)
         const panelSelector = targetType === 'enemy' ? '.enemy-panel' : '.player-panel';
@@ -423,15 +505,59 @@ export class CombatSystem {
         }
 
         let remainingDamage = damage;
+        let absorbed = 0;
 
         if (target.shield > 0) {
             if (target.shield >= remainingDamage) {
                 target.shield -= remainingDamage;
+                absorbed = remainingDamage;
                 remainingDamage = 0;
             } else {
+                absorbed = target.shield;
                 remainingDamage -= target.shield;
                 target.shield = 0;
             }
+
+            if (absorbed > 0) {
+                bus.emit('HEAL_APPLIED', {
+                    target: targetType,
+                    amount: absorbed,
+                    sourceType: 'shield',
+                    sourceItem: { name: 'Shield Absorb' }
+                });
+            }
+        }
+
+        // Global Buff: Reflect
+        // If player has reflect buff and absorbs damage with shield, reflect 50% of TAKEN damage
+        // Wait, "Reflect 50% of damage". Usually implies reflected damage is dealt to attacker.
+        // Let's reflect 50% of damage that hit the shield (absorbed) or just 50% of incoming?
+        // "Shield always reflect 50% of damage" -> When shield takes damage.
+        if (targetType === 'player' && globalBuffSystem.hasBuff('SHIELD_REFLECT_50') && absorbed > 0) {
+            const reflectAmount = Math.ceil(absorbed * 0.5);
+            // Recursively apply damage to attacker (enemy) - BE CAREFUL of infinite loops if enemy reflects too (enemy doesn't have buffs yet)
+            // But we call applyDamage on enemy. Enemy has no shield reflect buff. Safe.
+
+            // We need to defer this slightly or just apply it directly
+            // Direct application might trigger events while current processing? Should be fine.
+            // console.log(`Reflecting ${reflectAmount} damage`);
+            this.applyDamage('enemy', reflectAmount);
+
+            bus.emit('DAMAGE_DEALT', {
+                target: 'enemy',
+                damage: reflectAmount,
+                isCrit: false,
+                critType: "",
+                sourceItem: null,
+                sourceType: 'reflect'
+            });
+
+            bus.emit('SHOW_FLOATING_TEXT', {
+                target: 'enemy',
+                damage: reflectAmount,
+                isCrit: false,
+                sourceType: 'reflect'
+            });
         }
 
         gameState.updateHp(targetType, target.hp - remainingDamage);
@@ -444,7 +570,7 @@ export class CombatSystem {
     }
 
     checkDefeat(targetType) {
-        if (gameState.phase !== PHASES.COMBAT) return;
+        if (!this.isFighting || gameState.phase !== PHASES.COMBAT) return;
 
         const currentHp = targetType === 'enemy' ? gameState.enemy.hp : gameState.player.hp;
         if (currentHp <= 0) {

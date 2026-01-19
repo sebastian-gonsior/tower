@@ -1,6 +1,7 @@
 import { gameState, PHASES, GAME_CONFIG } from '../state/GameState.js';
 import { bus } from '../utils/EventBus.js';
 import { BuffSystem } from '../systems/BuffSystem.js';
+import { globalBuffSystem } from '../systems/GlobalBuffSystem.js';
 
 export class UIManager {
     constructor() {
@@ -9,6 +10,16 @@ export class UIManager {
             screenWelcome: document.getElementById('screen-welcome'),
             screenShop: document.getElementById('screen-shop'),
             screenCombat: document.getElementById('screen-combat'),
+            screenRewards: document.getElementById('screen-rewards'),
+
+            // Rewards UI
+            rewardChoices: document.getElementById('reward-choices'),
+            rewardLives: document.getElementById('reward-lives'),
+            rewardGold: document.getElementById('reward-gold'),
+            rewardIncome: document.getElementById('reward-income'),
+
+            // HUD
+            combatTimer: document.getElementById('combat-timer'),
 
             // Welcome Screen Elements
             charName: document.getElementById('char-name'),
@@ -32,6 +43,13 @@ export class UIManager {
             startFightBtn: document.getElementById('start-fight-btn'),
             finishShoppingBtn: document.getElementById('finish-shopping-btn'),
             backToShopBtn: document.getElementById('back-to-shop-btn'),
+            surrenderBtn: document.getElementById('surrender-btn'),
+
+            // Damage Meter
+            playerMeter: document.getElementById('player-meter'),
+            enemyMeter: document.getElementById('enemy-meter'),
+            playerDps: document.getElementById('player-dps'),
+            enemyDps: document.getElementById('enemy-dps'),
 
             levelDisplay: document.getElementById('level-display'),
             goldDisplay: document.getElementById('gold-display'),
@@ -57,6 +75,7 @@ export class UIManager {
 
             // Buff containers
             playerBuffs: document.getElementById('player-buffs'),
+            playerBlessings: document.getElementById('player-blessings'),
             enemyBuffs: document.getElementById('enemy-buffs'),
 
             // Sprites
@@ -78,59 +97,52 @@ export class UIManager {
 
     init() {
         this.generateSlots();
-        this.setupGlobalListeners();
+        // Initial Render
         this.setupEventBusListeners();
+        this.setupEventListeners();
+        this.renderSlots();
         this.render();
     }
 
-    setupGlobalListeners() {
+    setupEventListeners() {
+        // Global Listeners
         if (this.elements.finishShoppingBtn) {
             this.elements.finishShoppingBtn.onclick = () => gameState.finishShopping();
         }
-
-        // Reroll shop for 5 gold
         if (this.elements.rerollShopBtn) {
             this.elements.rerollShopBtn.onclick = () => gameState.rerollShop();
         }
-
-        // Boss Intro -> Equip Phase (Fight)
         if (this.elements.proceedToEquipBtn) {
             this.elements.proceedToEquipBtn.onclick = () => gameState.startEquipPhase();
         }
-
         if (this.elements.startFightBtn) {
             this.elements.startFightBtn.onclick = () => bus.emit('UI_REQUEST_START_FIGHT');
         }
-
         if (this.elements.backToShopBtn) {
-            this.elements.backToShopBtn.onclick = () => {
-                // Return to shop
-                gameState.setPhase(PHASES.SHOPPING);
-            };
+            this.elements.backToShopBtn.onclick = () => gameState.setPhase(PHASES.SHOPPING);
+        }
+        if (this.elements.surrenderBtn) {
+            this.elements.surrenderBtn.onclick = () => bus.emit('UI_REQUEST_SURRENDER');
         }
 
-        // Add Alt key listener for tooltip preview
+        // Alt key listener for tooltip preview
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Alt') {
-                // console.log('Alt key pressed');
-                e.preventDefault(); // Prevent menu focus
+                e.preventDefault();
                 this.isAltPressed = true;
                 if (this.elements.itemTooltip && !this.elements.itemTooltip.classList.contains('hidden') && this.currentTooltipArgs) {
-                    // console.log('Refreshing tooltip for preview...');
                     this.showTooltip(...this.currentTooltipArgs);
                 }
             }
         });
         document.addEventListener('keyup', (e) => {
             if (e.key === 'Alt') {
-                // console.log('Alt key released');
                 this.isAltPressed = false;
                 if (this.elements.itemTooltip && !this.elements.itemTooltip.classList.contains('hidden') && this.currentTooltipArgs) {
                     this.showTooltip(...this.currentTooltipArgs);
                 }
             }
         });
-
         // Add A cheat listeners
         document.addEventListener('keydown', (e) => {
             const key = e.key.toLowerCase();
@@ -152,6 +164,34 @@ export class UIManager {
         window.addEventListener('blur', () => {
             this.pressedKeys.clear();
         });
+
+        // Meter Tabs
+        document.querySelectorAll('.meter-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                const target = e.target.dataset.target; // 'player' or 'enemy'
+                const mode = e.target.dataset.mode;     // 'damage' or 'healing'
+
+                this.setMeterMode(target, mode);
+            });
+        });
+    }
+
+    setMeterMode(target, mode) {
+        if (!this.meterModes) this.meterModes = { player: 'damage', enemy: 'damage' };
+        this.meterModes[target] = mode;
+
+        // Update Tab Active State
+        document.querySelectorAll(`.meter-tab[data-target="${target}"]`).forEach(t => {
+            t.classList.toggle('active', t.dataset.mode === mode);
+        });
+
+        // Trigger re-render if we have latest data? 
+        // We don't store latest meter data in UIManager, so we wait for next update or request it?
+        // Meter updates frequently (every frame/action), so it should update soon.
+        // But to be responsive, we could store lastMeterData.
+        if (this.lastMeterData) {
+            this.renderMeters(this.lastMeterData);
+        }
     }
 
     isCheatActive() {
@@ -176,12 +216,40 @@ export class UIManager {
         bus.on('FIGHT_DEFEAT', () => {
             this.showNotification("DEFEAT!", "red");
         });
+        bus.on('METER_UPDATE', (data) => this.renderMeters(data));
+        bus.on('COMBAT_TIMER_UPDATE', (seconds) => {
+            if (this.elements.combatTimer) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                this.elements.combatTimer.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+                // Visual urgency
+                if (seconds <= 30) {
+                    this.elements.combatTimer.classList.add('timer-low');
+                } else {
+                    this.elements.combatTimer.classList.remove('timer-low');
+                }
+            }
+        });
     }
 
     handlePhaseChange(phase) {
         if (phase === PHASES.SHOPPING) {
             this.showScreen('screen-shop');
             this.updateShopUI();
+        } else if (phase === PHASES.REWARDS) {
+            this.showScreen('screen-rewards');
+            this.renderRewards();
+            this.updateStats();
+
+            // Title is always Victory now as we only show this screen on win
+            const titleEl = document.querySelector('.victory-title');
+            const subtitleEl = document.querySelector('.victory-subtitle');
+            if (titleEl && subtitleEl) {
+                titleEl.innerText = "VICTORY!";
+                titleEl.style.color = "#ffd700"; // Gold
+                subtitleEl.innerText = "The Boss has been slain.";
+            }
         } else if (phase === PHASES.COMBAT || phase === PHASES.EQUIP || phase === PHASES.BOSS_INTRO) {
             this.showScreen('screen-combat');
 
@@ -205,11 +273,18 @@ export class UIManager {
             if (this.elements.backToShopBtn) {
                 this.elements.backToShopBtn.classList.toggle('hidden', isFighting);
             }
+            if (this.elements.combatTimer) {
+                this.elements.combatTimer.classList.toggle('hidden', !isFighting);
+            }
+            if (this.elements.surrenderBtn) {
+                this.elements.surrenderBtn.classList.toggle('hidden', !isFighting);
+            }
         }
 
         // Full render to update names, sprites, health bars, etc.
         this.render();
     }
+
 
     showScreen(screenId) {
         document.querySelectorAll('.screen').forEach(el => el.classList.add('hidden'));
@@ -234,16 +309,28 @@ export class UIManager {
         if (this.elements.goldDisplay) this.elements.goldDisplay.innerText = gameState.gold;
         if (this.elements.livesDisplay) this.elements.livesDisplay.innerText = gameState.lives;
         if (this.elements.shopGoldDisplay) this.elements.shopGoldDisplay.innerText = gameState.gold;
+
+        // Reward Screen Stats
+        if (this.elements.rewardLives) this.elements.rewardLives.innerText = gameState.lives;
+        if (this.elements.rewardGold) this.elements.rewardGold.innerText = gameState.gold;
+        if (this.elements.rewardIncome) {
+            const baseIncome = 100;
+            const buffIncome = globalBuffSystem.hasBuff('INCOME_25') ? 25 : 0;
+            this.elements.rewardIncome.innerText = `+${baseIncome + buffIncome}`;
+        }
     }
 
     updatePlayerName() {
         if (this.elements.playerNameDisplay) {
+            // Log what we try to set
+            console.log(`[DEBUG] UIManager updating player name to: ${gameState.playerName}`);
             this.elements.playerNameDisplay.innerText = gameState.playerName || 'Hero';
         }
     }
 
     updateEnemyName() {
         if (this.elements.enemyNameDisplay) {
+            console.log(`[DEBUG] UIManager updating enemy name to: ${gameState.enemy.name}`);
             this.elements.enemyNameDisplay.innerText = gameState.enemy.name || 'Enemy';
         }
     }
@@ -544,7 +631,9 @@ export class UIManager {
         let colorClass = '';
         let sideClass = 'damage'; // Default to damage side
 
-        const val = amount || damage;
+        const val = amount || damage || 0;
+        if (val === 0) return;
+
         if (type === 'heal' || amount !== undefined || (isCrit && critType === 'gold')) {
             text = (type === 'heal' || amount !== undefined) ? `+${val}` : `${val}`;
             colorClass = (isCrit && critType === 'gold') ? 'gold-text' : 'heal-text';
@@ -568,6 +657,9 @@ export class UIManager {
 
         if (sourceType === 'debuff') {
             colorClass = `debuff-text-${debuffType}`;
+        } else if (sourceType === 'reflect') {
+            colorClass = 'reflect-text';
+            text = `🌵 ${val}`;
         }
 
         // Find position
@@ -692,6 +784,27 @@ export class UIManager {
             container.innerHTML = '';
             const buffs = BuffSystem.calculateBuffs(slots);
 
+            // Apply Global Buffs (Blessings) to Player Stats for Display
+            if (container === this.elements.playerBuffs) {
+                if (globalBuffSystem.hasBuff('SPEED_PCT_10')) buffs.speedBonus += 0.10;
+                if (globalBuffSystem.hasBuff('CRIT_PCT_10')) buffs.critChance += 0.10;
+                if (globalBuffSystem.hasBuff('CRIT_DMG_3X')) {
+                    // Base crit dmg is 2.0. If 3x, it becomes 3.0? 
+                    // Or adds +1.0? 
+                    // Combat logic sets it to 3 or 4/5/6. 
+                    // Base `buffs.critDmg` starts at 2.0.
+                    // If we want to show 3.0, we set it.
+                    buffs.critDmg = Math.max(buffs.critDmg, 3.0);
+                }
+
+                // Multihit +1 Blessing
+                if (globalBuffSystem.hasBuff('MULTIHIT_PLUS_1')) {
+                    buffs.multihitCount = (buffs.multihitCount || 0) + 1;
+                    // Ensure chance is tracked as existence
+                    buffs.multihitChance = 1.0;
+                }
+            }
+
             Object.entries(buffs).forEach(([key, value]) => {
                 if (value > 0 || (key === 'critDmg' && value > 2.0)) {
                     if (buffIcons[key]) {
@@ -708,9 +821,14 @@ export class UIManager {
                             displayValue = `${Math.round(value * 100)}%`;
                             title = `Global Crit: ${displayValue}`;
                         } else if (key === 'multihitChance') {
+                            // Logic change: Multihit is now always 100% if count > 0
                             const count = buffs.multihitCount || 0;
-                            displayValue = `${Math.round(value * 100)}% x${count}`;
-                            title = `Global Multihit: ${Math.round(value * 100)}% chance for x${count} hits`;
+                            if (count > 0) {
+                                displayValue = `x${count}`;
+                                title = `Multihit: Always hits ${count} times`;
+                            } else {
+                                return; // Don't show if count is 0
+                            }
                         } else if (key === 'critDmg') {
                             displayValue = `x${value.toFixed(1)}`;
                             title = `Crit Damage: ${displayValue}`;
@@ -729,6 +847,29 @@ export class UIManager {
 
         renderBuffContainer(this.elements.playerBuffs, gameState.activeSlots);
         renderBuffContainer(this.elements.enemyBuffs, gameState.enemySlots);
+
+        this.renderBlessings();
+    }
+
+    renderBlessings() {
+        const container = this.elements.playerBlessings;
+        if (!container) return;
+
+        container.innerHTML = '';
+        const allBuffs = globalBuffSystem.getAllBuffs();
+
+        allBuffs.forEach(buff => {
+            if (!globalBuffSystem.hasBuff(buff.id)) return;
+
+            const el = document.createElement('div');
+            el.className = `blessing-icon active`;
+            el.innerText = buff.icon;
+
+            // Tooltip
+            el.title = `${buff.name}\n${buff.description}`;
+
+            container.appendChild(el);
+        });
     }
 
     // --- Tooltip Logic ---
@@ -783,25 +924,144 @@ export class UIManager {
 
         // Format Stats
         let statsHtml = '';
-        if (displayItem.stats) {
-            statsHtml += '<div class="tooltip-stats">';
-            for (const [key, value] of Object.entries(displayItem.stats)) {
-                // Format key (e.g., "attackSpeed" -> "Attack Speed")
-                const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                statsHtml += `
-                    <div class="stat-row">
-                        <span class="stat-label">${label}</span>
-                        <span class="stat-value">${value}</span>
-                    </div>`;
+        statsHtml += '<div class="tooltip-stats">';
+
+        // Helper to add row
+        const addStatRow = (label, value) => {
+            statsHtml += `
+                <div class="stat-row">
+                    <span class="stat-label">${label}</span>
+                    <span class="stat-value">${value}</span>
+                </div>`;
+        };
+
+        const stats = displayItem.stats || {};
+
+        // Global bonuses (Relics + Blessings)
+        const currentEquipped = BuffSystem.calculateBuffs(gameState.activeSlots);
+
+        // Find if this specific item is currently equipped to avoid self-counting in the "Bonus" part
+        // (Though for total effective stats, we usually want to know the final value)
+        const isEquipped = gameState.activeSlots.some(s => s && s.id === displayItem.id && s.starLevel === displayItem.starLevel);
+
+        let globalAsBonus = (currentEquipped.speedBonus || 0);
+        let globalCritBonus = (currentEquipped.critChance || 0);
+        let globalCritDmgBonus = (currentEquipped.critDmg ? currentEquipped.critDmg - 2.0 : 0);
+        let globalExtraHits = (currentEquipped.multihitCount || 0) > 0 ? currentEquipped.multihitCount - 1 : 0; // multihitCount in BuffSystem is total hits? 
+        // Wait, BuffSystem.calculateBuffs sums counts. If I have Echo Stone (x2), count is 2.
+        // If I have Blessings too... let's check BuffSystem again.
+
+        // Check active blessings and ADD them to the relic totals
+        if (globalBuffSystem.hasBuff('SPEED_PCT_10')) globalAsBonus += 0.10;
+        if (globalBuffSystem.hasBuff('CRIT_PCT_10')) globalCritBonus += 0.10;
+        if (globalBuffSystem.hasBuff('CRIT_DMG_3X')) {
+            // Lethality makes base crit dmg 3.0. 
+            // If relics add more, it stacks.
+            // Current total = 2.0 (base) + globalCritDmgBonus.
+            // Lethality ensures it's at least 3.0.
+            const currentTotal = 2.0 + globalCritDmgBonus;
+            if (currentTotal < 3.0) {
+                globalCritDmgBonus = 1.0; // Boost to 3.0
             }
-            statsHtml += '</div>';
         }
+        if (globalBuffSystem.hasBuff('MULTIHIT_PLUS_1')) globalExtraHits += 1;
+
+        let globalLifesteal = 0;
+        if (globalBuffSystem.hasBuff('LIFELEECH_PCT_10')) globalLifesteal += 0.10;
+
+        // 1. Damage (Always Show)
+        addStatRow('Damage', stats.damage || 0);
+
+        // 2. Attack Speed (Always Show)
+        if (stats.cooldown) {
+            const baseAs = (1 / stats.cooldown);
+            // The globalAsBonus already includes this item's bonus if it's a relic and equipped.
+            // If it's a weapon, it doesn't give asBonus usually, just cooldown.
+            const totalAs = baseAs * (1 + globalAsBonus);
+            let display = totalAs.toFixed(2) + '/s';
+            if (globalAsBonus > 0) {
+                display += ` <span class="stat-bonus">(+${Math.round(globalAsBonus * 100)}%)</span>`;
+            }
+            addStatRow('Attack Speed', display);
+        } else {
+            const baseAsBonus = stats.attackSpeed || 0;
+            // totalAsBonus is already globalAsBonus
+            let display = `+${Math.round(globalAsBonus * 100)}%`;
+            if (globalAsBonus > baseAsBonus) {
+                display = `+${Math.round(baseAsBonus * 100)}% <span class="stat-bonus">(+${Math.round((globalAsBonus - baseAsBonus) * 100)}%)</span>`;
+            }
+            addStatRow('Attack Speed', display);
+        }
+
+        // 3. Crit Chance (Always Show)
+        const baseCrit = stats.critChance || 0;
+        let critDisplay = `+${Math.round(globalCritBonus * 100)}%`;
+        if (globalCritBonus > baseCrit) {
+            critDisplay = `+${Math.round(baseCrit * 100)}% <span class="stat-bonus">(+${Math.round((globalCritBonus - baseCrit) * 100)}%)</span>`;
+        }
+        addStatRow('Crit Chance', critDisplay);
+
+        // 4. Crit Damage (Always Show - Base x2.0)
+        const baseCritDmg = stats.critDmg || 2.0;
+        const totalCritDmg = 2.0 + globalCritDmgBonus;
+        let critDmgDisplay = `x${totalCritDmg.toFixed(1)}`;
+        if (totalCritDmg > baseCritDmg) {
+            critDmgDisplay = `x${baseCritDmg.toFixed(1)} <span class="stat-bonus">(+${(totalCritDmg - baseCritDmg).toFixed(1)})</span>`;
+        }
+        addStatRow('Crit Damage', critDmgDisplay);
+
+        // 5. Multihit (Always Show)
+        let baseHits = 1;
+        if (displayItem.effects && displayItem.effects.multihit) {
+            baseHits = displayItem.effects.multihit.count;
+        } else if (stats.multihitCount) {
+            baseHits = stats.multihitCount;
+        }
+
+        // totalHits is baseHits + globalExtraHits (excluding self if already in globalExtraHits)
+        // Wait, BuffSystem sums counts. If Echo Stone is equipped, currentEquipped.multihitCount is 2.
+        // baseHits for Echo Stone is 2.
+        // So totalHits = globalEquippedHits + blessings.
+        const totalEquippedHits = currentEquipped.multihitCount || 1;
+        const totalHits = totalEquippedHits + (globalBuffSystem.hasBuff('MULTIHIT_PLUS_1') ? 1 : 0);
+
+        let hitsDisplay = `x${totalHits} hits`;
+        if (totalHits > baseHits) {
+            hitsDisplay = `x${baseHits} <span class="stat-bonus">(+${totalHits - baseHits})</span> hits`;
+        }
+        addStatRow('Multihit', hitsDisplay);
+
+        // 6. Lifesteal (Show if base > 0 or global > 0)
+        let baseLifesteal = 0;
+        if (displayItem.effects && displayItem.effects.lifesteal) {
+            baseLifesteal = displayItem.effects.lifesteal.factor;
+        }
+        const totalLifesteal = baseLifesteal + globalLifesteal;
+        if (totalLifesteal > 0) {
+            let lsDisplay = `${Math.round(totalLifesteal * 100)}%`;
+            if (globalLifesteal > 0 && baseLifesteal > 0) {
+                lsDisplay = `${Math.round(baseLifesteal * 100)}% <span class="stat-bonus">(+${Math.round(globalLifesteal * 100)}%)</span>`;
+            } else if (globalLifesteal > 0) {
+                lsDisplay = `<span class="stat-bonus">${Math.round(globalLifesteal * 100)}%</span>`;
+            }
+            addStatRow('Lifesteal', lsDisplay);
+        }
+
+        // 7. Block (Card/Shield)
+        if (stats.block) {
+            addStatRow('Block', stats.block);
+        }
+
+        statsHtml += '</div>';
 
         // Format Effects
         let effectsHtml = '';
         if (displayItem.effects) {
             effectsHtml += '<div class="tooltip-effects">';
             for (const [type, data] of Object.entries(displayItem.effects)) {
+                // Skip multihit as it is shown in stats now
+                if (type === 'multihit') continue;
+
                 let text = '';
                 const chance = data.chance !== undefined ? data.chance : 1.0;
                 // Always show chance for consistency if requested, or at least handle it better
@@ -937,6 +1197,32 @@ export class UIManager {
         updateContainer(this.elements.stashSlots, gameState.stashSlots);
     }
 
+    renderRewards() {
+        const container = this.elements.rewardChoices;
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        const buffs = globalBuffSystem.getBuffsForLevel(gameState.level);
+
+        buffs.forEach(buff => {
+            const card = document.createElement('div');
+            card.className = 'reward-card';
+
+            card.innerHTML = `
+                <div class="reward-icon">${buff.icon}</div>
+                <div class="reward-name">${buff.name}</div>
+                <div class="reward-desc">${buff.description}</div>
+            `;
+
+            card.onclick = () => {
+                gameState.selectReward(buff.id);
+            };
+
+            container.appendChild(card);
+        });
+    }
+
     showNotification(text, color) {
         const el = document.createElement('div');
         el.className = 'notification';
@@ -970,6 +1256,89 @@ export class UIManager {
         `;
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 2500);
+    }
+
+    renderMeters(data) {
+        this.lastMeterData = data; // Store for tab switching
+        if (!this.meterModes) this.meterModes = { player: 'damage', enemy: 'damage' };
+
+        this.renderMeter(this.elements.playerMeter, this.elements.playerDps, data.player, this.meterModes.player);
+        this.renderMeter(this.elements.enemyMeter, this.elements.enemyDps, data.enemy, this.meterModes.enemy);
+    }
+
+    renderMeter(container, dpsLabel, stats, mode = 'damage') {
+        if (!container) return;
+
+        // Update Label
+        if (dpsLabel) {
+            let val = stats.dps;
+            let label = 'DPS';
+            if (mode === 'healing') { val = stats.hps; label = 'HPS'; }
+            else if (mode === 'gold') { val = 0; label = 'Gold'; /* No GPS yet */ }
+
+            dpsLabel.innerText = `${Math.round(val || 0)} ${label}`;
+        }
+
+        container.innerHTML = '';
+
+        // Filter entries based on mode
+        const filteredEntries = stats.entries.filter(entry => {
+            if (mode === 'damage') return entry.type === 'damage';
+            if (mode === 'healing') return entry.type === 'healing';
+            if (mode === 'gold') return entry.type === 'gold';
+            return false;
+        });
+
+        // Sum local total
+        let localTotal = 0;
+        filteredEntries.forEach(e => {
+            if (e.type === 'damage') localTotal += e.damage;
+            else if (e.type === 'healing') localTotal += e.healing;
+            else if (e.type === 'gold') localTotal += e.gold;
+        });
+
+        filteredEntries.sort((a, b) => {
+            const valA = (a.type === 'damage' ? a.damage : (a.type === 'healing' ? a.healing : a.gold));
+            const valB = (b.type === 'damage' ? b.damage : (b.type === 'healing' ? b.healing : b.gold));
+            return valB - valA;
+        });
+
+        filteredEntries.forEach(entry => {
+            const row = document.createElement('div');
+
+            let type = entry.type;
+            let value = 0;
+            if (type === 'damage') value = entry.damage;
+            else if (type === 'healing') value = entry.healing;
+            else if (type === 'gold') value = entry.gold;
+
+            // ... specific classes ...
+            let specificClass = '';
+            const nameLower = entry.name.toLowerCase();
+            if (nameLower.includes('poison')) specificClass = 'source-poison';
+            else if (nameLower.includes('bleed')) specificClass = 'source-bleed';
+            else if (nameLower.includes('fire') || nameLower.includes('burn')) specificClass = 'source-fire';
+            else if (nameLower.includes('ice') || nameLower.includes('frozen')) specificClass = 'source-ice';
+            else if (nameLower.includes('shadow')) specificClass = 'source-shadow';
+            else if (nameLower.includes('reflect')) specificClass = 'source-reflect';
+            else if (nameLower.includes('absorb')) specificClass = 'source-absorb'; // New for shield
+
+            row.className = `meter-row type-${type} ${specificClass}`;
+
+            // Calc pct
+            let pct = localTotal > 0 ? (value / localTotal) * 100 : 0;
+            const barWidth = Math.min(100, Math.max(0, pct));
+
+            row.innerHTML = `
+                <div class="meter-bar-fill" style="width: ${barWidth}%"></div>
+                <div class="meter-text-left">${entry.name}</div>
+                <div class="meter-text-right">${Math.round(value || 0)} ${type === 'gold' ? 'g' : ''}</div>
+            `;
+
+            row.title = `${entry.name}\nTotal: ${Math.round(value || 0)}`;
+
+            container.appendChild(row);
+        });
     }
 }
 

@@ -6,6 +6,7 @@ import { bus } from './utils/EventBus.js';
 import { dataManager } from './managers/DataManager.js';
 import { gameState } from './state/GameState.js';
 import { soundManager } from './managers/SoundManager.js';
+import { damageMeterSystem } from './systems/DamageMeterSystem.js';
 
 console.log("Initializing Game Modules...");
 
@@ -30,6 +31,10 @@ bus.on('FIGHT_VICTORY', () => {
 bus.on('FIGHT_DEFEAT', () => {
     combatSystem.endFight();
     setTimeout(() => gameState.handleLoss(), 2000);
+});
+
+bus.on('UI_REQUEST_SURRENDER', () => {
+    bus.emit('FIGHT_DEFEAT');
 });
 
 // Game Loop

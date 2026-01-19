@@ -345,6 +345,36 @@ body {
     letter-spacing: 3px;
 }
 
+.combat-timer {
+    margin-top: 10px;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    display: inline-block;
+    letter-spacing: 2px;
+}
+
+.combat-timer.timer-low {
+    color: #ff3333;
+    border-color: #ff0000;
+    animation: glow-pulse-red 1s infinite alternate;
+}
+
+@keyframes glow-pulse-red {
+    from {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    }
+
+    to {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    }
+}
+
 .hud-stat {
     font-size: 1.2em;
     background: rgba(255, 255, 255, 0.1);
@@ -554,6 +584,14 @@ body {
     margin: 0 0 10px 0;
     color: #fff;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    min-width: 50px;
+    z-index: 5;
+    position: relative;
+    opacity: 1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1215,6 +1253,14 @@ body {
     font-weight: bold;
     color: #ff6666;
     text-shadow: 1px 1px 1px #000;
+}
+
+.reflect-text {
+    color: #e040fb;
+    /* Purple */
+    text-shadow: 0 0 5px #aa00ff;
+    font-weight: bold;
+    font-size: 1.4em;
 }
 
 .debuff-count {
@@ -1889,6 +1935,12 @@ body {
     font-weight: bold;
 }
 
+.stat-bonus {
+    color: #ffd700;
+    font-size: 0.9em;
+    margin-left: 4px;
+}
+
 .effect-row {
     color: #ffb74d;
     /* Amber for effects */
@@ -1968,4 +2020,365 @@ body {
     }
 
 
+}
+
+/* --- Screen 4: Rewards --- */
+#screen-rewards {
+    background: radial-gradient(circle at center, #2e1a47 0%, #1a0b2e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.rewards-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    animation: fadeIn 1s ease-out;
+}
+
+.victory-title {
+    font-size: 5em;
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    margin: 0;
+    letter-spacing: 10px;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.victory-subtitle {
+    color: #b39ddb;
+    font-size: 1.5em;
+    margin-top: -20px;
+}
+
+.choose-blessing {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-top: 20px;
+    font-size: 1.8em;
+    border-bottom: 2px solid #5e35b1;
+    padding-bottom: 10px;
+}
+
+.reward-cards-container {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.reward-card {
+    background: linear-gradient(135deg, #4527a0 0%, #311b92 100%);
+    width: 250px;
+    height: 350px;
+    border-radius: 20px;
+    border: 3px solid #7e57c2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.reward-card:hover {
+    transform: translateY(-15px) scale(1.05);
+    border-color: #ffd700;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.4);
+}
+
+.reward-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+}
+
+.reward-card:hover::before {
+    transform: translateX(100%);
+}
+
+.reward-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.reward-name {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.reward-desc {
+    font-size: 1.1em;
+    color: #d1c4e9;
+    line-height: 1.5;
+}
+
+.rewards-footer {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px 40px;
+    border-radius: 50px;
+    border: 1px solid #5e35b1;
+}
+
+.rewards-footer .stat-item {
+    font-size: 1.5em;
+    color: #fff;
+}
+
+/* Surrender Button */
+.surrender-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #d32f2f;
+    color: #ef5350;
+    font-size: 0.8em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.surrender-btn:hover {
+    background: #d32f2f;
+    color: white;
+    box-shadow: 0 0 10px rgba(211, 47, 47, 0.5);
+}
+
+/* --- Combat Damage Meter (WoW Style) --- */
+.meter-section {
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 150px;
+    width: 100%;
+}
+
+.meter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ccc;
+    font-size: 0.9em;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.meter-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.meter-tab {
+    cursor: pointer;
+    font-size: 0.9em;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.meter-tab:hover {
+    opacity: 0.8;
+}
+
+.meter-tab.active {
+    opacity: 1;
+    color: #ffd700;
+    border-bottom: 2px solid #ffd700;
+}
+
+.combat-meter {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.meter-row {
+    position: relative;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    font-family: sans-serif;
+    font-size: 0.85em;
+    display: flex;
+    align-items: center;
+    padding: 0 5px;
+}
+
+/* Background Bar (using pseudo-element or child div) */
+.meter-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 0;
+    transition: width 0.2s;
+    opacity: 0.7;
+}
+
+.meter-row.type-damage .meter-bar-fill {
+    background-color: #d32f2f;
+    /* Red */
+}
+
+.meter-row.type-healing .meter-bar-fill {
+    background-color: #388e3c;
+    /* Green */
+}
+
+
+.meter-row.type-gold .meter-bar-fill {
+    background-color: #ffd700;
+    /* Gold */
+}
+
+/* Source specific overrides */
+.meter-row.source-poison .meter-bar-fill {
+    background-color: #4caf50;
+}
+
+/* Green */
+.meter-row.source-bleed .meter-bar-fill {
+    background-color: #8b0000;
+}
+
+/* Dark Red */
+.meter-row.source-fire .meter-bar-fill {
+    background-color: #ff5722;
+}
+
+/* Orange */
+.meter-row.source-ice .meter-bar-fill {
+    background-color: #00bcd4;
+}
+
+/* Cyan */
+.meter-row.source-shadow .meter-bar-fill {
+    background-color: #9c27b0;
+}
+
+/* Purple */
+.meter-row.source-reflect .meter-bar-fill {
+    background-color: #e040fb;
+}
+
+/* Magenta */
+.meter-row.source-absorb .meter-bar-fill {
+    background-color: #b0bec5;
+}
+
+/* Light Grey/Blue for Absorb */
+
+/* Text Content (above bar) */
+.meter-text-left {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.meter-text-right {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    font-weight: bold;
+}
+
+.meter-text-right {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    font-weight: bold;
+}
+
+.meter-row:hover .meter-bar-fill {
+    opacity: 0.9;
+}
+
+/* Buffs/Blessings above HP */
+.buffs-section {
+    min-height: 20px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Status Effects (Debuffs below HP) */
+.status-effects {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+/* --- Blessings Display --- */
+.blessings-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 5px;
+    padding: 2px;
+    min-height: 20px;
+}
+
+.blessing-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    cursor: help;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s;
+}
+
+.blessing-icon.locked {
+    filter: grayscale(100%);
+    opacity: 0.3;
+    border-color: transparent;
+}
+
+.blessing-icon.active {
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+.blessing-icon:hover {
+    transform: scale(1.1);
+    z-index: 10;
 }

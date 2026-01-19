@@ -153,7 +153,7 @@
     "rarity": "rare",
     "effects": {
       "multihit": {
-        "chance": 0.1,
+        "chance": 1,
         "count": 2
       }
     },
@@ -200,7 +200,23 @@
         "chance": 1,
         "heal": 250,
         "maxHpGain": 25
-      },
+      }
+    },
+    "price": 40
+  },
+  {
+    "id": "frozen_spear",
+    "name": "Frozen Spear",
+    "type": "weapon",
+    "subtype": "spear",
+    "set": "general",
+    "rarity": "uncommon",
+    "icon": "🪡",
+    "stats": {
+      "damage": 8,
+      "cooldown": 5
+    },
+    "effects": {
       "frozen": {
         "chance": 1,
         "duration": 5
