@@ -272,9 +272,8 @@ export class CombatSystem {
                 const leech = Math.ceil(damage * 0.10);
                 if (leech > 0) this.applyHeal('player', leech);
             }
-            if (globalBuffSystem.hasBuff('MAXHP_ON_HIT_1PCT')) {
-                const gain = Math.ceil(gameState.player.maxHp * 0.01);
-                if (gain > 0) this.applyMaxHpGain('player', gain);
+            if (globalBuffSystem.hasBuff('HP_ON_HIT_10')) {
+                this.applyMaxHpGain('player', 10);
             }
         }
 
@@ -529,8 +528,8 @@ export class CombatSystem {
         // Wait, "Reflect 50% of damage". Usually implies reflected damage is dealt to attacker.
         // Let's reflect 50% of damage that hit the shield (absorbed) or just 50% of incoming?
         // "Shield always reflect 50% of damage" -> When shield takes damage.
-        if (targetType === 'player' && globalBuffSystem.hasBuff('SHIELD_REFLECT_50') && absorbed > 0) {
-            const reflectAmount = Math.ceil(absorbed * 0.5);
+        if (targetType === 'player' && globalBuffSystem.hasBuff('SHIELD_REFLECT_10') && absorbed > 0) {
+            const reflectAmount = Math.ceil(absorbed * 0.1);
             // Recursively apply damage to attacker (enemy) - BE CAREFUL of infinite loops if enemy reflects too (enemy doesn't have buffs yet)
             // But we call applyDamage on enemy. Enemy has no shield reflect buff. Safe.
 

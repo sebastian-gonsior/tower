@@ -47,7 +47,7 @@
   {
     "id": "dagger_gold",
     "name": "Gold Dagger",
-    "icon": "🗡️",
+    "icon": "🪙",
     "type": "weapon",
     "subtype": "dagger",
     "set": "rogue",
@@ -126,6 +126,7 @@
   {
     "id": "relic_speed",
     "name": "Wind Feather",
+    "icon": "🪶",
     "type": "relic",
     "set": "general",
     "rarity": "common",
@@ -137,6 +138,7 @@
   {
     "id": "relic_crit_common",
     "name": "Lucky Clover",
+    "icon": "🍀",
     "type": "relic",
     "set": "general",
     "rarity": "common",
@@ -211,7 +213,7 @@
     "subtype": "spear",
     "set": "general",
     "rarity": "uncommon",
-    "icon": "🪡",
+    "icon": "🔱",
     "stats": {
       "damage": 8,
       "cooldown": 5

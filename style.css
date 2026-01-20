@@ -517,15 +517,13 @@ body {
 .char-info {
     display: flex;
     align-items: center;
+    flex-direction: column;
     gap: 15px;
     padding: 20px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 100%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.enemy-panel .char-info {
-    flex-direction: row-reverse;
-}
 
 .char-portrait {
     flex-shrink: 0;

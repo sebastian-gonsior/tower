@@ -386,12 +386,9 @@ class GameState {
         if (buffId === 'GOLD_INSTANT_200') {
             this.addGold(200);
         } else if (buffId === 'MAXHP_3500') {
-            // Fix MaxHP set
-            this.player.maxHp = 3500;
-            this.player.hp = 3500; // Heal to full
-            bus.emit('HP_UPDATED');
-        } else if (buffId === 'MAXHP_PCT_10') {
-            const added = Math.floor(this.player.maxHp * 0.10);
+            this.updateMaxHp('player', 3500);
+        } else if (buffId === 'MAXHP_PCT_100') {
+            const added = this.player.maxHp; // +100%
             this.updateMaxHp('player', added);
         } else if (buffId === 'HP_2000') {
             this.updateMaxHp('player', 2000);

@@ -1,0 +1,114 @@
+{
+    "1": [
+        {
+            "id": "GOLD_INSTANT_200",
+            "name": "Instant Gold",
+            "description": "+200 Gold immediately",
+            "type": "instant",
+            "icon": "💰"
+        },
+        {
+            "id": "INCOME_25",
+            "name": "Passive Income",
+            "description": "+25 Gold after every round",
+            "type": "passive",
+            "icon": "📈"
+        }
+    ],
+    "2": [
+        {
+            "id": "MAXHP_3500",
+            "name": "Vitality Boost",
+            "description": "add 3500 HP",
+            "type": "instant",
+            "icon": "❤️"
+        },
+        {
+            "id": "SHIELD_ON_START",
+            "name": "Energy Shield",
+            "description": "Start round with Shield equal to Max HP",
+            "type": "passive",
+            "icon": "🛡️"
+        }
+    ],
+    "3": [
+        {
+            "id": "MAXHP_PCT_100",
+            "name": "Hyper Growth",
+            "description": "+100% Max HP permanently",
+            "type": "passive",
+            "icon": "💪"
+        },
+        {
+            "id": "SHIELD_REFLECT_10",
+            "name": "Minor Thorns",
+            "description": "Shield reflects 10% damage taken",
+            "type": "passive",
+            "icon": "🌵"
+        }
+    ],
+    "4": [
+        {
+            "id": "CRIT_PCT_10",
+            "name": "Precision",
+            "description": "+10% Critical Strike Chance",
+            "type": "passive",
+            "icon": "🎯"
+        },
+        {
+            "id": "LIFELEECH_PCT_10",
+            "name": "Vampirism",
+            "description": "+10% Lifesteal on all damage",
+            "type": "passive",
+            "icon": "🦇"
+        }
+    ],
+    "5": [
+        {
+            "id": "SPEED_PCT_10",
+            "name": "Adrenaline",
+            "description": "+10% Attack Speed",
+            "type": "passive",
+            "icon": "⚡"
+        },
+        {
+            "id": "HP_ON_HIT_10",
+            "name": "Vitality Strike",
+            "description": "Gain 10 Max HP on every hit",
+            "type": "passive",
+            "icon": "🍖"
+        }
+    ],
+    "6": [
+        {
+            "id": "MULTIHIT_PLUS_1",
+            "name": "Echo Strike",
+            "description": "+1 Additional Hit",
+            "type": "passive",
+            "icon": "💥"
+        },
+        {
+            "id": "CRIT_DMG_3X",
+            "name": "Lethality",
+            "description": "Critical Hits deal 3x damage (up from 2x)",
+            "type": "passive",
+            "icon": "☠️"
+        }
+    ],
+    "generic": [
+        {
+            "id": "MAXHP_PCT_100",
+            "name": "Hyper Growth",
+            "description": "+100% Max HP permanently",
+            "type": "passive",
+            "icon": "💪"
+        },
+        {
+            "id": "GOLD_1000",
+            "name": "Treasure Trove",
+            "description": "+1000 Gold",
+            "type": "instant",
+            "icon": "💎"
+        }
+    ]
+}

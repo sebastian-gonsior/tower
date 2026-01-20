@@ -15,6 +15,7 @@ export class Item {
         this.name = data.name;
         this.type = data.type; // 'weapon', 'shield', 'relic'
         this.subtype = data.subtype; // 'sword', 'axe', 'dagger'
+        this.baseIcon = data.icon;
         this.set = data.set;
         this.rarity = data.rarity;
         this.price = data.price;
@@ -123,10 +124,12 @@ export class Item {
     }
 
     getIcon() {
+        if (this.baseIcon) return this.baseIcon;
         if (this.subtype === 'sword') return "⚔️";
         if (this.subtype === 'axe') return "🪓";
         if (this.subtype === 'dagger') return "🗡️";
         if (this.subtype === 'wand') return "🪄";
+        if (this.subtype === 'spear') return "🔱";
         if (this.type === 'shield') return "🛡️";
         if (this.type === 'relic') return "💍";
         return "📦";

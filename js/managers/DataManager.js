@@ -2,6 +2,7 @@ export class DataManager {
     constructor() {
         this.items = new Map();
         this.bosses = [];
+        this.blessings = {};
         this.loaded = false;
     }
 
@@ -15,9 +16,11 @@ export class DataManager {
             const bossesResp = await fetch('data/bosses.json');
             this.bosses = await bossesResp.json();
 
+            const blessingsResp = await fetch('data/blessings.json');
+            this.blessings = await blessingsResp.json();
+
             this.loaded = true;
-            this.loaded = true;
-            console.log(`Data loaded: ${this.items.size} items, ${this.bosses.length} bosses`);
+            console.log(`Data loaded: ${this.items.size} items, ${this.bosses.length} bosses, ${Object.keys(this.blessings).length} blessing levels`);
             if (this.bosses.length > 0) {
                 console.log("[DEBUG] First Loaded Boss:", this.bosses[0]);
             } else {
