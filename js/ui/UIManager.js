@@ -2,6 +2,7 @@ import { gameState, PHASES, GAME_CONFIG } from '../state/GameState.js';
 import { bus } from '../utils/EventBus.js';
 import { BuffSystem } from '../systems/BuffSystem.js';
 import { globalBuffSystem } from '../systems/GlobalBuffSystem.js';
+import { dataManager } from '../managers/DataManager.js';
 
 export class UIManager {
     constructor() {
@@ -88,7 +89,10 @@ export class UIManager {
 
             // Panels for state effects
             playerPanel: document.querySelector('.player-panel'),
-            enemyPanel: document.querySelector('.enemy-panel')
+            enemyPanel: document.querySelector('.enemy-panel'),
+
+            // New elements
+            sellZone: document.getElementById('sell-zone')
         };
 
         this.pressedKeys = new Set();
@@ -210,6 +214,15 @@ export class UIManager {
         bus.on('LEVEL_UPDATED', () => this.updateStats());
         bus.on('LIVES_UPDATED', () => this.updateStats());
         bus.on('SHOP_UPDATED', (items) => this.updateShopUI());
+        bus.on('REROLL_COST_UPDATED', (cost) => this.updateRerollButton(cost));
+        bus.on('ITEM_SOLD', (data) => {
+            this.showFloatingText({ 
+                target: 'player', 
+                amount: data.price, 
+                isCrit: true, 
+                critType: 'gold' 
+            });
+        });
         bus.on('ITEM_FUSED', (data) => this.showFusionNotification(data));
         bus.on('FIGHT_VICTORY', () => {
             this.showNotification("VICTORY!", "gold");
@@ -232,6 +245,12 @@ export class UIManager {
                 }
             }
         });
+    }
+
+    updateRerollButton(cost) {
+        if (this.elements.rerollShopBtn) {
+            this.elements.rerollShopBtn.innerHTML = `🎲 Reroll Shop (${cost}g)`;
+        }
     }
 
     handlePhaseChange(phase) {
@@ -310,6 +329,7 @@ export class UIManager {
         if (this.elements.goldDisplay) this.elements.goldDisplay.innerText = gameState.gold;
         if (this.elements.livesDisplay) this.elements.livesDisplay.innerText = gameState.lives;
         if (this.elements.shopGoldDisplay) this.elements.shopGoldDisplay.innerText = gameState.gold;
+        this.updateRerollButton(gameState.rerollCost);
 
         // Reward Screen Stats
         if (this.elements.rewardLives) this.elements.rewardLives.innerText = gameState.lives;
@@ -371,6 +391,7 @@ export class UIManager {
             if (item) {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = `item rarity-${item.rarity}`;
+                itemDiv.draggable = true;
 
                 if (item.starLevel > 0) {
                     itemDiv.classList.add(`star-${item.starLevel}`);
@@ -388,12 +409,23 @@ export class UIManager {
                     itemDiv.appendChild(starSpan);
                 }
 
-                // itemDiv.title = `${item.getDisplayName()}\n${item.description}`; // Remove native tooltip
-
                 // Tooltip Events
                 itemDiv.addEventListener('mouseenter', (e) => this.showTooltip(item, e.clientX, e.clientY));
                 itemDiv.addEventListener('mouseleave', () => this.hideTooltip());
                 itemDiv.addEventListener('mousemove', (e) => this.updateTooltipPosition(e.clientX, e.clientY));
+
+                // Drag Events
+                itemDiv.addEventListener('dragstart', (e) => {
+                    // Only allow drag during EQUIP phase or SHOPPING (for selling from stash)
+                    if (gameState.phase !== PHASES.EQUIP && gameState.phase !== PHASES.SHOPPING) {
+                        e.preventDefault();
+                        return;
+                    }
+                    const slotType = slotDiv.dataset.type;
+                    const slotIndex = slotDiv.dataset.index;
+                    e.dataTransfer.setData('text/plain', JSON.stringify({ type: slotType, index: parseInt(slotIndex) }));
+                    this.hideTooltip();
+                });
 
                 if (item.cooldown > 0) {
                     const castbarContainer = document.createElement('div');
@@ -503,7 +535,7 @@ export class UIManager {
     }
 
     renderShopInventoryPreview() {
-        const renderPreviewSlots = (container, items, maxSlots) => {
+        const renderPreviewSlots = (container, items, maxSlots, type) => {
             if (!container) return;
             container.innerHTML = '';
 
@@ -516,12 +548,22 @@ export class UIManager {
                     const itemDiv = document.createElement('div');
                     itemDiv.className = `item rarity-${item.rarity}`;
                     itemDiv.innerHTML = item.icon;
-                    // itemDiv.title = `${item.name} (${item.rarity})`;
+                    itemDiv.draggable = true;
 
                     // Tooltip Events
                     itemDiv.addEventListener('mouseenter', (e) => this.showTooltip(item, e.clientX, e.clientY));
                     itemDiv.addEventListener('mouseleave', () => this.hideTooltip());
                     itemDiv.addEventListener('mousemove', (e) => this.updateTooltipPosition(e.clientX, e.clientY));
+
+                    // Drag Events
+                    itemDiv.addEventListener('dragstart', (e) => {
+                        if (gameState.phase !== PHASES.SHOPPING) {
+                            e.preventDefault();
+                            return;
+                        }
+                        e.dataTransfer.setData('text/plain', JSON.stringify({ type: type, index: i }));
+                        this.hideTooltip();
+                    });
 
                     slot.appendChild(itemDiv);
                 }
@@ -530,8 +572,8 @@ export class UIManager {
             }
         };
 
-        renderPreviewSlots(this.elements.shopActivePreview, gameState.activeSlots, GAME_CONFIG.slotsCount);
-        renderPreviewSlots(this.elements.shopStashPreview, gameState.stashSlots, GAME_CONFIG.stashCount);
+        renderPreviewSlots(this.elements.shopActivePreview, gameState.activeSlots, GAME_CONFIG.slotsCount, 'active');
+        renderPreviewSlots(this.elements.shopStashPreview, gameState.stashSlots, GAME_CONFIG.stashCount, 'stash');
     }
 
     generateSlots() {
@@ -548,6 +590,7 @@ export class UIManager {
 
                 // Add Drag and Drop Events
                 slot.addEventListener('dragover', (e) => {
+                    if (gameState.phase !== PHASES.EQUIP) return;
                     e.preventDefault();
                     slot.classList.add('drag-over');
                 });
@@ -555,14 +598,25 @@ export class UIManager {
                     slot.classList.remove('drag-over');
                 });
                 slot.addEventListener('drop', (e) => {
+                    if (gameState.phase !== PHASES.EQUIP) return;
                     e.preventDefault();
                     slot.classList.remove('drag-over');
                     const textData = e.dataTransfer.getData('text/plain');
                     if (textData) {
-                        const fromIndex = parseInt(textData);
-                        // This part needs the source type, which we'd need to store in dataTransfer in a richer way or global state
-                        // For simplicity, we rely on click for now or add proper D&D later
-                        // Reverting to click-based movement as primary
+                        try {
+                            const data = JSON.parse(textData);
+                            if (data.type && data.index !== undefined) {
+                                // If dropping on same slot, ignore
+                                if (data.type === type && data.index === i) return;
+                                
+                                // Enemy slots are read-only
+                                if (type === 'enemy') return;
+
+                                this.moveItem(data.type, data.index, type, i);
+                            }
+                        } catch (err) {
+                            console.error("Failed to parse drop data", err);
+                        }
                     }
                 });
 
@@ -573,6 +627,34 @@ export class UIManager {
         createSlots(this.elements.activeSlots, GAME_CONFIG.slotsCount, 'active');
         createSlots(this.elements.enemySlots, GAME_CONFIG.slotsCount, 'enemy');
         createSlots(this.elements.stashSlots, GAME_CONFIG.stashCount, 'stash');
+
+        // Setup Sell Zone
+        if (this.elements.sellZone) {
+            this.elements.sellZone.addEventListener('dragover', (e) => {
+                if (gameState.phase !== PHASES.EQUIP && gameState.phase !== PHASES.SHOPPING) return;
+                e.preventDefault();
+                this.elements.sellZone.classList.add('drag-over');
+            });
+            this.elements.sellZone.addEventListener('dragleave', () => {
+                this.elements.sellZone.classList.remove('drag-over');
+            });
+            this.elements.sellZone.addEventListener('drop', (e) => {
+                if (gameState.phase !== PHASES.EQUIP && gameState.phase !== PHASES.SHOPPING) return;
+                e.preventDefault();
+                this.elements.sellZone.classList.remove('drag-over');
+                const textData = e.dataTransfer.getData('text/plain');
+                if (textData) {
+                    try {
+                        const data = JSON.parse(textData);
+                        if (data.type && data.index !== undefined) {
+                            gameState.sellItem(data.type, data.index);
+                        }
+                    } catch (err) {
+                        console.error("Failed to parse drop data", err);
+                    }
+                }
+            });
+        }
     }
 
     handleSlotClick(type, index) {
@@ -786,33 +868,9 @@ export class UIManager {
             container.innerHTML = '';
             const buffs = BuffSystem.calculateBuffs(slots);
 
-            // Apply Global Buffs (Blessings) to Player Stats for Display
-            if (container === this.elements.playerBuffs) {
-                if (globalBuffSystem.hasBuff('SPEED_PCT_10')) buffs.speedBonus += 0.10;
-                if (globalBuffSystem.hasBuff('CRIT_PCT_10')) buffs.critChance += 0.10;
-                if (globalBuffSystem.hasBuff('CRIT_DMG_3X')) {
-                    // Base crit dmg is 2.0. If 3x, it becomes 3.0? 
-                    // Or adds +1.0? 
-                    // Combat logic sets it to 3 or 4/5/6. 
-                    // Base `buffs.critDmg` starts at 2.0.
-                    // If we want to show 3.0, we set it.
-                    buffs.critDmg = Math.max(buffs.critDmg, 3.0);
-                }
-
-                if (globalBuffSystem.hasBuff('MULTIHIT_PLUS_1')) {
-                    buffs.multihitCount = (buffs.multihitCount || 0) + 1;
-                    // Ensure chance is tracked as existence
-                    buffs.multihitChance = 1.0;
-                }
-
-                // Dwarf Set Bonuses for Player Stat Display
-                if (globalBuffSystem.hasSetBonus('dwarf', 2, slots)) {
-                    buffs.critChance += 0.25;
-                }
-
-                if (container === this.elements.playerBuffs) {
-                    console.log("[DEBUG] Player Buffs Calculated:", buffs);
-                }
+            // Multihit logic for display: if we have hits, we set chance to 1.0 to show the icon
+            if (buffs.multihitCount > 0) {
+                buffs.multihitChance = 1.0;
             }
 
             Object.entries(buffs).forEach(([key, value]) => {
@@ -898,29 +956,61 @@ export class UIManager {
 
         container.innerHTML = '';
 
-        const dwarfCount = globalBuffSystem.getSetCount('dwarf');
-        if (dwarfCount < 2) return;
+        const allSets = dataManager.getAllSets();
+        const counts = globalBuffSystem.getActiveSetBonuses();
 
-        // Add set header with piece count
-        const headerEl = document.createElement('div');
-        headerEl.className = 'set-bonus-header';
-        headerEl.innerHTML = `<span class="set-icon">⚒️</span><span class="set-name">Dwarf (${dwarfCount}pc)</span>`;
-        container.appendChild(headerEl);
+        allSets.forEach(setDef => {
+            const count = counts[setDef.id] || 0;
+            if (count < 2) return;
 
-        // Set bonus definitions
-        const setDefinitions = [
-            { threshold: 2, icon: '🎯', name: 'Dwarf 2pc', description: '+25% Crit Chance' },
-            { threshold: 3, icon: '🩸', name: 'Dwarf 3pc', description: '2x Bleed Damage' },
-            { threshold: 4, icon: '💨', name: 'Dwarf 4pc', description: '+50% Bleed Tick Speed' }
-        ];
+            // Add set header with piece count
+            const headerEl = document.createElement('div');
+            headerEl.className = 'set-bonus-header';
+            
+            // Try to find a nice icon for the set header. 
+            // We can use the first item's icon or define icons in sets.json.
+            // For now, let's use a default or look at items.
+            let setIcon = "⚒️"; 
+            if (setDef.id === 'elf') setIcon = "🍃";
+            if (setDef.id === 'undead') setIcon = "💀";
+            if (setDef.id === 'celestial') setIcon = "☀️";
+            if (setDef.id === 'infernal') setIcon = "🔥";
+            if (setDef.id === 'oceanic') setIcon = "🌊";
+            if (setDef.id === 'assassin') setIcon = "🗡️";
+            if (setDef.id === 'paladin') setIcon = "🛡️";
+            if (setDef.id === 'warlock') setIcon = "🪄";
+            if (setDef.id === 'titan') setIcon = "🗿";
 
-        setDefinitions.forEach(bonus => {
-            if (dwarfCount >= bonus.threshold) {
-                const el = document.createElement('div');
-                el.className = 'set-bonus-icon active';
-                el.innerText = bonus.icon;
-                el.title = `${bonus.name}\n${bonus.description}`;
-                container.appendChild(el);
+            headerEl.innerHTML = `<span class="set-icon">${setIcon}</span><span class="set-name">${setDef.name} (${count}pc)</span>`;
+            container.appendChild(headerEl);
+
+            if (setDef.bonuses) {
+                setDef.bonuses.forEach(bonus => {
+                    if (count >= bonus.threshold) {
+                        const el = document.createElement('div');
+                        el.className = 'set-bonus-icon active';
+                        
+                        // Pick an icon based on the bonus description if possible
+                        let icon = '✨';
+                        const desc = bonus.description.toLowerCase();
+                        if (desc.includes('crit')) icon = '🎯';
+                        else if (desc.includes('bleed')) icon = '🩸';
+                        else if (desc.includes('poison')) icon = '🧪';
+                        else if (desc.includes('speed')) icon = '💨';
+                        else if (desc.includes('damage')) icon = '💥';
+                        else if (desc.includes('block')) icon = '🛡️';
+                        else if (desc.includes('holy') || desc.includes('heal')) icon = '✨';
+                        else if (desc.includes('shadow')) icon = '🌑';
+                        else if (desc.includes('curse')) icon = '🧿';
+                        else if (desc.includes('frozen')) icon = '❄️';
+                        else if (desc.includes('multihit')) icon = '⚔️';
+                        else if (desc.includes('lifesteal')) icon = '🦇';
+
+                        el.innerText = icon;
+                        el.title = `${bonus.name}\n${bonus.description}`;
+                        container.appendChild(el);
+                    }
+                });
             }
         });
     }
@@ -972,6 +1062,7 @@ export class UIManager {
                     <div class="tooltip-name">${displayItem.getDisplayName ? displayItem.getDisplayName() : displayItem.name}</div>
                     <div class="tooltip-rarity rarity-text-${displayItem.rarity}">${displayItem.rarity}</div>
                     <div class="tooltip-type">${displayItem.type} ${displayItem.subtype ? `• ${displayItem.subtype}` : ''}</div>
+                    ${displayItem.set ? `<div class="tooltip-set rarity-text-${displayItem.rarity}">Set: ${dataManager.getAllSets().find(s => s.id === displayItem.set)?.name || displayItem.set}</div>` : ''}
                 </div>
             </div>
         `;
@@ -1035,17 +1126,20 @@ export class UIManager {
 
         // 5. All Set Bonuses
         if (combined.setBonuses && combined.setBonuses.length > 0) {
-            html += '<div class="tooltip-sub-header">Set Progression</div>';
-            combined.setBonuses.forEach(sb => {
-                const statusClass = sb.active ? '' : 'inactive';
-                html += `
-                    <div class="bonus-source source-type-set ${statusClass}">
-                        <span style="flex:1">${sb.name}</span>
-                        <span style="font-weight:bold">${sb.bonus}</span>
-                        <span>${sb.active ? '✅' : '❌'}</span>
-                    </div>
-                `;
-            });
+            const relevantBonuses = combined.setBonuses.filter(sb => sb.setId === displayItem.set);
+            
+            if (relevantBonuses.length > 0) {
+                html += '<div class="tooltip-sub-header">Set Progression</div>';
+                relevantBonuses.forEach(sb => {
+                    const statusClass = sb.active ? '' : 'inactive';
+                    html += `
+                        <div class="set-bonus-line ${statusClass}">
+                            <span class="set-bonus-dot">${sb.active ? '●' : '○'}</span>
+                            <span class="set-bonus-text">${sb.name}: ${sb.description}</span>
+                        </div>
+                    `;
+                });
+            }
         }
 
         // 6. Bonus Sources (Active only)
@@ -1068,14 +1162,14 @@ export class UIManager {
             html += '<div class="tooltip-sub-header">Special Effects</div>';
             html += '<div class="tooltip-effects">';
             for (const [type, data] of Object.entries(effects)) {
-                if (type === 'multihit' || type === 'lifesteal') continue;
-
                 let effectDesc = '';
                 const chance = data.chance !== undefined ? data.chance : 1.0;
                 const chanceText = chance < 1.0 ? ` (${Math.round(chance * 100)}%)` : '';
 
                 if (type === 'goldOnHit') effectDesc = `+${data.amount} Gold on Hit${chanceText}`;
                 else if (type === 'poison') effectDesc = `Poison: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
+                else if (type === 'shadow') effectDesc = `Shadow: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
+                else if (type === 'curse') effectDesc = `Curse: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
                 else if (type === 'bleed') {
                     effectDesc = `Bleed: ${data.damagePerTick} dmg`;
                     if (data.isModified) {
@@ -1089,6 +1183,8 @@ export class UIManager {
                 else if (type === 'fire') effectDesc = `Burn: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
                 else if (type === 'frozen') effectDesc = `Freeze Target${chanceText}`;
                 else if (type === 'holy') effectDesc = `Heal ${data.heal} & +${data.maxHpGain || 0} MaxHP`;
+                else if (type === 'multihit') effectDesc = `Multihit: x${data.count}${chanceText}`;
+                else if (type === 'lifesteal') effectDesc = `Lifesteal: ${Math.round((data.factor || 0) * 100)}%${chanceText}`;
                 else effectDesc = type.charAt(0).toUpperCase() + type.slice(1);
 
                 const modClass = data.isModified ? 'modified' : '';

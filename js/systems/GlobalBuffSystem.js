@@ -20,11 +20,23 @@ export class GlobalBuffSystem {
         const targetSlots = slots || gameState.activeSlots;
         if (!targetSlots) return setCounts;
 
+        // Count unique templateIds per set
+        const setTemplates = {}; // { set: Set(templateId1, templateId2) }
+
         targetSlots.forEach(item => {
-            if (item?.set) {
-                setCounts[item.set] = (setCounts[item.set] || 0) + 1;
+            if (item?.set && item.templateId) {
+                if (!setTemplates[item.set]) {
+                    setTemplates[item.set] = new Set();
+                }
+                setTemplates[item.set].add(item.templateId);
             }
         });
+
+        // Convert sets to counts
+        for (const [setName, templates] of Object.entries(setTemplates)) {
+            setCounts[setName] = templates.size;
+        }
+
         return setCounts;
     }
 

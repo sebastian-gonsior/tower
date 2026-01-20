@@ -52,6 +52,7 @@ class GameState {
         this.gold = 100;
         this.level = 1;
         this.lives = 3;
+        this.rerollCost = 5;
 
         this.activeSlots = new Array(GAME_CONFIG.slotsCount).fill(null);
         this.enemySlots = new Array(GAME_CONFIG.slotsCount).fill(null);
@@ -110,8 +111,10 @@ class GameState {
         console.log("[DEBUG] GameState.startRound called");
         this.resetPlayerStats();
         this.configureBoss();
+        this.rerollCost = 5;
         this.generateShop();
         this.setPhase(PHASES.SHOPPING);
+        bus.emit('REROLL_COST_UPDATED', this.rerollCost);
     }
 
     finishShopping() {
@@ -236,12 +239,14 @@ class GameState {
      * Generates a new set of random items in the shop.
      */
     rerollShop() {
-        const rerollCost = 5;
-        if (this.gold >= rerollCost) {
-            this.gold -= rerollCost;
+        if (this.gold >= this.rerollCost) {
+            this.gold -= this.rerollCost;
+            const oldCost = this.rerollCost;
+            this.rerollCost += 10;
             bus.emit('GOLD_UPDATED', this.gold);
+            bus.emit('REROLL_COST_UPDATED', this.rerollCost);
             this.generateShop();
-            console.log("Shop rerolled for 5 gold");
+            console.log(`Shop rerolled for ${oldCost} gold. Next cost: ${this.rerollCost}`);
         } else {
             console.log("Not enough gold to reroll shop");
         }
@@ -274,6 +279,21 @@ class GameState {
             }
         }
         return false;
+    }
+
+    sellItem(type, index) {
+        const arr = this.getArray(type);
+        if (!arr || !arr[index]) return;
+
+        const item = arr[index];
+        const sellPrice = Math.floor(item.price * 0.8);
+        
+        this.addGold(sellPrice);
+        arr[index] = null;
+        
+        bus.emit('SLOTS_UPDATED');
+        bus.emit('ITEM_SOLD', { item, price: sellPrice });
+        console.log(`Sold ${item.name} for ${sellPrice} gold`);
     }
 
     resetCooldowns() {

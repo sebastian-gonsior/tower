@@ -101,16 +101,6 @@ export class CombatSystem {
         if (globalBuffSystem.hasBuff('SPEED_PCT_10')) playerBuffs.speedBonus += 0.10;
         if (globalBuffSystem.hasBuff('CRIT_PCT_10')) playerBuffs.critChance += 0.10;
 
-        // Dwarf Set Bonuses
-        // 2-piece: +25% crit chance
-        if (globalBuffSystem.hasSetBonus('dwarf', 2)) {
-            playerBuffs.critChance += 0.25;
-        }
-
-        // Pass global fixed buffs logic via separate mechanism or handle in logic loop?
-        // Let's handle it inside performAttack for clean separation or add a property 'extraHits'
-        // playerBuffs.extraHits = 0; if (globalBuffSystem.hasBuff('MULTIHIT_PLUS_1')) playerBuffs.extraHits += 1;
-
         this.processSlots(gameState.activeSlots, 'enemy', playerBuffs, deltaTime);
         this.processDebuffs('player', deltaTime);
 
@@ -137,6 +127,9 @@ export class CombatSystem {
                     return;
                 }
 
+                // Get combined stats which include set bonus modifications for effects
+                const combined = BuffSystem.getItemCombinedStats(item, slots);
+
                 let timeScale = 1.0;
                 const sourceDebuffs = sourceType === 'player' ? gameState.combatState.playerDebuffs : gameState.combatState.enemyDebuffs;
                 const frozenStacks = sourceDebuffs.filter(d => d.type === 'frozen').length;
@@ -152,12 +145,8 @@ export class CombatSystem {
                     timeScale = Math.max(0.05, 1.0 - frozenStacks * 0.05); // 5% slow per stack, capped at 95%
                 }
 
-                let effectiveCooldown = item.cooldown;
-                let effectiveCritChance = item.critChance + buffs.critChance;
-
-                if (item.type === 'weapon' || item.type === 'shield') {
-                    effectiveCooldown = item.cooldown / (1 + buffs.speedBonus);
-                }
+                let effectiveCooldown = combined.cooldown;
+                let effectiveCritChance = combined.critChance;
 
                 if (item.currentCooldown > 0) {
                     item.currentCooldown -= deltaTime * timeScale;
@@ -166,14 +155,14 @@ export class CombatSystem {
                 const targetHp = targetType === 'enemy' ? gameState.enemy.hp : gameState.player.hp;
 
                 if (item.currentCooldown <= 0 && targetHp > 0) {
-                    this.performAttack(item, targetType, sourceType, buffs, effectiveCritChance);
+                    this.performAttack(item, targetType, sourceType, buffs, effectiveCritChance, combined.modifiedEffects);
                     item.currentCooldown = effectiveCooldown;
                 }
             }
         });
     }
 
-    performAttack(item, targetType, sourceType, buffs, effectiveCritChance) {
+    performAttack(item, targetType, sourceType, buffs, effectiveCritChance, modifiedEffects = null) {
         // Visual: Trigger Attack Animation (Lunge)
         const isPlayer = sourceType === 'player';
         const panelSelector = isPlayer ? '.player-panel' : '.enemy-panel';
@@ -216,14 +205,16 @@ export class CombatSystem {
         // If item had hits:0 (normal), hits=1. + Global=2. Correct.
 
         for (let i = 0; i < hits; i++) {
-            this.resolveHit(item, targetType, sourceType, buffs, effectiveCritChance);
+            this.resolveHit(item, targetType, sourceType, buffs, effectiveCritChance, modifiedEffects);
         }
     }
 
-    resolveHit(item, targetType, sourceType, buffs, critChance) {
+    resolveHit(item, targetType, sourceType, buffs, critChance, modifiedEffects = null) {
         if (!this.isFighting) return;
 
-        let damage = item.damage;
+        // Use damage from combined stats if available, otherwise fallback to item damage
+        const combined = BuffSystem.getItemCombinedStats(item, sourceType === 'player' ? gameState.activeSlots : gameState.enemySlots);
+        let damage = combined.damage;
 
         let critMult = 1;
         let isCrit = false;
@@ -264,8 +255,8 @@ export class CombatSystem {
 
         if (damage > 0) this.applyDamage(targetType, damage);
 
-        if (item.effects) {
-            this.applyEffects(item.effects, targetType, sourceType, damage);
+        if (modifiedEffects || item.effects) {
+            this.applyEffects(modifiedEffects || item.effects, targetType, sourceType, damage);
         }
 
         // Global Buffs on HIT
@@ -394,13 +385,7 @@ export class CombatSystem {
                 const duration = (data.duration || defaultDurations[type]) * 1000;
                 let perStackDamage = data.damagePerTick || 0;
                 const chance = data.chance ?? 1.0;
-
-                // Dwarf 3-piece bonus: Double bleed damage
-                if (type === 'bleed' && sourceType === 'player' && globalBuffSystem.hasSetBonus('dwarf', 3)) {
-                    perStackDamage *= 2;
-                }
-
-
+                const tickInterval = data.tickInterval || 1000;
 
                 // Independent chance to apply/refresh/stack on this hit
                 if (chance > 0 && Math.random() < chance) {
@@ -417,7 +402,8 @@ export class CombatSystem {
                             tickTimer: 0,
                             id: Math.random(),
                             stacks: 1,
-                            perStackDamage: perStackDamage
+                            perStackDamage: perStackDamage,
+                            tickInterval: tickInterval
                         };
                         targetDebuffs.push(existingDebuff);
                         console.log(`[DEBUFF NEW] ${type} applied (${Math.round(chance * 100)}% chance) → x${existingDebuff.stacks} stack (${existingDebuff.damagePerTick} dmg/tick)`);
@@ -463,11 +449,7 @@ export class CombatSystem {
             if (debuff.damagePerTick > 0) {
                 debuff.tickTimer += deltaTime;
 
-                // Dwarf 4-piece bonus: Bleed ticks 50% faster (every 500ms instead of 1000ms)
-                let tickInterval = 1000;
-                if (debuff.type === 'bleed' && targetType === 'enemy' && globalBuffSystem.hasSetBonus('dwarf', 4)) {
-                    tickInterval = 500;
-                }
+                const tickInterval = debuff.tickInterval || 1000;
 
                 if (debuff.tickTimer >= tickInterval) {
                     debuff.tickTimer -= tickInterval;

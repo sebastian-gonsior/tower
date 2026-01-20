@@ -37,5 +37,341 @@
                 }
             }
         ]
+    },
+    {
+        "id": "elf",
+        "name": "Elf",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "elf_2",
+                "name": "Elf 2pc",
+                "description": "+15% Speed",
+                "stats": {
+                    "speedBonus": 0.15
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "elf_3",
+                "name": "Elf 3pc",
+                "description": "2x Poison Dmg",
+                "modifiers": {
+                    "poison": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "elf_4",
+                "name": "Elf 4pc",
+                "description": "+50% Poison Speed",
+                "modifiers": {
+                    "poison": {
+                        "tickInterval": 500,
+                        "label": "2x Speed"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "undead",
+        "name": "Undead",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "undead_2",
+                "name": "Undead 2pc",
+                "description": "+10% Lifesteal",
+                "stats": {
+                    "lifesteal": 0.10
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "undead_3",
+                "name": "Undead 3pc",
+                "description": "2x Shadow Dmg",
+                "modifiers": {
+                    "shadow": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "undead_4",
+                "name": "Undead 4pc",
+                "description": "+50% Shadow Speed",
+                "modifiers": {
+                    "shadow": {
+                        "tickInterval": 500,
+                        "label": "2x Speed"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "celestial",
+        "name": "Celestial",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "celestial_2",
+                "name": "Celestial 2pc",
+                "description": "+1 Multihit",
+                "stats": {
+                    "multihitCount": 1
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "celestial_3",
+                "name": "Celestial 3pc",
+                "description": "2x Holy Heal",
+                "modifiers": {
+                    "holy": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "celestial_4",
+                "name": "Celestial 4pc",
+                "description": "+1 Multihit (Total +2)",
+                "stats": {
+                    "multihitCount": 1
+                }
+            }
+        ]
+    },
+    {
+        "id": "infernal",
+        "name": "Infernal",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "infernal_2",
+                "name": "Infernal 2pc",
+                "description": "+20 Damage",
+                "stats": {
+                    "damage": 20
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "infernal_3",
+                "name": "Infernal 3pc",
+                "description": "2x Fire Dmg",
+                "modifiers": {
+                    "fire": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "infernal_4",
+                "name": "Infernal 4pc",
+                "description": "+50% Fire Speed",
+                "modifiers": {
+                    "fire": {
+                        "tickInterval": 500,
+                        "label": "2x Speed"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "oceanic",
+        "name": "Oceanic",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "oceanic_2",
+                "name": "Oceanic 2pc",
+                "description": "+100 Block",
+                "stats": {
+                    "block": 100
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "oceanic_3",
+                "name": "Oceanic 3pc",
+                "description": "2x Frozen Chance",
+                "modifiers": {
+                    "frozen": {
+                        "chanceMult": 2.0,
+                        "label": "x2 Chance"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "oceanic_4",
+                "name": "Oceanic 4pc",
+                "description": "+200 Block (Total +300)",
+                "stats": {
+                    "block": 200
+                }
+            }
+        ]
+    },
+    {
+        "id": "assassin",
+        "name": "Assassin",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "assassin_2",
+                "name": "Assassin 2pc",
+                "description": "+30% Crit Chance",
+                "stats": {
+                    "critChance": 0.30
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "assassin_3",
+                "name": "Assassin 3pc",
+                "description": "2x Poison Dmg",
+                "modifiers": {
+                    "poison": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "assassin_4",
+                "name": "Assassin 4pc",
+                "description": "+1.0x Crit Dmg",
+                "stats": {
+                    "critDmg": 1.0
+                }
+            }
+        ]
+    },
+    {
+        "id": "paladin",
+        "name": "Paladin",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "paladin_2",
+                "name": "Paladin 2pc",
+                "description": "+150 Block",
+                "stats": {
+                    "block": 150
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "paladin_3",
+                "name": "Paladin 3pc",
+                "description": "2x Holy Heal",
+                "modifiers": {
+                    "holy": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "paladin_4",
+                "name": "Paladin 4pc",
+                "description": "+20% Crit Chance",
+                "stats": {
+                    "critChance": 0.20
+                }
+            }
+        ]
+    },
+    {
+        "id": "warlock",
+        "name": "Warlock",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "warlock_2",
+                "name": "Warlock 2pc",
+                "description": "2x Curse Dmg",
+                "modifiers": {
+                    "curse": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "warlock_3",
+                "name": "Warlock 3pc",
+                "description": "2x Shadow Dmg",
+                "modifiers": {
+                    "shadow": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "warlock_4",
+                "name": "Warlock 4pc",
+                "description": "+50% Curse Speed",
+                "modifiers": {
+                    "curse": {
+                        "tickInterval": 500,
+                        "label": "2x Speed"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "id": "titan",
+        "name": "Titan",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "titan_2",
+                "name": "Titan 2pc",
+                "description": "+200 Block",
+                "stats": {
+                    "block": 200
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "titan_3",
+                "name": "Titan 3pc",
+                "description": "+1 Multihit",
+                "stats": {
+                    "multihitCount": 1
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "titan_4",
+                "name": "Titan 4pc",
+                "description": "+50 Damage",
+                "stats": {
+                    "damage": 50
+                }
+            }
+        ]
     }
 ]

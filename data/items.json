@@ -167,5 +167,1085 @@
       "critChance": 0.05
     },
     "price": 80
+  },
+  {
+    "id": "elven_longbow",
+    "name": "Elven Longbow",
+    "icon": "🏹",
+    "type": "weapon",
+    "set": "elf",
+    "rarity": "common",
+    "price": 20,
+    "stats": {
+      "damage": 10,
+      "cooldown": 2.0
+    },
+    "effects": {
+      "poison": {
+        "chance": 0.4,
+        "duration": 15,
+        "damagePerTick": 4
+      }
+    },
+    "subtype": "wand"
+  },
+  {
+    "id": "forest_edge",
+    "name": "Forest Edge",
+    "icon": "🍃",
+    "type": "weapon",
+    "set": "elf",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": {
+      "damage": 15,
+      "cooldown": 2.5
+    },
+    "effects": {
+      "poison": {
+        "chance": 0.3,
+        "duration": 15,
+        "damagePerTick": 2
+      }
+    },
+    "subtype": "sword"
+  },
+  {
+    "id": "natures_grasp",
+    "name": "Nature's Grasp",
+    "icon": "🌿",
+    "type": "relic",
+    "set": "elf",
+    "rarity": "rare",
+    "price": 60,
+    "stats": {
+      "attackSpeed": 0.08
+    }
+  },
+  {
+    "id": "sylvan_buckler",
+    "name": "Sylvan Buckler",
+    "icon": "🛡️",
+    "type": "shield",
+    "set": "elf",
+    "rarity": "epic",
+    "price": 80,
+    "stats": {
+      "block": 200,
+      "cooldown": 4.5
+    }
+  },
+  {
+    "id": "poison_ivy",
+    "name": "Poison Ivy",
+    "icon": "🧪",
+    "type": "relic",
+    "set": "elf",
+    "rarity": "common",
+    "price": 30,
+    "effects": {
+      "poison": {
+        "chance": 0.2,
+        "duration": 15,
+        "damagePerTick": 5
+      }
+    }
+  },
+  {
+    "id": "windrunner_boots",
+    "name": "Windrunner Boots",
+    "icon": "👟",
+    "type": "relic",
+    "set": "elf",
+    "rarity": "uncommon",
+    "price": 50,
+    "stats": {
+      "attackSpeed": 0.15
+    }
+  },
+  {
+    "id": "elder_oak_staff",
+    "name": "Elder Oak Staff",
+    "icon": "🍄",
+    "type": "weapon",
+    "set": "elf",
+    "rarity": "rare",
+    "price": 70,
+    "stats": {
+      "damage": 20,
+      "cooldown": 3.0
+    },
+    "effects": {
+      "poison": {
+        "chance": 0.6,
+        "duration": 15,
+        "damagePerTick": 8
+      }
+    },
+    "subtype": "wand"
+  },
+  {
+    "id": "pixie_dust",
+    "name": "Pixie Dust",
+    "icon": "🌸",
+    "type": "relic",
+    "set": "elf",
+    "rarity": "epic",
+    "price": 90,
+    "stats": {
+      "critChance": 0.05
+    }
+  },
+  {
+    "id": "moonlight_cloak",
+    "name": "Moonlight Cloak",
+    "icon": "🧣",
+    "type": "relic",
+    "set": "elf",
+    "rarity": "common",
+    "price": 40,
+    "stats": {
+      "block": 100
+    }
+  },
+  {
+    "id": "emerald_ring",
+    "name": "Emerald Ring",
+    "icon": "💍",
+    "type": "relic",
+    "set": "elf",
+    "rarity": "uncommon",
+    "price": 60,
+    "stats": {
+      "attackSpeed": 0.1
+    },
+    "effects": {
+      "multihit": {
+        "chance": 0.1,
+        "count": 2
+      }
+    }
+  },
+  {
+    "id": "bone_scythe",
+    "name": "Bone Scythe",
+    "icon": "💀",
+    "type": "weapon",
+    "set": "undead",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 2.0 },
+    "effects": { "shadow": { "chance": 0.5, "duration": 10, "damagePerTick": 5 } },
+    "subtype": "axe"
+  },
+  {
+    "id": "soul_eater",
+    "name": "Soul Eater",
+    "icon": "⛓️",
+    "type": "weapon",
+    "set": "undead",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 15, "cooldown": 2.5 },
+    "effects": { "shadow": { "chance": 0.4, "duration": 10, "damagePerTick": 3 } },
+    "subtype": "sword"
+  },
+  {
+    "id": "grave_dirt",
+    "name": "Grave Dirt",
+    "icon": "⚰️",
+    "type": "relic",
+    "set": "undead",
+    "rarity": "rare",
+    "price": 60,
+    "effects": { "shadow": { "chance": 0.2, "duration": 10, "damagePerTick": 2 } }
+  },
+  {
+    "id": "cursed_aegis",
+    "name": "Cursed Aegis",
+    "icon": "🛡️",
+    "type": "shield",
+    "set": "undead",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "block": 200, "cooldown": 4.5 }
+  },
+  {
+    "id": "vampire_fangs",
+    "name": "Vampire Fangs",
+    "icon": "🩸",
+    "type": "relic",
+    "set": "undead",
+    "rarity": "common",
+    "price": 30,
+    "effects": { "lifesteal": { "factor": 0.1 } }
+  },
+  {
+    "id": "ghostly_veil",
+    "name": "Ghostly Veil",
+    "icon": "👻",
+    "type": "relic",
+    "set": "undead",
+    "rarity": "uncommon",
+    "price": 50,
+    "stats": { "attackSpeed": 0.12 }
+  },
+  {
+    "id": "lichs_phylactery",
+    "name": "Lich's Phylactery",
+    "icon": "🏺",
+    "type": "relic",
+    "set": "undead",
+    "rarity": "rare",
+    "price": 70,
+    "effects": { "multihit": { "chance": 0.15, "count": 2 } }
+  },
+  {
+    "id": "wailing_bell",
+    "name": "Wailing Bell",
+    "icon": "🔔",
+    "type": "relic",
+    "set": "undead",
+    "rarity": "epic",
+    "price": 90,
+    "effects": { "curse": { "chance": 0.3, "duration": 20, "damagePerTick": 4 } }
+  },
+  {
+    "id": "shadow_essence",
+    "name": "Shadow Essence",
+    "icon": "🖤",
+    "type": "relic",
+    "set": "undead",
+    "rarity": "common",
+    "price": 40,
+    "effects": { "shadow": { "chance": 0.3, "duration": 10, "damagePerTick": 6 } }
+  },
+  {
+    "id": "deaths_touch",
+    "name": "Death's Touch",
+    "icon": "🎭",
+    "type": "weapon",
+    "set": "undead",
+    "rarity": "uncommon",
+    "price": 60,
+    "stats": { "damage": 20, "cooldown": 2.5 },
+    "effects": { "shadow": { "chance": 0.8, "duration": 10, "damagePerTick": 10 } },
+    "subtype": "dagger"
+  },
+  {
+    "id": "sunspear",
+    "name": "Sunspear",
+    "icon": "☀️",
+    "type": "weapon",
+    "set": "celestial",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 2.0 },
+    "effects": { "holy": { "chance": 0.5, "heal": 10, "maxHpGain": 2 } },
+    "subtype": "spear"
+  },
+  {
+    "id": "angelic_blade",
+    "name": "Angelic Blade",
+    "icon": "🌟",
+    "type": "weapon",
+    "set": "celestial",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 15, "cooldown": 2.5 },
+    "effects": { "holy": { "chance": 0.4, "heal": 8 } },
+    "subtype": "sword"
+  },
+  {
+    "id": "holy_grail",
+    "name": "Holy Grail",
+    "icon": "👼",
+    "type": "relic",
+    "set": "celestial",
+    "rarity": "rare",
+    "price": 60,
+    "effects": { "holy": { "chance": 0.2, "heal": 15 } }
+  },
+  {
+    "id": "divine_bulwark",
+    "name": "Divine Bulwark",
+    "icon": "🛡️",
+    "type": "shield",
+    "set": "celestial",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "block": 200, "cooldown": 4.5 }
+  },
+  {
+    "id": "seraphim_wings",
+    "name": "Seraphim Wings",
+    "icon": "🕊️",
+    "type": "relic",
+    "set": "celestial",
+    "rarity": "common",
+    "price": 30,
+    "stats": { "attackSpeed": 0.1 }
+  },
+  {
+    "id": "saints_tome",
+    "name": "Saint's Tome",
+    "icon": "📖",
+    "type": "relic",
+    "set": "celestial",
+    "rarity": "uncommon",
+    "price": 50,
+    "effects": { "multihit": { "chance": 0.2, "count": 2 } }
+  },
+  {
+    "id": "star_fragment",
+    "name": "Star Fragment",
+    "icon": "✨",
+    "type": "relic",
+    "set": "celestial",
+    "rarity": "rare",
+    "price": 70,
+    "stats": { "critChance": 0.1 }
+  },
+  {
+    "id": "halo_of_light",
+    "name": "Halo of Light",
+    "icon": "👑",
+    "type": "relic",
+    "set": "celestial",
+    "rarity": "epic",
+    "price": 90,
+    "effects": { "holy": { "chance": 0.3, "heal": 12, "maxHpGain": 5 } }
+  },
+  {
+    "id": "golden_censer",
+    "name": "Golden Censer",
+    "icon": "🕯️",
+    "type": "relic",
+    "set": "celestial",
+    "rarity": "common",
+    "price": 40,
+    "effects": { "holy": { "chance": 0.1, "heal": 20 } }
+  },
+  {
+    "id": "archangels_hammer",
+    "name": "Archangel's Hammer",
+    "icon": "🔨",
+    "type": "weapon",
+    "set": "celestial",
+    "rarity": "uncommon",
+    "price": 60,
+    "stats": { "damage": 20, "cooldown": 2.5 },
+    "effects": { "holy": { "chance": 0.6, "heal": 15, "maxHpGain": 10 } },
+    "subtype": "axe"
+  },
+  {
+    "id": "hellfire_greataxe",
+    "name": "Hellfire Greataxe",
+    "icon": "🔥",
+    "type": "weapon",
+    "set": "infernal",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 2.0 },
+    "effects": { "fire": { "chance": 0.6, "duration": 5, "damagePerTick": 8 } },
+    "subtype": "axe"
+  },
+  {
+    "id": "magma_saber",
+    "name": "Magma Saber",
+    "icon": "🌋",
+    "type": "weapon",
+    "set": "infernal",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 15, "cooldown": 2.5 },
+    "effects": { "fire": { "chance": 0.5, "duration": 5, "damagePerTick": 6 } },
+    "subtype": "sword"
+  },
+  {
+    "id": "blazing_heart",
+    "name": "Blazing Heart",
+    "icon": "👹",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "rare",
+    "price": 60,
+    "effects": { "fire": { "chance": 0.3, "duration": 5, "damagePerTick": 4 } }
+  },
+  {
+    "id": "molten_shield",
+    "name": "Molten Shield",
+    "icon": "🛡️",
+    "type": "shield",
+    "set": "infernal",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "block": 200, "cooldown": 4.5 }
+  },
+  {
+    "id": "phoenix_feather",
+    "name": "Phoenix Feather",
+    "icon": "☄️",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "common",
+    "price": 30,
+    "stats": { "attackSpeed": 0.15 }
+  },
+  {
+    "id": "demon_horn",
+    "name": "Demon Horn",
+    "icon": "🩸",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "uncommon",
+    "price": 50,
+    "stats": { "damage": 15 }
+  },
+  {
+    "id": "brimstone",
+    "name": "Brimstone",
+    "icon": "🧨",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "rare",
+    "price": 70,
+    "effects": { "fire": { "chance": 0.4, "duration": 5, "damagePerTick": 10 } }
+  },
+  {
+    "id": "lava_charm",
+    "name": "Lava Charm",
+    "icon": "💍",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "epic",
+    "price": 90,
+    "stats": { "critChance": 0.1 }
+  },
+  {
+    "id": "obsidian_shard",
+    "name": "Obsidian Shard",
+    "icon": "🗡️",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "common",
+    "price": 40,
+    "effects": { "multihit": { "chance": 0.1, "count": 2 } }
+  },
+  {
+    "id": "vulcans_anvil",
+    "name": "Vulcan's Anvil",
+    "icon": "🔨",
+    "type": "relic",
+    "set": "infernal",
+    "rarity": "uncommon",
+    "price": 60,
+    "stats": { "damage": 25 }
+  },
+  {
+    "id": "tidal_trident",
+    "name": "Tidal Trident",
+    "icon": "🌊",
+    "type": "weapon",
+    "set": "oceanic",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 2.0 },
+    "effects": { "frozen": { "chance": 0.3 } },
+    "subtype": "spear"
+  },
+  {
+    "id": "frostbite_dagger",
+    "name": "Frostbite Dagger",
+    "icon": "❄️",
+    "type": "weapon",
+    "set": "oceanic",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 15, "cooldown": 2.5 },
+    "effects": { "frozen": { "chance": 0.4 } },
+    "subtype": "dagger"
+  },
+  {
+    "id": "leviathan_scale",
+    "name": "Leviathan Scale",
+    "icon": "🧜",
+    "type": "relic",
+    "set": "oceanic",
+    "rarity": "rare",
+    "price": 60,
+    "stats": { "block": 50 }
+  },
+  {
+    "id": "frozen_shell",
+    "name": "Frozen Shell",
+    "icon": "🐚",
+    "type": "shield",
+    "set": "oceanic",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "block": 200, "cooldown": 4.5 }
+  },
+  {
+    "id": "coral_reef",
+    "name": "Coral Reef",
+    "icon": "⚓",
+    "type": "relic",
+    "set": "oceanic",
+    "rarity": "common",
+    "price": 30,
+    "effects": { "multihit": { "chance": 0.1, "count": 3 } }
+  },
+  {
+    "id": "pearl_of_wisdom",
+    "name": "Pearl of Wisdom",
+    "icon": "🦈",
+    "type": "relic",
+    "set": "oceanic",
+    "rarity": "uncommon",
+    "price": 50,
+    "stats": { "critChance": 0.08 }
+  },
+  {
+    "id": "arctic_wind",
+    "name": "Arctic Wind",
+    "icon": "🧊",
+    "type": "relic",
+    "set": "oceanic",
+    "rarity": "rare",
+    "price": 70,
+    "effects": { "frozen": { "chance": 0.5 } }
+  },
+  {
+    "id": "neptunes_crown",
+    "name": "Neptune's Crown",
+    "icon": "🫧",
+    "type": "relic",
+    "set": "oceanic",
+    "rarity": "epic",
+    "price": 90,
+    "stats": { "attackSpeed": 0.1 }
+  },
+  {
+    "id": "deep_sea_anchor",
+    "name": "Deep Sea Anchor",
+    "icon": "🛶",
+    "type": "weapon",
+    "set": "oceanic",
+    "rarity": "common",
+    "price": 40,
+    "stats": { "damage": 20, "cooldown": 3.0 },
+    "effects": { "frozen": { "chance": 0.6 } },
+    "subtype": "axe"
+  },
+  {
+    "id": "ice_crystal",
+    "name": "Ice Crystal",
+    "icon": "🔱",
+    "type": "relic",
+    "set": "oceanic",
+    "rarity": "uncommon",
+    "price": 60,
+    "effects": { "frozen": { "chance": 0.8 } }
+  },
+  {
+    "id": "shadow_dagger",
+    "name": "Shadow Dagger",
+    "icon": "🗡️",
+    "type": "weapon",
+    "set": "assassin",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 1.5 },
+    "effects": { "critChance": 0.2, "poison": { "chance": 0.2, "duration": 15, "damagePerTick": 3 } },
+    "subtype": "dagger"
+  },
+  {
+    "id": "hidden_blade",
+    "name": "Hidden Blade",
+    "icon": "🌑",
+    "type": "weapon",
+    "set": "assassin",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 15, "cooldown": 1.2 },
+    "effects": { "critChance": 0.15 },
+    "subtype": "dagger"
+  },
+  {
+    "id": "assassins_hood",
+    "name": "Assassin's Hood",
+    "icon": "🧥",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "rare",
+    "price": 60,
+    "stats": { "critChance": 0.1 }
+  },
+  {
+    "id": "smoke_bomb",
+    "name": "Smoke Bomb",
+    "icon": "👣",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "attackSpeed": 0.2 }
+  },
+  {
+    "id": "vipers_fang",
+    "name": "Viper's Fang",
+    "icon": "🐍",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "common",
+    "price": 30,
+    "effects": { "poison": { "chance": 0.4, "duration": 15, "damagePerTick": 5 } }
+  },
+  {
+    "id": "silent_boots",
+    "name": "Silent Boots",
+    "icon": "🦶",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "uncommon",
+    "price": 50,
+    "effects": { "multihit": { "chance": 0.2, "count": 2 } }
+  },
+  {
+    "id": "dark_cloak",
+    "name": "Dark Cloak",
+    "icon": "🧥",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "rare",
+    "price": 70,
+    "stats": { "block": 60 }
+  },
+  {
+    "id": "poisoned_dart",
+    "name": "Poisoned Dart",
+    "icon": "🎯",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "epic",
+    "price": 90,
+    "effects": { "poison": { "chance": 0.5, "duration": 15, "damagePerTick": 8 } }
+  },
+  {
+    "id": "masters_mark",
+    "name": "Master's Mark",
+    "icon": "👁️",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "common",
+    "price": 40,
+    "stats": { "critChance": 0.15 }
+  },
+  {
+    "id": "black_lotus",
+    "name": "Black Lotus",
+    "icon": "🃏",
+    "type": "relic",
+    "set": "assassin",
+    "rarity": "uncommon",
+    "price": 60,
+    "stats": { "damage": 30 }
+  },
+  {
+    "id": "justice_sword",
+    "name": "Justice Sword",
+    "icon": "⚔️",
+    "type": "weapon",
+    "set": "paladin",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 2.0 },
+    "effects": { "holy": { "chance": 0.3, "heal": 5 } },
+    "subtype": "sword"
+  },
+  {
+    "id": "valor_shield",
+    "name": "Valor Shield",
+    "icon": "🛡️",
+    "type": "shield",
+    "set": "paladin",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "block": 100, "cooldown": 3.5 }
+  },
+  {
+    "id": "holy_avenger",
+    "name": "Holy Avenger",
+    "icon": "⚖️",
+    "type": "weapon",
+    "set": "paladin",
+    "rarity": "rare",
+    "price": 60,
+    "stats": { "damage": 20, "cooldown": 3.0 },
+    "effects": { "holy": { "chance": 0.5, "heal": 15 } },
+    "subtype": "sword"
+  },
+  {
+    "id": "knights_banner",
+    "name": "Knight's Banner",
+    "icon": "⛪",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "attackSpeed": 0.1 }
+  },
+  {
+    "id": "armor_of_faith",
+    "name": "Armor of Faith",
+    "icon": "📜",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "common",
+    "price": 30,
+    "stats": { "block": 100 }
+  },
+  {
+    "id": "lion_heart",
+    "name": "Lion Heart",
+    "icon": "🦁",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "uncommon",
+    "price": 50,
+    "stats": { "damage": 10 }
+  },
+  {
+    "id": "sacred_oil",
+    "name": "Sacred Oil",
+    "icon": "🕯️",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "rare",
+    "price": 70,
+    "effects": { "holy": { "chance": 0.4, "heal": 10 } }
+  },
+  {
+    "id": "iron_will",
+    "name": "Iron Will",
+    "icon": "💎",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "epic",
+    "price": 90,
+    "stats": { "block": 200 }
+  },
+  {
+    "id": "guardians_seal",
+    "name": "Guardian's Seal",
+    "icon": "💠",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "common",
+    "price": 40,
+    "effects": { "multihit": { "chance": 0.1, "count": 2 } }
+  },
+  {
+    "id": "lights_grace",
+    "name": "Light's Grace",
+    "icon": "🎖️",
+    "type": "relic",
+    "set": "paladin",
+    "rarity": "uncommon",
+    "price": 60,
+    "effects": { "holy": { "chance": 0.5, "heal": 20 } }
+  },
+  {
+    "id": "chaos_wand",
+    "name": "Chaos Wand",
+    "icon": "🪄",
+    "type": "weapon",
+    "set": "warlock",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 10, "cooldown": 2.5 },
+    "effects": { "curse": { "chance": 0.5, "duration": 20, "damagePerTick": 5 } },
+    "subtype": "wand"
+  },
+  {
+    "id": "void_staff",
+    "name": "Void Staff",
+    "icon": "🔮",
+    "type": "weapon",
+    "set": "warlock",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 15, "cooldown": 3.0 },
+    "effects": { "curse": { "chance": 0.6, "duration": 20, "damagePerTick": 8 } },
+    "subtype": "wand"
+  },
+  {
+    "id": "eye_of_abyss",
+    "name": "Eye of Abyss",
+    "icon": "🧿",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "rare",
+    "price": 60,
+    "effects": { "shadow": { "chance": 0.3, "duration": 10, "damagePerTick": 10 } }
+  },
+  {
+    "id": "cursed_mirror",
+    "name": "Cursed Mirror",
+    "icon": "🕸️",
+    "type": "shield",
+    "set": "warlock",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "block": 200, "cooldown": 4.5 }
+  },
+  {
+    "id": "bat_wing",
+    "name": "Bat Wing",
+    "icon": "🦇",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "common",
+    "price": 30,
+    "stats": { "attackSpeed": 0.12 }
+  },
+  {
+    "id": "forbidden_scroll",
+    "name": "Forbidden Scroll",
+    "icon": "📜",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "uncommon",
+    "price": 50,
+    "effects": { "curse": { "chance": 0.4, "duration": 20, "damagePerTick": 6 } }
+  },
+  {
+    "id": "moonstone",
+    "name": "Moonstone",
+    "icon": "🌙",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "rare",
+    "price": 70,
+    "effects": { "multihit": { "chance": 0.1, "count": 3 } }
+  },
+  {
+    "id": "dark_pact",
+    "name": "Dark Pact",
+    "icon": "🧪",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "epic",
+    "price": 90,
+    "stats": { "damage": 20 }
+  },
+  {
+    "id": "owls_eye",
+    "name": "Owl's Eye",
+    "icon": "🦉",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "common",
+    "price": 40,
+    "stats": { "critChance": 0.1 }
+  },
+  {
+    "id": "witchs_brew",
+    "name": "Witch's Brew",
+    "icon": "🕯️",
+    "type": "relic",
+    "set": "warlock",
+    "rarity": "uncommon",
+    "price": 60,
+    "effects": { "curse": { "chance": 0.7, "duration": 20, "damagePerTick": 12 } }
+  },
+  {
+    "id": "titan_hammer",
+    "name": "Titan Hammer",
+    "icon": "🔨",
+    "type": "weapon",
+    "set": "titan",
+    "rarity": "common",
+    "price": 20,
+    "stats": { "damage": 15, "cooldown": 3.0 },
+    "effects": { "multihit": { "chance": 0.2, "count": 2 } },
+    "subtype": "axe"
+  },
+  {
+    "id": "earth_shaker",
+    "name": "Earth Shaker",
+    "icon": "🗿",
+    "type": "weapon",
+    "set": "titan",
+    "rarity": "uncommon",
+    "price": 40,
+    "stats": { "damage": 20, "cooldown": 3.5 },
+    "effects": { "multihit": { "chance": 0.3, "count": 2 } },
+    "subtype": "axe"
+  },
+  {
+    "id": "stone_skin",
+    "name": "Stone Skin",
+    "icon": "🧱",
+    "type": "relic",
+    "set": "titan",
+    "rarity": "rare",
+    "price": 60,
+    "stats": { "block": 150 }
+  },
+  {
+    "id": "mountain_aegis",
+    "name": "Mountain Aegis",
+    "icon": "⛰️",
+    "type": "shield",
+    "set": "titan",
+    "rarity": "epic",
+    "price": 80,
+    "stats": { "block": 300, "cooldown": 5.0 }
+  },
+  {
+    "id": "giants_belt",
+    "name": "Giant's Belt",
+    "icon": "🪐",
+    "type": "relic",
+    "set": "titan",
+    "rarity": "common",
+    "price": 30,
+    "stats": { "damage": 20 }
+  },
+  {
+    "id": "thunder_bolt",
+    "name": "Thunder Bolt",
+    "icon": "🌩️",
+    "type": "relic",
+    "set": "titan",
+    "rarity": "uncommon",
+    "price": 50,
+    "effects": { "multihit": { "chance": 0.1, "count": 5 } }
+  },
+  {
+    "id": "ancient_gear",
+    "name": "Ancient Gear",
+    "icon": "⛓️",
+    "type": "relic",
+    "set": "titan",
+    "rarity": "rare",
+    "price": 70,
+    "stats": { "attackSpeed": 0.05 }
+  },
+  {
+    "id": "dragon_scale",
+    "name": "Dragon Scale",
+    "icon": "🐲",
+    "type": "relic",
+    "set": "titan",
+    "rarity": "epic",
+    "price": 90,
+    "stats": { "block": 250 }
+  },
+  {
+    "id": "meteorite",
+    "name": "Meteorite",
+    "icon": "☄️",
+    "type": "relic",
+    "set": "titan",
+    "rarity": "common",
+    "price": 40,
+    "stats": { "critChance": 0.1 }
+  },
+  {
+    "id": "world_pillar",
+    "name": "World Pillar",
+    "icon": "🔱",
+    "type": "weapon",
+    "set": "titan",
+    "rarity": "uncommon",
+    "price": 60,
+    "stats": { "damage": 25, "cooldown": 4.0 },
+    "effects": { "multihit": { "chance": 0.5, "count": 3 } },
+    "subtype": "spear"
+  },
+  {
+    "id": "dagger_common",
+    "name": "Rusty Dagger",
+    "icon": "🗡️",
+    "type": "weapon",
+    "subtype": "dagger",
+    "rarity": "common",
+    "price": 10,
+    "stats": { "damage": 5, "cooldown": 1.0 },
+    "effects": { "poison": { "chance": 0.2, "duration": 15, "damagePerTick": 1 } }
+  },
+  {
+    "id": "sword_common",
+    "name": "Iron Sword",
+    "icon": "⚔️",
+    "type": "weapon",
+    "subtype": "sword",
+    "rarity": "common",
+    "price": 15,
+    "stats": { "damage": 10, "cooldown": 2.0 },
+    "effects": { "bleed": { "chance": 0.2, "duration": 10, "damagePerTick": 2 } }
+  },
+  {
+    "id": "shield_common",
+    "name": "Wooden Shield",
+    "icon": "🛡️",
+    "type": "shield",
+    "rarity": "common",
+    "price": 10,
+    "stats": { "block": 5, "cooldown": 5.0 }
+  },
+  {
+    "id": "axe_rare",
+    "name": "Heavy Axe",
+    "icon": "🪓",
+    "type": "weapon",
+    "subtype": "axe",
+    "rarity": "rare",
+    "price": 50,
+    "stats": { "damage": 25, "cooldown": 3.0 },
+    "effects": { "bleed": { "chance": 0.4, "duration": 10, "damagePerTick": 5 }, "critChance": 0.1 }
+  },
+  {
+    "id": "relic_speed",
+    "name": "Wind Feather",
+    "icon": "🪶",
+    "type": "relic",
+    "rarity": "common",
+    "price": 25,
+    "stats": { "attackSpeed": 0.1 }
+  },
+  {
+    "id": "relic_multihit",
+    "name": "Echo Stone",
+    "icon": "💎",
+    "type": "relic",
+    "rarity": "rare",
+    "price": 60,
+    "effects": { "multihit": { "chance": 0.1, "count": 2 } }
+  },
+  {
+    "id": "dagger_epic",
+    "name": "Shadow Fang",
+    "icon": "🗡️",
+    "type": "weapon",
+    "subtype": "dagger",
+    "rarity": "epic",
+    "price": 100,
+    "stats": { "damage": 15, "cooldown": 0.8 },
+    "effects": { "poison": { "chance": 0.5, "duration": 15, "damagePerTick": 5 }, "shadow": { "chance": 0.2, "duration": 10, "damagePerTick": 3 } }
+  },
+  {
+    "id": "wand_holy",
+    "name": "Cleric's Wand",
+    "icon": "🪄",
+    "type": "weapon",
+    "subtype": "wand",
+    "rarity": "uncommon",
+    "price": 35,
+    "stats": { "damage": 8, "cooldown": 2.5 },
+    "effects": { "holy": { "chance": 0.2, "heal": 5 } }
   }
 ]

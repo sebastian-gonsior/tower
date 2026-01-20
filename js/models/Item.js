@@ -22,7 +22,7 @@ export class Item {
 
         // Star level (0-10): each star doubles stats
         this.starLevel = Math.min(10, Math.max(0, starLevel));
-        this.statMultiplier = Math.pow(4, this.starLevel);
+        this.statMultiplier = Math.pow(2, this.starLevel);
 
         // Base stats (before star multiplier)
         this.baseStats = data.stats || {};
@@ -60,7 +60,6 @@ export class Item {
         if (scaled.damage) scaled.damage = Math.floor(scaled.damage * mult);
         if (scaled.block) scaled.block = Math.floor(scaled.block * mult);
         if (scaled.attackSpeed) scaled.attackSpeed = scaled.attackSpeed * mult;
-        if (scaled.critChance) scaled.critChance = scaled.critChance * mult;
         return scaled;
     }
 
@@ -80,10 +79,9 @@ export class Item {
 
         for (const [key, effect] of Object.entries(scaled)) {
             if (key === 'multihit') {
-                // Special scaling for multihit as requested:
-                // Chance scales multiplicatively (chance * mult)
+                // Special scaling for multihit:
                 // Count scales linearly (count + starLevel)
-                effect.chance = effect.chance * mult;
+                // Chance does NOT scale with stars
                 effect.count = effect.count + level;
                 continue; // Skip generic scaling below
             }

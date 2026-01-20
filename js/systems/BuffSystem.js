@@ -29,17 +29,22 @@ export class BuffSystem {
             critDmg: 0,
             multihitCount: 0,
             lifesteal: 0,
+            damageBonus: 0,
+            blockBonus: 0,
             setBonuses: []
         };
 
-        // 1. Aggregate stats from all items in slots (Relics, Weapons, Shields contribute globally where applicable)
+        // 1. Aggregate stats from all items in slots (Relics contribute globally)
         if (slots) {
             slots.forEach(item => {
-                if (item) {
+                if (item && item.type === 'relic') {
                     if (item.stats.attackSpeed) bonuses.speedBonus += item.stats.attackSpeed;
                     if (item.stats.critChance) bonuses.critChance += item.stats.critChance;
                     if (item.stats.critDmg) bonuses.critDmg += item.stats.critDmg;
+                    if (item.stats.damage) bonuses.damageBonus += item.stats.damage;
+                    if (item.stats.block) bonuses.blockBonus += item.stats.block;
                     if (item.effects && item.effects.lifesteal) bonuses.lifesteal += item.effects.lifesteal.factor;
+                    if (item.effects && item.effects.multihit) bonuses.multihitCount += item.effects.multihit.count;
                 }
             });
         }
@@ -64,14 +69,19 @@ export class BuffSystem {
                     // Track for UI and processing
                     bonuses.setBonuses.push({
                         ...bonus,
+                        setId: setDef.id,
                         active: isActive
                     });
 
                     // Apply stat bonuses if active
                     if (isActive && bonus.stats) {
                         for (const [stat, value] of Object.entries(bonus.stats)) {
-                            if (bonuses.hasOwnProperty(stat)) {
-                                bonuses[stat] += value;
+                            // Support mapping common names to internal names
+                            const internalStat = stat === 'damage' ? 'damageBonus' : 
+                                               stat === 'block' ? 'blockBonus' : stat;
+
+                            if (bonuses.hasOwnProperty(internalStat)) {
+                                bonuses[internalStat] += value;
                             }
                         }
                     }
@@ -88,20 +98,31 @@ export class BuffSystem {
      * @param {Array} slots 
      */
     static getItemCombinedStats(item, slots) {
-        const globals = this.calculateGlobalBonuses(slots);
+        // Exclude the item itself from globals if it's already in the slots to avoid double counting
+        const otherSlots = slots ? slots.filter(s => s && s.id !== item.id) : [];
+        const globals = this.calculateGlobalBonuses(otherSlots);
+
         const baseStats = item.stats || {};
         const baseEffects = JSON.parse(JSON.stringify(item.effects || {})); // Work on a copy
 
+        // Relics contribute their effects globally
+        let itemMultihit = 0;
+        let itemLifesteal = 0;
+        if (item.type === 'relic') {
+            if (item.effects && item.effects.multihit) itemMultihit = item.effects.multihit.count;
+            if (item.effects && item.effects.lifesteal) itemLifesteal = item.effects.lifesteal.factor;
+        }
+
         // 1. Calculate Stat Totals
         const combined = {
-            damage: baseStats.damage || 0,
-            cooldown: baseStats.cooldown || 0,
-            block: baseStats.block || 0,
+            damage: (baseStats.damage || 0) + (item.type === 'weapon' ? globals.damageBonus : 0),
+            cooldown: (baseStats.cooldown || 0) * 1000,
+            block: (baseStats.block || 0) + (item.type === 'shield' ? globals.blockBonus : 0),
             attackSpeed: (1 / (baseStats.cooldown || 1)) * (1 + globals.speedBonus),
             critChance: (baseStats.critChance || 0) + globals.critChance,
             critDmg: (baseStats.critDmg || 2.0) + globals.critDmg,
-            multihitCount: 1 + globals.multihitCount,
-            lifesteal: globals.lifesteal,
+            multihitCount: 1 + globals.multihitCount + itemMultihit,
+            lifesteal: globals.lifesteal + itemLifesteal,
             sources: [],
             setBonuses: globals.setBonuses,
             modifiedEffects: {}
@@ -125,8 +146,12 @@ export class BuffSystem {
             globals.setBonuses.forEach(sb => {
                 if (sb.active && sb.modifiers && sb.modifiers[type]) {
                     const m = sb.modifiers[type];
-                    if (m.damageMult) mod.damagePerTick *= m.damageMult;
+                    if (m.damageMult) {
+                        if (mod.damagePerTick) mod.damagePerTick *= m.damageMult;
+                        if (mod.heal) mod.heal *= m.damageMult; // Also apply to holy healing
+                    }
                     if (m.tickInterval) mod.tickInterval = m.tickInterval;
+                    if (m.chanceMult && mod.chance) mod.chance *= m.chanceMult;
 
                     mod.isModified = true;
                     // Aggregate labels
@@ -148,27 +173,26 @@ export class BuffSystem {
      * @returns {Object} Aggregated buff stats
      */
     static calculateBuffs(slots) {
+        const globals = this.calculateGlobalBonuses(slots);
+        
         let stats = {
-            speedBonus: 0,
-            critDmg: 2.0,
-            critChance: 0,
+            speedBonus: globals.speedBonus,
+            critDmg: 2.0 + globals.critDmg,
+            critChance: globals.critChance,
             multihitChance: 0,
-            multihitCount: 0
+            multihitCount: globals.multihitCount,
+            damageBonus: globals.damageBonus,
+            blockBonus: globals.blockBonus,
+            lifesteal: globals.lifesteal
         };
 
         slots.forEach(item => {
             if (item) {
-                // Global stats from both Relics and Weapons
-                if (item.type === 'relic' || item.type === 'weapon' || item.type === 'shield') {
-                    if (item.stats.attackSpeed) stats.speedBonus += item.stats.attackSpeed;
-                    if (item.stats.critChance) stats.critChance += item.stats.critChance;
-                    if (item.stats.critDmg) stats.critDmg += item.stats.critDmg;
-                }
-
                 // Effects that act as buffs
                 if (item.effects && item.effects.multihit) {
                     stats.multihitChance += item.effects.multihit.chance;
-                    stats.multihitCount += item.effects.multihit.count;
+                    // We don't add multihitCount here because it's handled differently in combat
+                    // or should it? In calculateGlobalBonuses it's already summed for relics etc.
                 }
             }
         });
