@@ -1,4 +1,5 @@
 import { dataManager } from '../managers/DataManager.js';
+import { gameState } from '../state/GameState.js';
 
 export class GlobalBuffSystem {
     constructor() {
@@ -7,6 +8,47 @@ export class GlobalBuffSystem {
 
     get buffDefinitions() {
         return dataManager.blessings || {};
+    }
+
+    /**
+     * Count equipped items per set from provided slots.
+     * @param {Array} [slots] - Optional slots array, defaults to gameState.activeSlots
+     * @returns {Object} Map of set name to count
+     */
+    getActiveSetBonuses(slots = null) {
+        const setCounts = {};
+        const targetSlots = slots || gameState.activeSlots;
+        if (!targetSlots) return setCounts;
+
+        targetSlots.forEach(item => {
+            if (item?.set) {
+                setCounts[item.set] = (setCounts[item.set] || 0) + 1;
+            }
+        });
+        return setCounts;
+    }
+
+    /**
+     * Check if a set bonus threshold is met.
+     * @param {string} setName - Name of the set
+     * @param {number} threshold - pieces required
+     * @param {Array} [slots] - Optional slots array
+     * @returns {boolean}
+     */
+    hasSetBonus(setName, threshold, slots = null) {
+        const counts = this.getActiveSetBonuses(slots);
+        return (counts[setName] || 0) >= threshold;
+    }
+
+    /**
+     * Get count of equipped items for a specific set.
+     * @param {string} setName - Name of the set
+     * @param {Array} [slots] - Optional slots array
+     * @returns {number}
+     */
+    getSetCount(setName, slots = null) {
+        const counts = this.getActiveSetBonuses(slots);
+        return counts[setName] || 0;
     }
 
     getBuffsForLevel(level) {

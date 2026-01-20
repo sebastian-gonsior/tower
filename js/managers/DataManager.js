@@ -3,6 +3,7 @@ export class DataManager {
         this.items = new Map();
         this.bosses = [];
         this.blessings = {};
+        this.sets = [];
         this.loaded = false;
     }
 
@@ -19,8 +20,11 @@ export class DataManager {
             const blessingsResp = await fetch('data/blessings.json');
             this.blessings = await blessingsResp.json();
 
+            const setsResp = await fetch('data/sets.json');
+            this.sets = await setsResp.json();
+
             this.loaded = true;
-            console.log(`Data loaded: ${this.items.size} items, ${this.bosses.length} bosses, ${Object.keys(this.blessings).length} blessing levels`);
+            console.log(`Data loaded: ${this.items.size} items, ${this.bosses.length} bosses, ${Object.keys(this.blessings).length} blessing levels, ${this.sets.length} sets`);
             if (this.bosses.length > 0) {
                 console.log("[DEBUG] First Loaded Boss:", this.bosses[0]);
             } else {
@@ -43,6 +47,10 @@ export class DataManager {
 
     getAllItems() {
         return Array.from(this.items.values());
+    }
+
+    getAllSets() {
+        return this.sets || [];
     }
 
     getItemsByRarity(rarity) {

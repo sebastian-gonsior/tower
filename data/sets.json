@@ -1,0 +1,41 @@
+[
+    {
+        "id": "dwarf",
+        "name": "Dwarf",
+        "bonuses": [
+            {
+                "threshold": 2,
+                "id": "dwarf_2",
+                "name": "Dwarf 2pc",
+                "description": "+25% Crit",
+                "stats": {
+                    "critChance": 0.25
+                }
+            },
+            {
+                "threshold": 3,
+                "id": "dwarf_3",
+                "name": "Dwarf 3pc",
+                "description": "2x Bleed Dmg",
+                "modifiers": {
+                    "bleed": {
+                        "damageMult": 2.0,
+                        "label": "x2"
+                    }
+                }
+            },
+            {
+                "threshold": 4,
+                "id": "dwarf_4",
+                "name": "Dwarf 4pc",
+                "description": "+50% Bleed Speed",
+                "modifiers": {
+                    "bleed": {
+                        "tickInterval": 500,
+                        "label": "2x Speed"
+                    }
+                }
+            }
+        ]
+    }
+]

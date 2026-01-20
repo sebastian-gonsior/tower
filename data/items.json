@@ -1,99 +1,36 @@
 [
   {
-    "id": "dagger_common",
-    "name": "Rusty Dagger",
+    "id": "ironforge_battleaxe",
+    "name": "Ironforge Battleaxe",
+    "icon": "🪓",
     "type": "weapon",
-    "subtype": "dagger",
-    "set": "rogue",
+    "subtype": "axe",
+    "set": "dwarf",
     "rarity": "common",
     "stats": {
-      "damage": 5,
-      "cooldown": 3.0
-    },
-    "effects": {
-      "poison": {
-        "chance": 0.8,
-        "duration": 15,
-        "damagePerTick": 2
-      }
-    },
-    "price": 10
-  },
-  {
-    "id": "dagger_vampire",
-    "name": "Vampire Dagger",
-    "icon": "💀",
-    "type": "weapon",
-    "subtype": "dagger",
-    "set": "rogue",
-    "rarity": "common",
-    "stats": {
-      "damage": 5,
-      "cooldown": 3.0
-    },
-    "effects": {
-      "poison": {
-        "chance": 0.8,
-        "duration": 15,
-        "damagePerTick": 2
-      },
-      "lifesteal": {
-        "chance": 1.0,
-        "factor": 0.5
-      }
-    },
-    "price": 10
-  },
-  {
-    "id": "dagger_gold",
-    "name": "Gold Dagger",
-    "icon": "🪙",
-    "type": "weapon",
-    "subtype": "dagger",
-    "set": "rogue",
-    "rarity": "common",
-    "stats": {
-      "damage": 3,
-      "cooldown": 3.0
-    },
-    "effects": {
-      "goldOnHit": {
-        "chance": 1.0,
-        "amount": 2
-      }
-    },
-    "price": 15
-  },
-  {
-    "id": "sword_common",
-    "name": "Iron Sword",
-    "type": "weapon",
-    "subtype": "sword",
-    "set": "warrior",
-    "rarity": "common",
-    "stats": {
-      "damage": 10,
+      "damage": 15,
       "cooldown": 3.0
     },
     "effects": {
       "bleed": {
-        "chance": 0.6,
+        "chance": 0.8,
         "duration": 10,
-        "damagePerTick": 2
+        "damagePerTick": 3
       }
     },
-    "price": 15
+    "price": 20
   },
   {
-    "id": "axe_rare",
-    "name": "Heavy Axe",
+    "id": "dwarven_waraxe",
+    "name": "Dwarven Waraxe",
+    "icon": "⚔️",
     "type": "weapon",
     "subtype": "axe",
-    "set": "warrior",
-    "rarity": "rare",
+    "set": "dwarf",
+    "rarity": "uncommon",
     "stats": {
-      "damage": 25,
-      "cooldown": 3.0,
+      "damage": 20,
+      "cooldown": 3.5,
       "critChance": 0.1
     },
     "effects": {
@@ -103,32 +40,83 @@
         "damagePerTick": 5
       }
     },
-    "price": 50
+    "price": 35
   },
   {
-    "id": "shield_common",
-    "name": "Wooden Shield",
-    "type": "shield",
-    "set": "general",
-    "rarity": "common",
+    "id": "runic_cleaver",
+    "name": "Runic Cleaver",
+    "icon": "🔨",
+    "type": "weapon",
+    "subtype": "axe",
+    "set": "dwarf",
+    "rarity": "rare",
     "stats": {
-      "block": 100,
-      "cooldown": 3.0
+      "damage": 25,
+      "cooldown": 4.0,
+      "critChance": 0.15
     },
     "effects": {
-      "goldOnHit": {
+      "bleed": {
         "chance": 1.0,
-        "amount": 2
+        "duration": 10,
+        "damagePerTick": 8
       }
     },
-    "price": 10
+    "price": 60
   },
   {
-    "id": "relic_speed",
-    "name": "Wind Feather",
-    "icon": "🪶",
+    "id": "stonebreaker",
+    "name": "Stonebreaker",
+    "icon": "⛏️",
+    "type": "weapon",
+    "subtype": "axe",
+    "set": "dwarf",
+    "rarity": "epic",
+    "stats": {
+      "damage": 35,
+      "cooldown": 5.0,
+      "critChance": 0.2
+    },
+    "effects": {
+      "bleed": {
+        "chance": 1.0,
+        "duration": 10,
+        "damagePerTick": 12
+      }
+    },
+    "price": 100
+  },
+  {
+    "id": "mountainguard_shield",
+    "name": "Mountainguard Shield",
+    "icon": "🛡️",
+    "type": "shield",
+    "set": "dwarf",
+    "rarity": "uncommon",
+    "stats": {
+      "block": 150,
+      "cooldown": 3.0
+    },
+    "price": 30
+  },
+  {
+    "id": "ale_mug_relic",
+    "name": "Dwarven Ale Mug",
+    "icon": "🍺",
     "type": "relic",
-    "set": "general",
+    "set": "dwarf",
+    "rarity": "common",
+    "stats": {
+      "critChance": 0.05
+    },
+    "price": 25
+  },
+  {
+    "id": "anvil_charm",
+    "name": "Anvil Charm",
+    "icon": "⚒️",
+    "type": "relic",
+    "set": "dwarf",
     "rarity": "common",
     "stats": {
       "attackSpeed": 0.1
@@ -136,94 +124,48 @@
     "price": 25
   },
   {
-    "id": "relic_crit_common",
-    "name": "Lucky Clover",
-    "icon": "🍀",
-    "type": "relic",
-    "set": "general",
+    "id": "miners_pickaxe",
+    "name": "Miner's Pickaxe",
+    "icon": "💎",
+    "type": "weapon",
+    "subtype": "axe",
+    "set": "dwarf",
     "rarity": "common",
+    "stats": {
+      "damage": 10,
+      "cooldown": 2.5
+    },
+    "effects": {
+      "goldOnHit": {
+        "chance": 1.0,
+        "amount": 3
+      }
+    },
+    "price": 30
+  },
+  {
+    "id": "forgefire_ring",
+    "name": "Forgefire Ring",
+    "icon": "💍",
+    "type": "relic",
+    "set": "dwarf",
+    "rarity": "rare",
     "stats": {
       "critChance": 0.1
     },
-    "price": 25
+    "price": 50
   },
   {
-    "id": "relic_multihit",
-    "name": "Echo Stone",
+    "id": "runemasters_tome",
+    "name": "Runemaster's Tome",
+    "icon": "📕",
     "type": "relic",
-    "set": "general",
-    "rarity": "rare",
-    "effects": {
-      "multihit": {
-        "chance": 1,
-        "count": 2
-      }
-    },
-    "price": 60
-  },
-  {
-    "id": "dagger_epic",
-    "name": "Shadow fang",
-    "type": "weapon",
-    "subtype": "dagger",
-    "set": "rogue",
+    "set": "dwarf",
     "rarity": "epic",
     "stats": {
-      "damage": 15,
-      "cooldown": 3.0
+      "attackSpeed": 0.15,
+      "critChance": 0.05
     },
-    "effects": {
-      "poison": {
-        "chance": 0.8,
-        "duration": 15,
-        "damagePerTick": 30
-      },
-      "shadow": {
-        "chance": 0.8,
-        "duration": 10,
-        "damagePerTick": 45
-      }
-    },
-    "price": 120
-  },
-  {
-    "id": "wand_holy",
-    "name": "Cleric's Wand",
-    "type": "weapon",
-    "subtype": "wand",
-    "set": "general",
-    "rarity": "uncommon",
-    "stats": {
-      "damage": 8,
-      "cooldown": 5
-    },
-    "effects": {
-      "holy": {
-        "chance": 1,
-        "heal": 250,
-        "maxHpGain": 25
-      }
-    },
-    "price": 40
-  },
-  {
-    "id": "frozen_spear",
-    "name": "Frozen Spear",
-    "type": "weapon",
-    "subtype": "spear",
-    "set": "general",
-    "rarity": "uncommon",
-    "icon": "🔱",
-    "stats": {
-      "damage": 8,
-      "cooldown": 5
-    },
-    "effects": {
-      "frozen": {
-        "chance": 1,
-        "duration": 5
-      }
-    },
-    "price": 40
+    "price": 80
   }
 ]

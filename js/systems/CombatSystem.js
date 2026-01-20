@@ -97,13 +97,15 @@ export class CombatSystem {
         playerBuffs.speedBonus += gameState.combatState.playerStackingSpeed || 0;
         playerBuffs.critChance += gameState.combatState.playerStackingCrit || 0;
 
-        // Global Stat Buffs
+        // Global Stat Buffs (Blessings)
         if (globalBuffSystem.hasBuff('SPEED_PCT_10')) playerBuffs.speedBonus += 0.10;
         if (globalBuffSystem.hasBuff('CRIT_PCT_10')) playerBuffs.critChance += 0.10;
-        // Global Stat Buffs
-        if (globalBuffSystem.hasBuff('SPEED_PCT_10')) playerBuffs.speedBonus += 0.10;
-        if (globalBuffSystem.hasBuff('CRIT_PCT_10')) playerBuffs.critChance += 0.10;
-        // Old multihit chance buf removed
+
+        // Dwarf Set Bonuses
+        // 2-piece: +25% crit chance
+        if (globalBuffSystem.hasSetBonus('dwarf', 2)) {
+            playerBuffs.critChance += 0.25;
+        }
 
         // Pass global fixed buffs logic via separate mechanism or handle in logic loop?
         // Let's handle it inside performAttack for clean separation or add a property 'extraHits'
@@ -390,8 +392,13 @@ export class CombatSystem {
             else if (['bleed', 'poison', 'fire', 'shadow', 'curse'].includes(type)) {
                 let existingDebuff = targetDebuffs.find(d => d.type === type);
                 const duration = (data.duration || defaultDurations[type]) * 1000;
-                const perStackDamage = data.damagePerTick || 0;
+                let perStackDamage = data.damagePerTick || 0;
                 const chance = data.chance ?? 1.0;
+
+                // Dwarf 3-piece bonus: Double bleed damage
+                if (type === 'bleed' && sourceType === 'player' && globalBuffSystem.hasSetBonus('dwarf', 3)) {
+                    perStackDamage *= 2;
+                }
 
 
 
@@ -455,8 +462,15 @@ export class CombatSystem {
 
             if (debuff.damagePerTick > 0) {
                 debuff.tickTimer += deltaTime;
-                if (debuff.tickTimer >= 1000) {
-                    debuff.tickTimer -= 1000;
+
+                // Dwarf 4-piece bonus: Bleed ticks 50% faster (every 500ms instead of 1000ms)
+                let tickInterval = 1000;
+                if (debuff.type === 'bleed' && targetType === 'enemy' && globalBuffSystem.hasSetBonus('dwarf', 4)) {
+                    tickInterval = 500;
+                }
+
+                if (debuff.tickTimer >= tickInterval) {
+                    debuff.tickTimer -= tickInterval;
                     this.applyDamage(targetType, debuff.damagePerTick);
 
                     // Emit damage event for UI

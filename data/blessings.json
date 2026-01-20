@@ -19,7 +19,7 @@
         {
             "id": "MAXHP_3500",
             "name": "Vitality Boost",
-            "description": "add 3500 HP",
+            "description": "Add 3500 HP",
             "type": "instant",
             "icon": "❤️"
         },
@@ -35,7 +35,7 @@
         {
             "id": "MAXHP_PCT_100",
             "name": "Hyper Growth",
-            "description": "+100% Max HP permanently",
+            "description": "Add 100% Max HP permanently",
             "type": "passive",
             "icon": "💪"
         },
@@ -51,14 +51,14 @@
         {
             "id": "CRIT_PCT_10",
             "name": "Precision",
-            "description": "+10% Critical Strike Chance",
+            "description": "Add 10% Critical Strike Chance",
             "type": "passive",
             "icon": "🎯"
         },
         {
             "id": "LIFELEECH_PCT_10",
             "name": "Vampirism",
-            "description": "+10% Lifesteal on all damage",
+            "description": "Add 10% Lifesteal on all damage",
             "type": "passive",
             "icon": "🦇"
         }
@@ -67,14 +67,14 @@
         {
             "id": "SPEED_PCT_10",
             "name": "Adrenaline",
-            "description": "+10% Attack Speed",
+            "description": "Add 10% Attack Speed",
             "type": "passive",
             "icon": "⚡"
         },
         {
             "id": "HP_ON_HIT_10",
             "name": "Vitality Strike",
-            "description": "Gain 10 Max HP on every hit",
+            "description": "Add 10 Max HP on every hit",
             "type": "passive",
             "icon": "🍖"
         }
@@ -83,7 +83,7 @@
         {
             "id": "MULTIHIT_PLUS_1",
             "name": "Echo Strike",
-            "description": "+1 Additional Hit",
+            "description": "Add 1 Additional Hit",
             "type": "passive",
             "icon": "💥"
         },
@@ -99,14 +99,14 @@
         {
             "id": "MAXHP_PCT_100",
             "name": "Hyper Growth",
-            "description": "+100% Max HP permanently",
+            "description": "Add 100% Max HP permanently",
             "type": "passive",
             "icon": "💪"
         },
         {
             "id": "GOLD_1000",
             "name": "Treasure Trove",
-            "description": "+1000 Gold",
+            "description": "Add 1000 Gold",
             "type": "instant",
             "icon": "💎"
         }

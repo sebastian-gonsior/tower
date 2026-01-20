@@ -664,6 +664,132 @@ body {
     margin-bottom: 5px;
 }
 
+/* Blessings Row - Golden Divine Theme */
+.blessings-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 5px;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(218, 165, 32, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 8px;
+    padding: 6px 10px;
+}
+
+.blessing-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #ffd700;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 6px;
+    padding-right: 8px;
+    border-right: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.blessing-header .blessing-icon-small {
+    font-size: 14px;
+}
+
+.blessing-header .blessing-name {
+    white-space: nowrap;
+}
+
+.blessings-row .blessing-icon {
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    cursor: help;
+}
+
+.blessings-row .blessing-icon.active {
+    animation: blessing-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes blessing-glow {
+    from {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+    }
+
+    to {
+        box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    }
+}
+
+/* Set Bonuses Row - Bronze Dwarfy Theme */
+.set-bonuses-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 5px;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(205, 127, 50, 0.15) 100%);
+    border: 1px solid rgba(205, 127, 50, 0.5);
+    border-radius: 8px;
+    padding: 6px 10px;
+}
+
+.set-bonus-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #cd7f32;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 6px;
+    padding-right: 8px;
+    border-right: 1px solid rgba(205, 127, 50, 0.4);
+}
+
+.set-bonus-header .set-icon {
+    font-size: 14px;
+}
+
+.set-bonus-header .set-name {
+    white-space: nowrap;
+}
+
+.set-bonus-icon {
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, #cd7f32 0%, #8b4513 100%);
+    border: 2px solid #cd7f32;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    box-shadow: 0 0 8px rgba(205, 127, 50, 0.6);
+    cursor: help;
+}
+
+.set-bonus-icon.active {
+    animation: set-bonus-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes set-bonus-glow {
+    from {
+        box-shadow: 0 0 5px rgba(205, 127, 50, 0.4);
+    }
+
+    to {
+        box-shadow: 0 0 12px rgba(205, 127, 50, 0.8);
+    }
+}
+
 /* Inventory Section */
 .inventory-section {
     padding: 15px 20px 20px;
@@ -945,7 +1071,7 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    padding-bottom: 10px;
+    padding-bottom: 0;
     /* Space for castbar below item */
     box-sizing: content-box;
 }
@@ -1016,7 +1142,7 @@ body {
 /* Castbar - horizontal bar below item showing attack progress */
 .castbar-container {
     position: absolute;
-    bottom: -8px;
+    bottom: 0;
     left: 2px;
     right: 2px;
     height: 6px;
@@ -1822,19 +1948,22 @@ body {
     }
 }
 
-/* --- Item Tooltip --- */
+/* --- Item Tooltip Redesign --- */
 .item-tooltip {
     position: absolute;
-    background: rgba(20, 20, 25, 0.98);
-    border: 2px solid #444;
-    border-radius: 10px;
-    padding: 15px;
-    width: 300px;
+    background: rgba(15, 15, 20, 0.98);
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 16px;
+    width: 320px;
     pointer-events: none;
     z-index: 10000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #eee;
     transition: opacity 0.1s;
+    overflow: hidden;
 }
 
 .item-tooltip.hidden {
@@ -1842,125 +1971,195 @@ body {
     visibility: hidden;
 }
 
-/* Tooltip Rarity Borders */
-.item-tooltip.rarity-common {
-    border-color: #9e9e9e;
-    box-shadow: 0 0 15px rgba(158, 158, 158, 0.2);
+/* Section Headers */
+.tooltip-sub-header {
+    font-size: 0.75em;
+    font-weight: 800;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 12px 0 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 2px;
 }
 
-.item-tooltip.rarity-uncommon {
-    border-color: #4caf50;
-    box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
-}
-
-.item-tooltip.rarity-rare {
-    border-color: #2196f3;
-    box-shadow: 0 0 15px rgba(33, 150, 243, 0.2);
-}
-
-.item-tooltip.rarity-epic {
-    border-color: #9c27b0;
-    box-shadow: 0 0 15px rgba(156, 39, 176, 0.2);
-}
-
-.item-tooltip.rarity-legendary {
-    border-color: #ff9800;
-    box-shadow: 0 0 15px rgba(255, 152, 0, 0.2);
-}
-
-/* Tooltip Header */
-.tooltip-header {
-    display: flex;
-    gap: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 10px;
+/* Stat Layouts */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     margin-bottom: 10px;
 }
 
+.stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-box.highlight {
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.stat-label-small {
+    font-size: 0.7em;
+    color: #888;
+    margin-bottom: 2px;
+}
+
+.stat-value-main {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Bonus Sources */
+.bonus-source {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85em;
+    margin-bottom: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.source-type-blessing {
+    background: rgba(255, 215, 0, 0.1);
+    color: #ffd700;
+    border-left: 3px solid #ffd700;
+}
+
+.source-type-set {
+    background: rgba(205, 127, 50, 0.1);
+    color: #cd7f32;
+    border-left: 3px solid #cd7f32;
+}
+
+.source-type-set.inactive {
+    background: rgba(255, 255, 255, 0.05);
+    color: #666;
+    border-left: 3px solid #333;
+}
+
+/* Crit Tiers Styling */
+.crit-tier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+    font-size: 0.85em;
+}
+
+.crit-tier-normal {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.crit-tier-super {
+    color: #ffeb3b;
+    background: rgba(255, 235, 59, 0.1);
+    border-left: 2px solid #ffeb3b;
+}
+
+.crit-tier-hyper {
+    color: #ff9800;
+    background: rgba(255, 152, 0, 0.1);
+    border-left: 2px solid #ff9800;
+    animation: hyper-glow 2s infinite;
+}
+
+@keyframes hyper-glow {
+
+    0%,
+    100% {
+        box-shadow: inset 0 0 5px rgba(255, 152, 0, 0.2);
+    }
+
+    50% {
+        box-shadow: inset 0 0 15px rgba(255, 152, 0, 0.4);
+    }
+}
+
+/* Modified Effect Styling */
+.effect-mod-label {
+    font-size: 0.8em;
+    font-style: italic;
+    color: #ffd700;
+    margin-left: 10px;
+}
+
+.effect-row.modified {
+    background: rgba(255, 215, 0, 0.05);
+    border-radius: 4px;
+    padding: 2px 6px;
+}
+
+/* General Cleanup */
+.tooltip-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
 .tooltip-icon {
-    font-size: 40px;
-    background: rgba(0, 0, 0, 0.3);
-    width: 60px;
-    height: 60px;
+    font-size: 32px;
+    width: 54px;
+    height: 54px;
+    background: rgba(255, 255, 255, 0.05);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
-}
-
-.tooltip-title {
-    flex: 1;
+    border-radius: 10px;
 }
 
 .tooltip-name {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 0 0 5px 0;
-    display: block;
+    font-size: 1.25em;
+    font-weight: 800;
+    line-height: 1.2;
 }
 
 .tooltip-rarity {
-    font-size: 0.9em;
+    font-size: 0.75em;
     text-transform: uppercase;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
 .tooltip-type {
     font-size: 0.8em;
-    color: #888;
-    margin-top: 2px;
+    color: #666;
 }
 
-/* Tooltip Body */
-.tooltip-stats,
 .tooltip-effects {
-    margin-bottom: 10px;
-}
-
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    color: #ddd;
-    font-size: 0.95em;
-    margin-bottom: 4px;
-}
-
-.stat-label {
-    color: #aaa;
-}
-
-.stat-value {
-    font-weight: bold;
-}
-
-.stat-bonus {
-    color: #ffd700;
-    font-size: 0.9em;
-    margin-left: 4px;
+    background: rgba(255, 183, 77, 0.05);
+    border-radius: 8px;
+    padding: 8px;
+    margin: 10px 0;
 }
 
 .effect-row {
     color: #ffb74d;
-    /* Amber for effects */
-    font-size: 0.9em;
-    margin-top: 5px;
-    line-height: 1.4;
+    font-size: 0.85em;
+    margin-bottom: 4px;
     display: flex;
-    gap: 5px;
-}
-
-.effect-bullet {
-    color: #ffd180;
+    gap: 6px;
 }
 
 .tooltip-price {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: right;
+    margin-top: 12px;
+    font-weight: 700;
     color: #ffd700;
-    font-weight: bold;
+    text-align: right;
+    font-size: 0.9em;
 }
+
 
 
 
@@ -2329,6 +2528,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    width: 100%;
 }
 
 /* Status Effects (Debuffs below HP) */
