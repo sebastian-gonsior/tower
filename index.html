@@ -116,6 +116,7 @@
                     <div class="hp-section">
                         <div class="hp-bar-wrapper">
                             <div class="hp-bar-bg">
+                                <div class="hp-bar-ghost" id="player-hp-ghost" style="width: 100%;"></div>
                                 <div class="hp-bar-fill player-hp-fill" id="player-hp-bar" style="width: 100%;"></div>
                             </div>
                             <span class="hp-text" id="player-hp-text">100/100</span>
@@ -174,6 +175,7 @@
                     <div class="hp-section">
                         <div class="hp-bar-wrapper">
                             <div class="hp-bar-bg">
+                                <div class="hp-bar-ghost" id="enemy-hp-ghost" style="width: 100%;"></div>
                                 <div class="hp-bar-fill enemy-hp-fill" id="enemy-hp-bar" style="width: 100%;"></div>
                             </div>
                             <span class="hp-text" id="enemy-hp-text">1000/1000</span>
@@ -253,6 +255,9 @@
     <div id="item-tooltip" class="item-tooltip hidden">
         <!-- Dynamic Content -->
     </div>
+
+    <!-- New Screen Flash Layer -->
+    <div id="screen-flash" class="screen-flash"></div>
 
     <script type="module" src="js/main.js"></script>
 </body>

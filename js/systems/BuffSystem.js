@@ -20,9 +20,10 @@ export class BuffSystem {
     /**
      * Calculate all global bonuses active for the player, including inactive set bonuses for display.
      * @param {Array} slots - Context slots for set bonuses
+     * @param {Item} excludeItem - Optional item to exclude from flat stat aggregation
      * @returns {Object} { speedBonus, critChance, critDmg, multihitBonus, lifesteal, setBonuses }
      */
-    static calculateGlobalBonuses(slots) {
+    static calculateGlobalBonuses(slots, excludeItem = null) {
         let bonuses = {
             speedBonus: 0,
             critChance: 0,
@@ -30,21 +31,52 @@ export class BuffSystem {
             multihitCount: 0,
             lifesteal: 0,
             damageBonus: 0,
-            blockBonus: 0,
-            setBonuses: []
+            shieldBonus: 0, // Flat Shield (Absorb)
+            blockChance: 0, // % Damage Reduction
+            setBonuses: [],
+            addedEffects: {} // New: Store global effects from relics
         };
 
         // 1. Aggregate stats from all items in slots (Relics contribute globally)
         if (slots) {
             slots.forEach(item => {
-                if (item && item.type === 'relic') {
-                    if (item.stats.attackSpeed) bonuses.speedBonus += item.stats.attackSpeed;
-                    if (item.stats.critChance) bonuses.critChance += item.stats.critChance;
-                    if (item.stats.critDmg) bonuses.critDmg += item.stats.critDmg;
-                    if (item.stats.damage) bonuses.damageBonus += item.stats.damage;
-                    if (item.stats.block) bonuses.blockBonus += item.stats.block;
-                    if (item.effects && item.effects.lifesteal) bonuses.lifesteal += item.effects.lifesteal.factor;
-                    if (item.effects && item.effects.multihit) bonuses.multihitCount += item.effects.multihit.count;
+                if (item && item !== excludeItem) {
+                    // Global Stats from all items
+                    if (item.stats.block) bonuses.blockChance += item.stats.block;
+                    if (item.stats.shield) bonuses.shieldBonus += item.stats.shield;
+
+                    if (item.type === 'relic') {
+                        if (item.stats.attackSpeed) bonuses.speedBonus += item.stats.attackSpeed;
+                        if (item.stats.critChance) bonuses.critChance += item.stats.critChance;
+                        if (item.stats.critDmg) bonuses.critDmg += item.stats.critDmg;
+                        if (item.stats.damage) bonuses.damageBonus += item.stats.damage;
+
+                        // Handle Global Effects from Relics
+                        if (item.effects) {
+                            if (item.effects.lifesteal) bonuses.lifesteal += item.effects.lifesteal.factor;
+                            if (item.effects.multihit) bonuses.multihitCount += item.effects.multihit.count;
+
+                            // Aggregate other effects (Poison, Bleed, Fire, etc.)
+                            const globalEffectTypes = ['poison', 'bleed', 'fire', 'shadow', 'curse', 'frozen', 'holy', 'goldOnHit'];
+
+                            globalEffectTypes.forEach(type => {
+                                if (item.effects[type]) {
+                                    if (!bonuses.addedEffects[type]) {
+                                        bonuses.addedEffects[type] = { ...item.effects[type] };
+                                    } else {
+                                        // Merge/Stack logic if multiple relics give same effect
+                                        const existing = bonuses.addedEffects[type];
+                                        const next = item.effects[type];
+
+                                        if (next.damagePerTick) existing.damagePerTick = (existing.damagePerTick || 0) + next.damagePerTick;
+                                        if (next.amount) existing.amount = (existing.amount || 0) + next.amount; // Gold
+                                        if (next.heal) existing.heal = (existing.heal || 0) + next.heal;
+                                        if (next.duration) existing.duration = Math.max(existing.duration || 0, next.duration);
+                                    }
+                                }
+                            });
+                        }
+                    }
                 }
             });
         }
@@ -58,7 +90,7 @@ export class BuffSystem {
 
         // 3. Generic Set Bonus Calculation
         const allSets = dataManager.getAllSets();
-        const counts = globalBuffSystem.getActiveSetBonuses(slots);
+        const counts = globalBuffSystem.getActiveSetBonuses(slots); // Use the full slots for counting
 
         allSets.forEach(setDef => {
             const count = counts[setDef.id] || 0;
@@ -77,8 +109,9 @@ export class BuffSystem {
                     if (isActive && bonus.stats) {
                         for (const [stat, value] of Object.entries(bonus.stats)) {
                             // Support mapping common names to internal names
-                            const internalStat = stat === 'damage' ? 'damageBonus' : 
-                                               stat === 'block' ? 'blockBonus' : stat;
+                            const internalStat = stat === 'damage' ? 'damageBonus' :
+                                stat === 'shield' ? 'shieldBonus' :
+                                    stat === 'block' ? 'blockChance' : stat;
 
                             if (bonuses.hasOwnProperty(internalStat)) {
                                 bonuses[internalStat] += value;
@@ -98,9 +131,8 @@ export class BuffSystem {
      * @param {Array} slots 
      */
     static getItemCombinedStats(item, slots) {
-        // Exclude the item itself from globals if it's already in the slots to avoid double counting
-        const otherSlots = slots ? slots.filter(s => s && s.id !== item.id) : [];
-        const globals = this.calculateGlobalBonuses(otherSlots);
+        // Use full slots for set bonuses, but exclude the item itself from global flat stats
+        const globals = this.calculateGlobalBonuses(slots, item);
 
         const baseStats = item.stats || {};
         const baseEffects = JSON.parse(JSON.stringify(item.effects || {})); // Work on a copy
@@ -117,7 +149,8 @@ export class BuffSystem {
         const combined = {
             damage: (baseStats.damage || 0) + (item.type === 'weapon' ? globals.damageBonus : 0),
             cooldown: (baseStats.cooldown || 0) * 1000,
-            block: (baseStats.block || 0) + (item.type === 'shield' ? globals.blockBonus : 0),
+            shield: (baseStats.shield || 0) + (item.type === 'shield' ? globals.shieldBonus : 0),
+            block: (baseStats.block || 0) + globals.blockChance,
             attackSpeed: (1 / (baseStats.cooldown || 1)) * (1 + globals.speedBonus),
             critChance: (baseStats.critChance || 0) + globals.critChance,
             critDmg: (baseStats.critDmg || 2.0) + globals.critDmg,
@@ -138,6 +171,25 @@ export class BuffSystem {
         globals.setBonuses.forEach(sb => {
             if (sb.active) combined.sources.push({ name: sb.name, bonus: sb.description, type: 'set' });
         });
+
+        // Merge Global Effects (from Relics) into Base Effects
+        if (globals.addedEffects) {
+            for (const [type, data] of Object.entries(globals.addedEffects)) {
+                if (!baseEffects[type]) {
+                    baseEffects[type] = { ...data }; // Add new effect
+                    combined.sources.push({ name: 'Relic Effect', bonus: type, type: 'relic' });
+                } else {
+                    // Stack with existing item effect
+                    // E.g. Weapon has Bleed, Relic has Bleed -> Stack values
+                    baseEffects[type].damagePerTick = (baseEffects[type].damagePerTick || 0) + (data.damagePerTick || 0);
+                    baseEffects[type].amount = (baseEffects[type].amount || 0) + (data.amount || 0);
+                    baseEffects[type].heal = (baseEffects[type].heal || 0) + (data.heal || 0);
+                    baseEffects[type].duration = Math.max(baseEffects[type].duration || 0, data.duration || 0);
+
+                    // Keep track of source?
+                }
+            }
+        }
 
         // 3. Handle Effect Modifications (Generic from sets.json)
         for (const [type, data] of Object.entries(baseEffects)) {
@@ -174,7 +226,7 @@ export class BuffSystem {
      */
     static calculateBuffs(slots) {
         const globals = this.calculateGlobalBonuses(slots);
-        
+
         let stats = {
             speedBonus: globals.speedBonus,
             critDmg: 2.0 + globals.critDmg,
@@ -182,7 +234,8 @@ export class BuffSystem {
             multihitChance: 0,
             multihitCount: globals.multihitCount,
             damageBonus: globals.damageBonus,
-            blockBonus: globals.blockBonus,
+            shieldBonus: globals.shieldBonus,
+            blockChance: globals.blockChance,
             lifesteal: globals.lifesteal
         };
 

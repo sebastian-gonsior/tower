@@ -1,16 +1,24 @@
-#  Tower
+# Tower 🏰
 
-This is a simple browser-based game.
+A browser-based auto-battler game focusing on item fusion, strategic setups, and automated combat.
 
-## How to Play
-1. Open `index.html` in your web browser.
-2. You will see a "Stash" at the bottom with a Sword.
-3. Click the Sword to move it to the "Active Slots" on the left.
-4. Once in an active slot, the Sword will automatically attack the Enemy on the right every 3 seconds.
-5. Watch the Enemy HP go down!
+## 🚀 Quick Start
+This game requires a local server to load data files.
 
-## Features
-- Inventory System (6 Active Slots, 3 Stash Slots)
-- Combat System (Auto-attack with cooldowns)
-- Visual Health Bars
-- Simple Sword Item (25 Damage, 3s Cooldown)
+**Using Python:**
+```bash
+python -m http.server
+# Open http://localhost:8000
+```
+
+**Using Node:**
+```bash
+npx http-server .
+# Open http://127.0.0.1:8080
+```
+
+## 📖 Documentation
+All game details, mechanics, systems, and context for LLMs are located in:
+👉 **[manifesto/GAME_MANIFESTO.md](manifesto/GAME_MANIFESTO.md)**
+
+*Refer to this file for analyzing code, understanding features, or making updates.*

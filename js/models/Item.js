@@ -58,7 +58,8 @@ export class Item {
         const mult = customMult !== null ? customMult : this.statMultiplier;
         const scaled = { ...baseStats };
         if (scaled.damage) scaled.damage = Math.floor(scaled.damage * mult);
-        if (scaled.block) scaled.block = Math.floor(scaled.block * mult);
+        if (scaled.block) scaled.block = scaled.block * mult;
+        if (scaled.shield) scaled.shield = Math.floor(scaled.shield * mult);
         if (scaled.attackSpeed) scaled.attackSpeed = scaled.attackSpeed * mult;
         return scaled;
     }
@@ -101,10 +102,8 @@ export class Item {
 
     getPreview(targetLevel) {
         if (targetLevel > 10) return null;
-        // Multiplier = 4^level (based on current logic: 0->1, 1->4, etc.)
-        // Wait, current logic in constructor: Math.pow(4, this.starLevel)
-        // If starLevel is 0, mult is 1. If 1, mult is 4.
-        const mult = Math.pow(4, targetLevel);
+        // Multiplier = 2^level (matches constructor: Math.pow(2, starLevel))
+        const mult = Math.pow(2, targetLevel);
 
         return {
             starLevel: targetLevel,
@@ -143,6 +142,7 @@ export class Item {
 
         if (this.damage > 0) parts.push(`Dmg: ${this.damage}`);
         if (this.cooldown > 0) parts.push(`CD: ${this.cooldown / 1000}s`);
+        if (this.stats.shield) parts.push(`Shield: ${this.stats.shield}`);
         if (this.stats.block) parts.push(`Block: ${this.stats.block}`);
         if (this.stats.attackSpeed) parts.push(`Speed: +${(this.stats.attackSpeed * 100).toFixed(0)}%`);
 

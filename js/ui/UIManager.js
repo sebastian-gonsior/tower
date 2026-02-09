@@ -216,11 +216,11 @@ export class UIManager {
         bus.on('SHOP_UPDATED', (items) => this.updateShopUI());
         bus.on('REROLL_COST_UPDATED', (cost) => this.updateRerollButton(cost));
         bus.on('ITEM_SOLD', (data) => {
-            this.showFloatingText({ 
-                target: 'player', 
-                amount: data.price, 
-                isCrit: true, 
-                critType: 'gold' 
+            this.showFloatingText({
+                target: 'player',
+                amount: data.price,
+                isCrit: true,
+                critType: 'gold'
             });
         });
         bus.on('ITEM_FUSED', (data) => this.showFusionNotification(data));
@@ -366,16 +366,31 @@ export class UIManager {
     }
 
     updateHealthUI() {
-        const updateBar = (bar, text, current, max) => {
+        const updateBar = (bar, ghost, text, current, max) => {
             if (bar && text) {
                 const percent = Math.max(0, Math.min(100, (current / max) * 100));
+
+                // If HP increased (heal), move ghost immediately
+                const currentWidth = parseFloat(bar.style.width) || 0;
+                if (percent > currentWidth) {
+                    if (ghost) ghost.style.width = `${percent}%`;
+                }
+
                 bar.style.width = `${percent}%`;
                 text.innerText = `${Math.ceil(current)} / ${max}`;
+
+                // Ghost bar will transition slowly via CSS for damage
+                if (ghost && percent < currentWidth) {
+                    ghost.style.width = `${percent}%`;
+                }
             }
         };
 
-        updateBar(this.elements.playerHpBar, this.elements.playerHpText, gameState.player.hp, gameState.player.maxHp);
-        updateBar(this.elements.enemyHpBar, this.elements.enemyHpText, gameState.enemy.hp, gameState.enemy.maxHp);
+        const playerGhost = document.getElementById('player-hp-ghost');
+        const enemyGhost = document.getElementById('enemy-hp-ghost');
+
+        updateBar(this.elements.playerHpBar, playerGhost, this.elements.playerHpText, gameState.player.hp, gameState.player.maxHp);
+        updateBar(this.elements.enemyHpBar, enemyGhost, this.elements.enemyHpText, gameState.enemy.hp, gameState.enemy.maxHp);
 
         if (gameState.player.shield > 0) {
             this.elements.playerHpText.innerText += ` (+${Math.ceil(gameState.player.shield)})`;
@@ -386,7 +401,7 @@ export class UIManager {
     }
 
     renderSlots() {
-        const renderSlot = (slotDiv, item) => {
+        const renderSlot = (slotDiv, item, items) => {
             slotDiv.innerHTML = '';
             if (item) {
                 const itemDiv = document.createElement('div');
@@ -410,7 +425,7 @@ export class UIManager {
                 }
 
                 // Tooltip Events
-                itemDiv.addEventListener('mouseenter', (e) => this.showTooltip(item, e.clientX, e.clientY));
+                itemDiv.addEventListener('mouseenter', (e) => this.showTooltip(item, e.clientX, e.clientY, items));
                 itemDiv.addEventListener('mouseleave', () => this.hideTooltip());
                 itemDiv.addEventListener('mousemove', (e) => this.updateTooltipPosition(e.clientX, e.clientY));
 
@@ -454,7 +469,7 @@ export class UIManager {
             if (!container) return;
             Array.from(container.children).forEach((slotDiv, index) => {
                 // Fix: Was recursively calling updateContainer which caused infinite loop
-                renderSlot(slotDiv, items[index]);
+                renderSlot(slotDiv, items[index], items);
             });
         };
 
@@ -490,10 +505,12 @@ export class UIManager {
 
             el.classList.add(`rarity-${item.rarity}`);
 
+            const setClass = item.set ? `set-badge-${item.set.toLowerCase()}` : '';
             el.innerHTML = `
                 <div class="item-stars">${'★'.repeat(item.starLevel)}</div>
                 <div class="item-icon">${item.icon}</div>
                 <div class="shop-item-name">${item.name}</div>
+                <div class="shop-item-set-badge ${setClass}">${item.set ? item.set : ''}</div>
                 <div class="shop-item-rarity rarity-text-${item.rarity}">${item.rarity.toUpperCase()}</div>
                 <div class="shop-item-price">${item.price}g</div>
             `;
@@ -503,7 +520,7 @@ export class UIManager {
             // Tooltip Events
             el.addEventListener('mouseenter', (e) => {
                 // console.log('mouseenter item', item);
-                this.showTooltip(item, e.clientX, e.clientY);
+                this.showTooltip(item, e.clientX, e.clientY, gameState.activeSlots);
             });
             el.addEventListener('mouseleave', () => this.hideTooltip());
             el.addEventListener('mousemove', (e) => {
@@ -551,7 +568,7 @@ export class UIManager {
                     itemDiv.draggable = true;
 
                     // Tooltip Events
-                    itemDiv.addEventListener('mouseenter', (e) => this.showTooltip(item, e.clientX, e.clientY));
+                    itemDiv.addEventListener('mouseenter', (e) => this.showTooltip(item, e.clientX, e.clientY, items));
                     itemDiv.addEventListener('mouseleave', () => this.hideTooltip());
                     itemDiv.addEventListener('mousemove', (e) => this.updateTooltipPosition(e.clientX, e.clientY));
 
@@ -608,7 +625,7 @@ export class UIManager {
                             if (data.type && data.index !== undefined) {
                                 // If dropping on same slot, ignore
                                 if (data.type === type && data.index === i) return;
-                                
+
                                 // Enemy slots are read-only
                                 if (type === 'enemy') return;
 
@@ -724,6 +741,10 @@ export class UIManager {
             sideClass = 'gain';
         } else {
             text = `-${val}`;
+            // Add blocked text if present
+            if (data.blocked > 0) {
+                text += ` (${data.blocked} blocked)`;
+            }
             colorClass = 'damage-text';
             sideClass = 'damage';
         }
@@ -768,6 +789,39 @@ export class UIManager {
 
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 1200); // 1.2s to match gain animation
+
+            // Trigger visual impact if it's damage
+            if (sideClass === 'damage') {
+                this.triggerHitEffect(target, isCrit);
+            }
+        }
+    }
+
+    triggerHitEffect(target, isCrit) {
+        const panel = target === 'player' ? this.elements.playerPanel : this.elements.enemyPanel;
+        const sprite = target === 'player' ? this.elements.playerSprite : this.elements.enemySprite;
+        const screenFlash = document.getElementById('screen-flash');
+
+        if (panel) {
+            const shakeClass = isCrit ? 'crit-shake' : 'shake';
+            panel.classList.remove('shake', 'crit-shake');
+            void panel.offsetWidth; // Trigger reflow
+            panel.classList.add(shakeClass);
+            setTimeout(() => panel.classList.remove(shakeClass), 500);
+        }
+
+        if (sprite) {
+            sprite.classList.remove('hit-flash', 'sprite-impact');
+            void sprite.offsetWidth; // Trigger reflow
+            sprite.classList.add('hit-flash', 'sprite-impact');
+            setTimeout(() => sprite.classList.remove('hit-flash', 'sprite-impact'), 500);
+        }
+
+        // Global screen flash for crits
+        if (isCrit && screenFlash) {
+            screenFlash.classList.remove('flash-active');
+            void screenFlash.offsetWidth;
+            screenFlash.classList.add('flash-active');
         }
     }
 
@@ -860,7 +914,9 @@ export class UIManager {
             speedBonus: '⚡',
             critChance: '🎯',
             multihitChance: '💥',
-            critDmg: '💢'
+            critDmg: '💢',
+            shieldBonus: '🛡️',
+            blockChance: '🧱'
         };
 
         const renderBuffContainer = (container, slots) => {
@@ -900,6 +956,12 @@ export class UIManager {
                         } else if (key === 'critDmg') {
                             displayValue = `x${value.toFixed(1)}`;
                             title = `Crit Damage: ${displayValue}`;
+                        } else if (key === 'shieldBonus') {
+                            displayValue = `${value}`;
+                            title = `Shield: Gain ${value} Absorb per hit`;
+                        } else if (key === 'blockChance') {
+                            displayValue = `${Math.round(value * 100)}%`;
+                            title = `Block: Reduce incoming damage by ${Math.round(value * 100)}%`;
                         }
 
                         el.innerHTML = `
@@ -966,11 +1028,11 @@ export class UIManager {
             // Add set header with piece count
             const headerEl = document.createElement('div');
             headerEl.className = 'set-bonus-header';
-            
+
             // Try to find a nice icon for the set header. 
             // We can use the first item's icon or define icons in sets.json.
             // For now, let's use a default or look at items.
-            let setIcon = "⚒️"; 
+            let setIcon = "⚒️";
             if (setDef.id === 'elf') setIcon = "🍃";
             if (setDef.id === 'undead') setIcon = "💀";
             if (setDef.id === 'celestial') setIcon = "☀️";
@@ -989,7 +1051,7 @@ export class UIManager {
                     if (count >= bonus.threshold) {
                         const el = document.createElement('div');
                         el.className = 'set-bonus-icon active';
-                        
+
                         // Pick an icon based on the bonus description if possible
                         let icon = '✨';
                         const desc = bonus.description.toLowerCase();
@@ -1017,7 +1079,7 @@ export class UIManager {
 
     // --- Tooltip Logic ---
 
-    showTooltip(item, x, y) {
+    showTooltip(item, x, y, slots = null) {
         if (!this.elements.itemTooltip) {
             this.elements.itemTooltip = document.getElementById('item-tooltip');
         }
@@ -1025,7 +1087,7 @@ export class UIManager {
         if (!item || !this.elements.itemTooltip) return;
 
         // Store args for refresh
-        this.currentTooltipArgs = [item, x, y];
+        this.currentTooltipArgs = [item, x, y, slots];
 
         let displayItem = item;
         let isPreview = false;
@@ -1050,7 +1112,7 @@ export class UIManager {
         el.className = `item-tooltip rarity-${displayItem.rarity}`;
 
         // Get Combined Stats (Applied stats include global sets/blessings)
-        const combined = BuffSystem.getItemCombinedStats(displayItem, gameState.activeSlots);
+        const combined = BuffSystem.getItemCombinedStats(displayItem, slots || gameState.activeSlots);
         const base = displayItem.stats || {};
 
         // 1. Header
@@ -1073,7 +1135,8 @@ export class UIManager {
 
         if (base.damage) html += `<div class="stat-box"><span class="stat-label-small">Damage</span><span class="stat-value-main">${base.damage}</span></div>`;
         if (base.cooldown) html += `<div class="stat-box"><span class="stat-label-small">Cooldown</span><span class="stat-value-main">${base.cooldown}s</span></div>`;
-        if (base.block) html += `<div class="stat-box"><span class="stat-label-small">Block</span><span class="stat-value-main">${base.block}</span></div>`;
+        if (base.shield) html += `<div class="stat-box"><span class="stat-label-small">Shield</span><span class="stat-value-main">${base.shield}</span></div>`;
+        if (base.block) html += `<div class="stat-box"><span class="stat-label-small">Block</span><span class="stat-value-main">${Math.round(base.block * 100)}%</span></div>`;
         if (base.attackSpeed) html += `<div class="stat-box"><span class="stat-label-small">Speed</span><span class="stat-value-main">+${Math.round(base.attackSpeed * 100)}%</span></div>`;
         if (base.critChance) html += `<div class="stat-box"><span class="stat-label-small">Crit %</span><span class="stat-value-main">+${Math.round(base.critChance * 100)}%</span></div>`;
 
@@ -1122,12 +1185,22 @@ export class UIManager {
             html += `<div class="stat-box highlight"><span class="stat-label-small">Lifesteal</span><span class="stat-value-main">${Math.round(combined.lifesteal * 100)}%</span></div>`;
         }
 
+        // Shield (Absorb)
+        if (combined.shield > 0) {
+            html += `<div class="stat-box highlight"><span class="stat-label-small">Shield</span><span class="stat-value-main">${combined.shield}</span></div>`;
+        }
+
+        // Block (Reduction)
+        if (combined.block > 0) {
+            html += `<div class="stat-box highlight"><span class="stat-label-small">Block</span><span class="stat-value-main">${Math.round(combined.block * 100)}%</span></div>`;
+        }
+
         html += '</div>';
 
         // 5. All Set Bonuses
         if (combined.setBonuses && combined.setBonuses.length > 0) {
             const relevantBonuses = combined.setBonuses.filter(sb => sb.setId === displayItem.set);
-            
+
             if (relevantBonuses.length > 0) {
                 html += '<div class="tooltip-sub-header">Set Progression</div>';
                 relevantBonuses.forEach(sb => {
@@ -1163,28 +1236,27 @@ export class UIManager {
             html += '<div class="tooltip-effects">';
             for (const [type, data] of Object.entries(effects)) {
                 let effectDesc = '';
-                const chance = data.chance !== undefined ? data.chance : 1.0;
-                const chanceText = chance < 1.0 ? ` (${Math.round(chance * 100)}%)` : '';
+                // Chance removed - using implicit 100%
 
-                if (type === 'goldOnHit') effectDesc = `+${data.amount} Gold on Hit${chanceText}`;
-                else if (type === 'poison') effectDesc = `Poison: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
-                else if (type === 'shadow') effectDesc = `Shadow: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
-                else if (type === 'curse') effectDesc = `Curse: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
+                if (type === 'goldOnHit') effectDesc = `+${data.amount} Gold on Hit`;
+                else if (type === 'poison') effectDesc = `Poison: ${data.damagePerTick} dmg (${data.duration}s)`;
+                else if (type === 'shadow') effectDesc = `Shadow: ${data.damagePerTick} dmg (${data.duration}s)`;
+                else if (type === 'curse') effectDesc = `Curse: ${data.damagePerTick} dmg (${data.duration}s)`;
                 else if (type === 'bleed') {
                     effectDesc = `Bleed: ${data.damagePerTick} dmg`;
                     if (data.isModified) {
                         effectDesc += ` <span class="effect-mod-label">(Base: ${data.original.damagePerTick})</span>`;
                     }
-                    effectDesc += ` (${data.duration}s)${chanceText}`;
+                    effectDesc += ` (${data.duration}s)`;
                     if (data.tickInterval && data.tickInterval < 1000) {
                         effectDesc += ` <span class="effect-mod-label">Rapid Ticks!</span>`;
                     }
                 }
-                else if (type === 'fire') effectDesc = `Burn: ${data.damagePerTick} dmg (${data.duration}s)${chanceText}`;
-                else if (type === 'frozen') effectDesc = `Freeze Target${chanceText}`;
+                else if (type === 'fire') effectDesc = `Burn: ${data.damagePerTick} dmg (${data.duration}s)`;
+                else if (type === 'frozen') effectDesc = `Freeze Target`;
                 else if (type === 'holy') effectDesc = `Heal ${data.heal} & +${data.maxHpGain || 0} MaxHP`;
-                else if (type === 'multihit') effectDesc = `Multihit: x${data.count}${chanceText}`;
-                else if (type === 'lifesteal') effectDesc = `Lifesteal: ${Math.round((data.factor || 0) * 100)}%${chanceText}`;
+                else if (type === 'multihit') effectDesc = `Multihit: x${data.count}`;
+                else if (type === 'lifesteal') effectDesc = `Lifesteal: ${Math.round((data.factor || 0) * 100)}%`;
                 else effectDesc = type.charAt(0).toUpperCase() + type.slice(1);
 
                 const modClass = data.isModified ? 'modified' : '';
@@ -1410,10 +1482,15 @@ export class UIManager {
             row.innerHTML = `
                 <div class="meter-bar-fill" style="width: ${barWidth}%"></div>
                 <div class="meter-text-left">${entry.name}</div>
-                <div class="meter-text-right">${Math.round(value || 0)} ${type === 'gold' ? 'g' : ''}</div>
+                <div class="meter-text-right">
+                    ${Math.round(value || 0)}${type === 'gold' ? 'g' : ''}
+                    ${(type === 'damage' && entry.blocked > 0) ? `<span class="meter-blocked">(${Math.round(entry.blocked)})</span>` : ''}
+                </div>
             `;
 
-            row.title = `${entry.name}\nTotal: ${Math.round(value || 0)}`;
+            let tooltip = `${entry.name}\nTotal: ${Math.round(value || 0)}`;
+            if (entry.blocked > 0) tooltip += `\nBlocked: ${Math.round(entry.blocked)}`;
+            row.title = tooltip;
 
             container.appendChild(row);
         });

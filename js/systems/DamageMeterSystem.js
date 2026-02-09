@@ -10,8 +10,8 @@ class DamageMeterSystem {
         this.startTime = 0;
         this.isFighting = false;
         this.stats = {
-            player: { totalDamage: 0, totalHealing: 0, sources: {} },
-            enemy: { totalDamage: 0, totalHealing: 0, sources: {} }
+            player: { totalDamage: 0, totalHealing: 0, totalBlocked: 0, sources: {} },
+            enemy: { totalDamage: 0, totalHealing: 0, totalBlocked: 0, sources: {} }
         };
     }
 
@@ -69,7 +69,7 @@ class DamageMeterSystem {
             sourceName = "Reflect";
         }
 
-        this.addEntry(sourceEntity, sourceName, data.damage, 'damage');
+        this.addEntry(sourceEntity, sourceName, data.damage, 'damage', data.blocked || 0);
     }
 
     handleHeal(data) {
@@ -93,22 +93,28 @@ class DamageMeterSystem {
         this.addEntry(entity, sourceName, data.amount, 'healing');
     }
 
-    addEntry(entity, sourceName, amount, type) {
-        if (!amount || amount <= 0) return;
+    addEntry(entity, sourceName, amount, type, blockedAmount = 0) {
+        if ((!amount || amount <= 0) && (!blockedAmount || blockedAmount <= 0)) return;
 
         const entityStats = this.stats[entity];
         if (!entityStats) return;
 
-        if (type === 'damage') entityStats.totalDamage += amount;
+        if (type === 'damage') {
+            entityStats.totalDamage += amount;
+            entityStats.totalBlocked += blockedAmount;
+        }
         if (type === 'healing') entityStats.totalHealing += amount;
         // Don't add gold to totalDamage
 
         if (!entityStats.sources[sourceName]) {
-            entityStats.sources[sourceName] = { damage: 0, healing: 0, gold: 0, hits: 0, type: type }; // Store main type
+            entityStats.sources[sourceName] = { damage: 0, healing: 0, gold: 0, blocked: 0, hits: 0, type: type }; // Store main type
         }
 
         const source = entityStats.sources[sourceName];
-        if (type === 'damage') source.damage += amount;
+        if (type === 'damage') {
+            source.damage += amount;
+            source.blocked += blockedAmount;
+        }
         if (type === 'healing') source.healing += amount;
         if (type === 'gold') source.gold += amount;
 
@@ -137,6 +143,7 @@ class DamageMeterSystem {
             return {
                 totalDamage: stats.totalDamage,
                 totalHealing: stats.totalHealing,
+                totalBlocked: stats.totalBlocked,
                 dps: stats.totalDamage / duration,
                 hps: stats.totalHealing / duration,
                 duration,

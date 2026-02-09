@@ -199,24 +199,27 @@ body {
 }
 
 .shop-item {
-    background: #3e2723;
+    background: linear-gradient(135deg, #3e2723 0%, #2b1d0e 100%);
     border: 2px solid #5d4037;
-    width: 100px;
-    height: 120px;
+    width: 110px;
+    height: 145px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .shop-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.05);
     border-color: #ffb74d;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 183, 77, 0.4);
+    z-index: 10;
 }
 
 .shop-item-price {
@@ -227,6 +230,75 @@ body {
     border-radius: 3px;
     width: 100%;
     text-align: center;
+}
+
+.shop-item-set-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: sans-serif;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    z-index: 5;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Set Specific Colors */
+.set-badge-dwarf {
+    background: linear-gradient(135deg, #795548, #3e2723);
+    color: #fff;
+}
+
+.set-badge-elf {
+    background: linear-gradient(135deg, #66bb6a, #2e7d32);
+    color: #fff;
+}
+
+.set-badge-undead {
+    background: linear-gradient(135deg, #7b1fa2, #4a148c);
+    color: #e1bee7;
+}
+
+.set-badge-celestial {
+    background: linear-gradient(135deg, #fdd835, #fbc02d);
+    color: #fff8e1;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.set-badge-infernal {
+    background: linear-gradient(135deg, #ff5722, #bf360c);
+    color: #fff;
+}
+
+.set-badge-oceanic {
+    background: linear-gradient(135deg, #29b6f6, #0277bd);
+    color: #fff;
+}
+
+.set-badge-assassin {
+    background: linear-gradient(135deg, #424242, #212121);
+    color: #cfd8dc;
+}
+
+.set-badge-paladin {
+    background: linear-gradient(135deg, #cfd8dc, #90a4ae);
+    color: #fff;
+}
+
+.set-badge-warlock {
+    background: linear-gradient(135deg, #673ab7, #311b92);
+    color: #d1c4e9;
+}
+
+.set-badge-titan {
+    background: linear-gradient(135deg, #78909c, #455a64);
+    color: #fff;
 }
 
 .shop-actions {
@@ -609,18 +681,36 @@ body {
 }
 
 .hp-bar-bg {
-    height: 28px;
-    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-    border-radius: 14px;
+    height: 32px;
+    /* Increased height for premium feel */
+    background: #000;
+    border-radius: 16px;
     overflow: hidden;
     border: 2px solid #333;
-    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.hp-bar-ghost {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #fff;
+    opacity: 0.3;
+    transition: width 0.8s cubic-bezier(0, 0.5, 0.5, 1);
+    z-index: 2;
 }
 
 .hp-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    transition: width 0.3s ease-out;
-    border-radius: 12px;
+    transition: width 0.2s ease-out;
+    border-radius: 14px;
+    z-index: 3;
 }
 
 .player-hp-fill {
@@ -638,15 +728,17 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 28px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.85em;
-    font-weight: bold;
+    font-size: 0.9em;
+    font-weight: 800;
     color: #fff;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
+    text-shadow: 0 0 4px rgba(0, 0, 0, 1), 1px 1px 0 rgba(0, 0, 0, 0.8);
     pointer-events: none;
+    z-index: 4;
+    letter-spacing: 1px;
 }
 
 /* Status Effects Section */
@@ -664,131 +756,105 @@ body {
     margin-bottom: 5px;
 }
 
-/* Blessings Row - Golden Divine Theme */
+/* --- Status Effects: Blessings & Set Bonuses (Combat Panel) --- */
+
 .blessings-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 5px;
+    gap: 8px;
+    margin-bottom: 8px;
     align-items: center;
-    background: linear-gradient(135deg, rgba(218, 165, 32, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%);
-    border: 1px solid rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(184, 134, 11, 0.05) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 8px 12px;
+    box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1);
+}
+
+.blessing-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #ffd700 0%, #daa520 100%);
+    border: 2px solid #fff;
     border-radius: 8px;
-    padding: 6px 10px;
-}
-
-.blessing-header {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: #ffd700;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-right: 6px;
-    padding-right: 8px;
-    border-right: 1px solid rgba(255, 215, 0, 0.3);
-}
-
-.blessing-header .blessing-icon-small {
-    font-size: 14px;
-}
-
-.blessing-header .blessing-name {
-    white-space: nowrap;
-}
-
-.blessings-row .blessing-icon {
-    width: 26px;
-    height: 26px;
-    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-    border: 2px solid #ffd700;
-    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px;
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    font-size: 18px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     cursor: help;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.blessings-row .blessing-icon.active {
-    animation: blessing-glow 2s ease-in-out infinite alternate;
+.blessing-icon:hover {
+    transform: scale(1.15) translateY(-2px);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    z-index: 10;
 }
 
-@keyframes blessing-glow {
-    from {
-        box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+.blessing-icon.active {
+    animation: divine-pulse 2.5s infinite alternate;
+}
+
+@keyframes divine-pulse {
+    0% {
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        border-color: #ffd700;
     }
 
-    to {
-        box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    100% {
+        box-shadow: 0 0 18px rgba(255, 215, 0, 0.9), 0 0 5px #fff;
+        border-color: #fff;
     }
 }
 
-/* Set Bonuses Row - Bronze Dwarfy Theme */
 .set-bonuses-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 5px;
+    gap: 8px;
+    margin-bottom: 8px;
     align-items: center;
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.3) 0%, rgba(205, 127, 50, 0.15) 100%);
-    border: 1px solid rgba(205, 127, 50, 0.5);
-    border-radius: 8px;
-    padding: 6px 10px;
-}
-
-.set-bonus-header {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    color: #cd7f32;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-right: 6px;
-    padding-right: 8px;
-    border-right: 1px solid rgba(205, 127, 50, 0.4);
-}
-
-.set-bonus-header .set-icon {
-    font-size: 14px;
-}
-
-.set-bonus-header .set-name {
-    white-space: nowrap;
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.2) 0%, rgba(139, 69, 19, 0.1) 100%);
+    border: 1px solid rgba(205, 127, 50, 0.4);
+    border-radius: 12px;
+    padding: 8px 12px;
 }
 
 .set-bonus-icon {
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     background: linear-gradient(135deg, #cd7f32 0%, #8b4513 100%);
     border: 2px solid #cd7f32;
-    border-radius: 6px;
+    border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 13px;
-    box-shadow: 0 0 8px rgba(205, 127, 50, 0.6);
+    font-size: 18px;
+    box-shadow: 0 0 8px rgba(205, 127, 50, 0.5);
     cursor: help;
+    transition: all 0.2s;
+}
+
+.set-bonus-icon:hover {
+    transform: scale(1.1) translateY(-2px);
+    border-color: #fff;
 }
 
 .set-bonus-icon.active {
-    animation: set-bonus-glow 2s ease-in-out infinite alternate;
+    animation: set-pulse 3s infinite alternate;
 }
 
-@keyframes set-bonus-glow {
-    from {
+@keyframes set-pulse {
+    0% {
         box-shadow: 0 0 5px rgba(205, 127, 50, 0.4);
     }
 
-    to {
-        box-shadow: 0 0 12px rgba(205, 127, 50, 0.8);
+    100% {
+        box-shadow: 0 0 15px rgba(205, 127, 50, 0.8);
+        border-color: #ffd700;
     }
 }
+
 
 /* Inventory Section */
 .inventory-section {
@@ -815,35 +881,95 @@ body {
 }
 
 .slot {
-    width: 65px;
-    height: 65px;
-    background: linear-gradient(135deg, #252535 0%, #1a1a2a 100%);
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     border: 2px solid #3a3a4a;
-    border-radius: 8px;
+    border-radius: 12px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .slot:hover {
-    border-color: #5a5a6a;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border-color: #5d5d7d;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(93, 93, 125, 0.3);
+}
+
+.slot.drag-over {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .item {
-    width: 55px;
-    height: 55px;
-    border-radius: 6px;
+    width: 62px;
+    height: 62px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 26px;
+    font-size: 36px;
     position: relative;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    transition: transform 0.1s ease-out, box-shadow 0.2s;
+    user-select: none;
 }
+
+.item:active {
+    cursor: grabbing;
+    transform: scale(0.92);
+}
+
+/* Premium Rarity Styles */
+.item.rarity-common {
+    background: linear-gradient(135deg, #424242 0%, #212121 100%);
+    border-color: #757575;
+}
+
+.item.rarity-uncommon {
+    background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+    border-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+.item.rarity-rare {
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+    border-color: #2196f3;
+    box-shadow: 0 0 12px rgba(33, 150, 243, 0.5);
+}
+
+.item.rarity-epic {
+    background: linear-gradient(135deg, #6a1b9a 0%, #4a148c 100%);
+    border-color: #9c27b0;
+    box-shadow: 0 0 15px rgba(156, 39, 176, 0.6);
+}
+
+.item.rarity-legendary {
+    background: linear-gradient(135deg, #ff8f00 0%, #e65100 100%);
+    border-color: #ffb74d;
+    box-shadow: 0 0 20px rgba(255, 152, 0, 0.7);
+    animation: legendary-pulse 2s infinite alternate;
+}
+
+@keyframes legendary-pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+        border-color: #ffb74d;
+    }
+
+    100% {
+        box-shadow: 0 0 35px rgba(255, 152, 0, 1), 0 0 10px #fff;
+        border-color: #fff;
+    }
+}
+
 
 /* VS Separator */
 .vs-separator {
@@ -851,17 +977,64 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    padding: 0 15px;
+    gap: 25px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
 }
 
 .vs-text {
-    font-size: 2em;
-    font-weight: bold;
-    color: #555;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    letter-spacing: 5px;
+    font-size: 3em;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.2);
+    letter-spacing: 12px;
+    font-style: italic;
+    background: linear-gradient(180deg, #fff 0%, #888 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: vs-pulse 2s infinite alternate;
 }
+
+@keyframes vs-pulse {
+    from {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    }
+
+    to {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+    }
+}
+
+.screen-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.screen-flash.flash-active {
+    animation: screen-flash-anim 0.15s ease-out;
+}
+
+@keyframes screen-flash-anim {
+    0% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 
 .btn-fight {
     padding: 20px 30px;
@@ -1086,78 +1259,8 @@ body {
     position: relative;
 }
 
-.slot {
-    width: 80px;
-    height: 80px;
-    background-color: #444;
-    border: 2px solid #666;
-    border-radius: 5px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    padding-bottom: 0;
-    /* Space for castbar below item */
-    box-sizing: content-box;
-}
+/* Consolidated with premium styles above */
 
-.slot:hover {
-    border-color: #888;
-}
-
-.slot.drag-over {
-    background-color: #666;
-    border-color: #aaa;
-}
-
-.item {
-    width: 70px;
-    height: 70px;
-    background-color: #5a5;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    position: relative;
-    user-select: none;
-}
-
-.item-name {
-    font-size: 10px;
-    position: absolute;
-    bottom: 2px;
-    text-align: center;
-    width: 100%;
-}
-
-/* Item Rarity Background Colors */
-.item.rarity-common {
-    background: linear-gradient(135deg, #4a4a4a 0%, #6a6a6a 50%, #4a4a4a 100%);
-    border: 2px solid #888;
-}
-
-.item.rarity-uncommon {
-    background: linear-gradient(135deg, #1e5631 0%, #2e7d32 50%, #1e5631 100%);
-    border: 2px solid #4caf50;
-}
-
-.item.rarity-rare {
-    background: linear-gradient(135deg, #1565c0 0%, #1976d2 50%, #1565c0 100%);
-    border: 2px solid #42a5f5;
-}
-
-.item.rarity-epic {
-    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 50%, #6a1b9a 100%);
-    border: 2px solid #ba68c8;
-}
-
-.item.rarity-legendary {
-    background: linear-gradient(135deg, #ff8f00 0%, #ffc107 50%, #ff8f00 100%);
-    border: 2px solid #fff176;
-    box-shadow: 0 0 15px rgba(255, 193, 7, 0.6);
-}
 
 .rarity-text-legendary {
     color: #ffd54f !important;
@@ -1498,80 +1601,79 @@ body {
     z-index: 2;
 }
 
-/* Buff Display */
-.buffs-container,
+/* --- Status Effects: Temporary Buffs (Combat Panel) --- */
+
 .buffs-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
-    margin-top: 10px;
-    min-height: 35px;
-    width: 100%;
-    padding: 5px;
-    background: rgba(0, 50, 0, 0.2);
-    border-radius: 5px;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    padding: 6px;
+    background: rgba(46, 125, 50, 0.1);
+    border-radius: 8px;
+    min-height: 40px;
 }
 
 .buff-icon {
     position: relative;
-    min-width: 50px;
-    height: 28px;
-    background-color: #1a3a1a;
-    border: 2px solid #2a5a2a;
-    border-radius: 4px;
+    height: 30px;
+    padding: 0 10px;
+    background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
+    border: 1px solid #4caf50;
+    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4px;
-    padding: 0 6px;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    animation: aura-pulse 2s infinite ease-in-out;
+}
+
+@keyframes aura-pulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(76, 175, 80, 0.7);
+    }
 }
 
 .buff-emoji {
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .buff-value {
-    color: #7fff7f;
-    font-size: 11px;
-    font-weight: bold;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
-/* Buff type-specific colors */
 .buff-speedBonus {
-    border-color: #FFD700;
-    background-color: rgba(255, 215, 0, 0.2);
-}
-
-.buff-speedBonus .buff-value {
-    color: #FFD700;
+    border-color: #ffd700;
+    background: linear-gradient(180deg, #fbc02d 0%, #f57f17 100%);
 }
 
 .buff-critChance {
-    border-color: #FF6347;
-    background-color: rgba(255, 99, 71, 0.2);
-}
-
-.buff-critChance .buff-value {
-    color: #FF6347;
+    border-color: #ff5252;
+    background: linear-gradient(180deg, #ff5252 0%, #d32f2f 100%);
 }
 
 .buff-multihitChance {
-    border-color: #9370DB;
-    background-color: rgba(147, 112, 219, 0.2);
-}
-
-.buff-multihitChance .buff-value {
-    color: #9370DB;
+    border-color: #b388ff;
+    background: linear-gradient(180deg, #b388ff 0%, #7c4dff 100%);
 }
 
 .buff-critDmg {
-    border-color: #FF4500;
-    background-color: rgba(255, 69, 0, 0.2);
+    border-color: #ffab40;
+    background: linear-gradient(180deg, #ffab40 0%, #e65100 100%);
 }
 
-.buff-critDmg .buff-value {
-    color: #FF4500;
-}
 
 .enemy-sprite,
 .player-sprite {
@@ -2422,12 +2524,14 @@ body {
 /* --- Combat Damage Meter (WoW Style) --- */
 .meter-section {
     margin-top: 15px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid #444;
-    border-radius: 5px;
-    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
     min-height: 150px;
     width: 100%;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .meter-header {
@@ -2471,15 +2575,16 @@ body {
 
 .meter-row {
     position: relative;
-    height: 20px;
+    height: 24px;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
+    border-radius: 6px;
     overflow: hidden;
-    font-family: sans-serif;
     font-size: 0.85em;
     display: flex;
     align-items: center;
-    padding: 0 5px;
+    padding: 0 8px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.2s;
 }
 
 /* Background Bar (using pseudo-element or child div) */
@@ -2494,19 +2599,18 @@ body {
 }
 
 .meter-row.type-damage .meter-bar-fill {
-    background-color: #d32f2f;
-    /* Red */
+    background: linear-gradient(90deg, #c62828 0%, #ef5350 100%);
+    box-shadow: 0 0 10px rgba(198, 40, 40, 0.3);
 }
 
 .meter-row.type-healing .meter-bar-fill {
-    background-color: #388e3c;
-    /* Green */
+    background: linear-gradient(90deg, #2e7d32 0%, #66bb6a 100%);
+    box-shadow: 0 0 10px rgba(46, 125, 50, 0.3);
 }
 
-
 .meter-row.type-gold .meter-bar-fill {
-    background-color: #ffd700;
-    /* Gold */
+    background: linear-gradient(90deg, #fbc02d 0%, #fff176 100%);
+    box-shadow: 0 0 10px rgba(251, 192, 45, 0.3);
 }
 
 /* Source specific overrides */
@@ -2574,6 +2678,13 @@ body {
     font-weight: bold;
 }
 
+.meter-blocked {
+    font-size: 0.85em;
+    opacity: 0.6;
+    font-weight: normal;
+    margin-left: 4px;
+}
+
 .meter-row:hover .meter-bar-fill {
     opacity: 0.9;
 }
@@ -2597,43 +2708,98 @@ body {
     min-height: 20px;
 }
 
-/* --- Blessings Display --- */
-.blessings-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 5px;
-    padding: 2px;
-    min-height: 20px;
+/* Redundant blessing icons removed, using consolidated styles above */
+
+/* --- Combat Feedback Animations --- */
+.hit-flash {
+    animation: hit-flash-anim 0.2s ease-out;
 }
 
-.blessing-icon {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    cursor: help;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.2s;
+@keyframes hit-flash-anim {
+    0% {
+        filter: brightness(1) contrast(1);
+    }
+
+    50% {
+        filter: brightness(3) contrast(2) saturate(0);
+    }
+
+    100% {
+        filter: brightness(1) contrast(1);
+    }
 }
 
-.blessing-icon.locked {
-    filter: grayscale(100%);
-    opacity: 0.3;
-    border-color: transparent;
+.shake {
+    animation: shake-anim 0.3s cubic-bezier(.36, .07, .19, .97) both;
 }
 
-.blessing-icon.active {
-    background: rgba(255, 215, 0, 0.2);
-    border-color: #ffd700;
-    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+@keyframes shake-anim {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
 }
 
-.blessing-icon:hover {
-    transform: scale(1.1);
-    z-index: 10;
+.crit-shake {
+    animation: crit-shake-anim 0.4s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes crit-shake-anim {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, -1px, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 2px, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, -4px, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 4px, 0);
+    }
+}
+
+/* Character sprite impact */
+.sprite-impact {
+    animation: impact-pop 0.2s ease-out;
+}
+
+@keyframes impact-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

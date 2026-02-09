@@ -253,7 +253,7 @@ export class CombatSystem {
             (gameState.combatState.enemyStackingDamage || 0);
         damage = Math.floor(damage * (1 + stackingDamage));
 
-        if (damage > 0) this.applyDamage(targetType, damage);
+        if (damage > 0) this.applyDamage(targetType, damage, BuffSystem.calculateBuffs(targetType === 'enemy' ? gameState.enemySlots : gameState.activeSlots).blockChance);
 
         if (modifiedEffects || item.effects) {
             this.applyEffects(modifiedEffects || item.effects, targetType, sourceType, damage);
@@ -270,9 +270,11 @@ export class CombatSystem {
             }
         }
 
-        // Handle Shield Items
-        if (item.type === 'shield' && item.stats.block) {
-            this.applyShield(sourceType, item.stats.block);
+        // Handle Shield Items (Flat Absorb Gain)
+        // Use 'shield' stat now instead of 'block'
+        // combined.shield comes from getItemCombinedStats
+        if (combined.shield > 0) {
+            this.applyShield(sourceType, combined.shield);
         }
 
         // Play attack sound (only for player attacks to avoid sound spam)
@@ -312,106 +314,101 @@ export class CombatSystem {
 
             // Gold on hit - gives gold to the attacker if it's the player
             if (type === 'goldOnHit' && sourceType === 'player') {
-                if (data.chance && Math.random() < data.chance) {
-                    const goldAmount = data.amount || 1;
-                    gameState.gold += goldAmount;
-                    bus.emit('GOLD_UPDATED', gameState.gold);
+                // ALWAYS APPLY (100% Chance)
+                const goldAmount = data.amount || 1;
+                gameState.gold += goldAmount;
+                bus.emit('GOLD_UPDATED', gameState.gold);
 
-                    // Show floating text directly for gold on the player gaining it
-                    bus.emit('SHOW_FLOATING_TEXT', {
-                        target: sourceType,
-                        damage: `${goldAmount}g`,
-                        amount: goldAmount, // Pass numeric value for meter
-                        isCrit: true, // Make it pop
-                        critType: 'gold', // Custom styling
-                        sourceType: 'gold'
-                    });
+                // Show floating text directly for gold on the player gaining it
+                bus.emit('SHOW_FLOATING_TEXT', {
+                    target: sourceType,
+                    damage: `${goldAmount}g`,
+                    amount: goldAmount, // Pass numeric value for meter
+                    isCrit: true, // Make it pop
+                    critType: 'gold', // Custom styling
+                    sourceType: 'gold'
+                });
 
-                    console.log(`[GOLD ON HIT] +${goldAmount} gold! Total: ${gameState.gold}`);
-                }
+                console.log(`[GOLD ON HIT] +${goldAmount} gold! Total: ${gameState.gold}`);
             }
             else if (type === 'lifesteal') {
-                if (Math.random() < (data.chance ?? 1.0)) {
-                    // Factor defaults to 1.0 (100% of damage)
-                    const factor = data.factor !== undefined ? data.factor : 1.0;
-                    const healAmount = Math.ceil(damageDealt * factor);
-                    if (healAmount > 0) {
-                        this.applyHeal(sourceType, healAmount);
-                        console.log(`[LIFESTEAL] Healed ${sourceType} for ${healAmount} (${factor * 100}% of ${damageDealt} dmg)`);
-                    }
+                // ALWAYS APPLY (100% Chance by default now)
+                // Factor defaults to 1.0 (100% of damage)
+                const factor = data.factor !== undefined ? data.factor : 1.0;
+                const healAmount = Math.ceil(damageDealt * factor);
+                if (healAmount > 0) {
+                    this.applyHeal(sourceType, healAmount);
+                    console.log(`[LIFESTEAL] Healed ${sourceType} for ${healAmount} (${factor * 100}% of ${damageDealt} dmg)`);
                 }
             }
             else if (type === 'holy') {
-                if (data.chance && Math.random() < data.chance) {
-                    this.applyHeal(sourceType, data.heal || 0);
-                    if (data.maxHpGain) {
-                        this.applyMaxHpGain(sourceType, data.maxHpGain);
-                    }
+                // ALWAYS APPLY (100% Chance)
+                this.applyHeal(sourceType, data.heal || 0);
+                if (data.maxHpGain) {
+                    this.applyMaxHpGain(sourceType, data.maxHpGain);
                 }
             }
             else if (type === 'frozen') {
-                if (data.chance && Math.random() < data.chance) {
-                    const duration = (data.duration || defaultDurations.frozen) * 1000;
+                // ALWAYS APPLY (100% Chance)
+                const duration = (data.duration || defaultDurations.frozen) * 1000;
 
-                    const currentStacks = targetDebuffs.filter(d => d.type === 'frozen').length;
+                const currentStacks = targetDebuffs.filter(d => d.type === 'frozen').length;
 
-                    targetDebuffs.push({
-                        type: 'frozen',
-                        duration: duration,
-                        damagePerTick: 0,
-                        tickTimer: 0,
-                        id: Math.random()
-                    });
+                targetDebuffs.push({
+                    type: 'frozen',
+                    duration: duration,
+                    damagePerTick: 0,
+                    tickTimer: 0,
+                    id: Math.random()
+                });
 
-                    if (currentStacks + 1 >= 10) {
-                        const timerKey = targetType === 'enemy' ? 'enemyFrozenTimer' : 'playerFrozenTimer';
-                        gameState.combatState[timerKey] = 1000; // 1 second
+                if (currentStacks + 1 >= 10) {
+                    const timerKey = targetType === 'enemy' ? 'enemyFrozenTimer' : 'playerFrozenTimer';
+                    gameState.combatState[timerKey] = 1000; // 1 second
 
-                        // Consume all frozen stacks
-                        for (let i = targetDebuffs.length - 1; i >= 0; i--) {
-                            if (targetDebuffs[i].type === 'frozen') {
-                                targetDebuffs.splice(i, 1);
-                            }
+                    // Consume all frozen stacks
+                    for (let i = targetDebuffs.length - 1; i >= 0; i--) {
+                        if (targetDebuffs[i].type === 'frozen') {
+                            targetDebuffs.splice(i, 1);
                         }
-
-                        console.log(`[FROZEN] 10 stacks reached → 1-second full freeze on ${targetType}! Stacks consumed.`);
-                    } else {
-                        console.log(`[FROZEN] Stack added (${currentStacks + 1}/10)`);
                     }
+
+                    console.log(`[FROZEN] 10 stacks reached → 1-second full freeze on ${targetType}! Stacks consumed.`);
+                } else {
+                    console.log(`[FROZEN] Stack added (${currentStacks + 1}/10)`);
                 }
             }
             else if (['bleed', 'poison', 'fire', 'shadow', 'curse'].includes(type)) {
                 let existingDebuff = targetDebuffs.find(d => d.type === type);
                 const duration = (data.duration || defaultDurations[type]) * 1000;
                 let perStackDamage = data.damagePerTick || 0;
-                const chance = data.chance ?? 1.0;
+                // const chance = data.chance ?? 1.0; // Chance Removed
                 const tickInterval = data.tickInterval || 1000;
 
-                // Independent chance to apply/refresh/stack on this hit
-                if (chance > 0 && Math.random() < chance) {
-                    // Refresh duration if exists
-                    if (existingDebuff) {
-                        existingDebuff.duration = duration;
-                    }
+                // ALWAYS APPLY (100% Chance)
 
-                    if (!existingDebuff) {
-                        existingDebuff = {
-                            type: type,
-                            duration: duration,
-                            damagePerTick: perStackDamage,
-                            tickTimer: 0,
-                            id: Math.random(),
-                            stacks: 1,
-                            perStackDamage: perStackDamage,
-                            tickInterval: tickInterval
-                        };
-                        targetDebuffs.push(existingDebuff);
-                        console.log(`[DEBUFF NEW] ${type} applied (${Math.round(chance * 100)}% chance) → x${existingDebuff.stacks} stack (${existingDebuff.damagePerTick} dmg/tick)`);
-                    } else {
-                        existingDebuff.stacks += 1;
-                        existingDebuff.damagePerTick = existingDebuff.stacks * existingDebuff.perStackDamage;
-                        console.log(`[DEBUFF STACK] ${type} +1 stack (now x${existingDebuff.stacks}, ${existingDebuff.damagePerTick} dmg/tick), duration refreshed`);
-                    }
+                // Refresh duration if exists
+                if (existingDebuff) {
+                    existingDebuff.duration = duration;
+                }
+
+                if (!existingDebuff) {
+                    existingDebuff = {
+                        type: type,
+                        duration: duration,
+                        damagePerTick: perStackDamage,
+                        tickTimer: 0,
+                        id: Math.random(),
+                        stacks: 1,
+                        perStackDamage: perStackDamage,
+                        tickInterval: tickInterval
+                    };
+                    targetDebuffs.push(existingDebuff);
+                    console.log(`[DEBUFF NEW] ${type} applied → x${existingDebuff.stacks} stack (${existingDebuff.damagePerTick} dmg/tick)`);
+                } else {
+                    existingDebuff.stacks += 1;
+                    existingDebuff.damagePerTick = existingDebuff.stacks * existingDebuff.perStackDamage;
+                    console.log(`[DEBUFF STACK] ${type} +1 stack (now x${existingDebuff.stacks}, ${existingDebuff.damagePerTick} dmg/tick), duration refreshed`);
                 }
             }
         }
@@ -453,7 +450,11 @@ export class CombatSystem {
 
                 if (debuff.tickTimer >= tickInterval) {
                     debuff.tickTimer -= tickInterval;
-                    this.applyDamage(targetType, debuff.damagePerTick);
+                    this.applyDamage(targetType, debuff.damagePerTick); // Debuffs ignore block for now? Or apply same mitigation? 
+                    // Let's assume Debuffs ignore block reduction (Internal damage), or maybe apply it?
+                    // User said "Block should be a value that reduced the damge done by enemy".
+                    // Usually DoTs are internal.
+                    // But for consistency let's leave DoTs as True Damage for now unless requested.
 
                     // Emit damage event for UI
                     bus.emit('DAMAGE_DEALT', {
@@ -475,7 +476,7 @@ export class CombatSystem {
         }
     }
 
-    applyDamage(targetType, damage) {
+    applyDamage(targetType, damage, blockChance = 0) {
         const target = targetType === 'enemy' ? gameState.enemy : gameState.player;
         const attackerType = targetType === 'enemy' ? 'player' : 'enemy';
 
@@ -495,7 +496,18 @@ export class CombatSystem {
             }, 150);
         }
 
+        // 1. Apply Block (Percentage Reduction)
+        let blockedAmount = 0;
         let remainingDamage = damage;
+
+        if (blockChance > 0) {
+            // Cap block at 90%?
+            const effectiveBlock = Math.min(0.9, blockChance);
+            blockedAmount = Math.ceil(damage * effectiveBlock);
+            remainingDamage -= blockedAmount;
+        }
+
+        // 2. Apply Shield (Absorb)
         let absorbed = 0;
 
         if (target.shield > 0) {
@@ -540,7 +552,8 @@ export class CombatSystem {
                 isCrit: false,
                 critType: "",
                 sourceItem: null,
-                sourceType: 'reflect'
+                sourceType: 'reflect',
+                blocked: 0
             });
 
             bus.emit('SHOW_FLOATING_TEXT', {
@@ -548,6 +561,15 @@ export class CombatSystem {
                 damage: reflectAmount,
                 isCrit: false,
                 sourceType: 'reflect'
+            });
+        }
+
+        if (remainingDamage > 0 || blockedAmount > 0 || absorbed > 0) {
+            bus.emit('DAMAGE_DEALT', {
+                target: targetType,
+                damage: remainingDamage,
+                blocked: blockedAmount + absorbed, // Total mitigated damage
+                isCrit: false
             });
         }
 

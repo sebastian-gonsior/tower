@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Testing - Manual Boss Fight</title>
+    <style>
+        :root {
+            --bg: #1a1a2e;
+            --surface: #16213e;
+            --accent: #e94560;
+            --text: #eee;
+            --success: #4ade80;
+            --warning: #fbbf24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        select,
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        select {
+            background: var(--surface);
+            color: var(--text);
+            min-width: 150px;
+        }
+
+        button {
+            background: var(--accent);
+            color: white;
+            transition: transform 0.1s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .panel h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .health-bar {
+            background: #333;
+            border-radius: 10px;
+            height: 30px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .health-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            transition: width 0.3s;
+        }
+
+        .health-bar-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .item-slot {
+            background: #2a2a4a;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-slot .icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .item-slot .name {
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        .set-bonuses {
+            background: #2a2a4a;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .bonus {
+            padding: 5px 0;
+            font-size: 13px;
+        }
+
+        .bonus.active {
+            color: var(--success);
+        }
+
+        .bonus.inactive {
+            color: #666;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .stat {
+            padding: 5px;
+            background: #2a2a4a;
+            border-radius: 4px;
+        }
+
+        .stat-label {
+            color: #888;
+        }
+
+        .combat-log {
+            background: #0a0a1a;
+            border-radius: 8px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: monospace;
+        }
+
+        .log-entry {
+            padding: 2px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        .log-damage {
+            color: #ff6b6b;
+        }
+
+        .log-heal {
+            color: #4ade80;
+        }
+
+        .log-effect {
+            color: #60a5fa;
+        }
+
+        .log-crit {
+            color: #fbbf24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏰 Set Testing - Manual Boss Fight</h1>
+
+        <div class="controls">
+            <select id="setSelect">
+                <option value="dwarf">Dwarf (Bleed)</option>
+                <option value="elf">Elf (Poison)</option>
+                <option value="undead">Undead (Shadow)</option>
+                <option value="celestial">Celestial (Holy)</option>
+                <option value="infernal">Infernal (Fire)</option>
+                <option value="oceanic">Oceanic (Freeze)</option>
+                <option value="assassin">Assassin (Poison+Crit)</option>
+                <option value="paladin">Paladin (Holy+Shield)</option>
+                <option value="warlock">Warlock (Curse+Shadow)</option>
+                <option value="titan">Titan (Multihit+Shield)</option>
+            </select>
+            <select id="bossSelect">
+                <option value="0">Boss 1: Rat King (100 HP)</option>
+                <option value="1">Boss 2: Bandit Leader (800 HP)</option>
+                <option value="2">Boss 3: Forest Guardian (2500 HP)</option>
+                <option value="3">Boss 4: Stone Golem (5000 HP)</option>
+                <option value="4">Boss 5: Cursed Knight (10000 HP)</option>
+            </select>
+            <button id="equipBtn">Equip Set (4pc)</button>
+            <button id="startBtn" disabled>Start Fight</button>
+            <button id="resetBtn">Reset</button>
+        </div>
+
+        <div class="game-area">
+            <div class="panel">
+                <h2>👤 Player</h2>
+                <div class="health-bar">
+                    <div class="health-bar-fill" id="playerHpBar" style="width: 100%"></div>
+                    <div class="health-bar-text" id="playerHpText">1000 / 1000</div>
+                </div>
+                <div class="items-grid" id="playerItems"></div>
+                <div class="set-bonuses" id="setBonuses">
+                    <strong>Set Bonuses:</strong>
+                    <div id="bonusList"></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>👹 Boss: <span id="bossName">Rat King</span></h2>
+                <div class="health-bar">
+                    <div class="health-bar-fill" id="bossHpBar" style="width: 100%"></div>
+                    <div class="health-bar-text" id="bossHpText">100 / 100</div>
+                </div>
+                <div class="stats-grid" id="bossStats"></div>
+            </div>
+
+            <div class="panel" style="grid-column: 1 / -1;">
+                <h2>📜 Combat Log</h2>
+                <div class="combat-log" id="combatLog"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import game modules
+        import { gameState, PHASES, GAME_CONFIG } from '../js/state/GameState.js';
+        import { dataManager } from '../js/managers/DataManager.js';
+        import { combatSystem } from '../js/systems/CombatSystem.js';
+        import { ItemFactory } from '../js/models/ItemFactory.js';
+        import { BuffSystem } from '../js/systems/BuffSystem.js';
+        import { bus } from '../js/utils/EventBus.js';
+
+        let combatInterval = null;
+        let originalBossHp = 100;
+        let combatLog = [];
+
+        // DOM Elements
+        const setSelect = document.getElementById('setSelect');
+        const bossSelect = document.getElementById('bossSelect');
+        const equipBtn = document.getElementById('equipBtn');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const playerItemsEl = document.getElementById('playerItems');
+        const bonusListEl = document.getElementById('bonusList');
+        const combatLogEl = document.getElementById('combatLog');
+
+        // Initialize
+        async function init() {
+            await dataManager.loadData();
+            gameState.init();
+            gameState.startGame('Tester');
+
+            // Subscribe to combat events
+            bus.on('damage', (data) => logCombat(`💥 ${data.target} takes ${data.amount} damage`, 'damage'));
+            bus.on('heal', (data) => logCombat(`💚 ${data.target} heals ${data.amount} HP`, 'heal'));
+            bus.on('debuff', (data) => logCombat(`🔥 ${data.type} applied to ${data.target}`, 'effect'));
+            bus.on('crit', (data) => logCombat(`⚡ CRIT! ${data.multiplier}x damage`, 'crit'));
+
+            updateUI();
+            console.log('Test page initialized');
+        }
+
+        function getSetItems(setId) {
+            const items = [];
+            for (const [id, template] of dataManager.items) {
+                if (template.set === setId) {
+                    items.push(template);
+                }
+            }
+            return items;
+        }
+
+        function equipSet() {
+            const setId = setSelect.value;
+            const setItems = getSetItems(setId);
+
+            // Clear player items
+            gameState.activeSlots = [null, null, null, null, null, null];
+
+            // Equip up to 4 items from the set
+            const toEquip = setItems.slice(0, 4);
+            toEquip.forEach((template, index) => {
+                const item = ItemFactory.createItem(template.id);
+                item.starLevel = 2; // Give some star level for better stats
+                gameState.activeSlots[index] = item;
+            });
+
+            startBtn.disabled = false;
+            updateUI();
+            logCombat(`✅ Equipped ${toEquip.length} items from ${setId} set`, 'effect');
+        }
+
+        function startFight() {
+            const bossIndex = parseInt(bossSelect.value);
+            const bosses = dataManager.bosses;
+            const boss = bosses[bossIndex];
+
+            gameState.level = bossIndex + 1;
+            gameState.configureBoss();
+            originalBossHp = gameState.enemy.hp;
+
+            gameState.setPhase(PHASES.COMBAT);
+            combatSystem.startFight();
+
+            equipBtn.disabled = true;
+            startBtn.disabled = true;
+
+            logCombat(`⚔️ Fight started against ${boss.name}!`, 'effect');
+
+            combatInterval = setInterval(() => {
+                combatSystem.update(100);
+                updateUI();
+
+                if (gameState.enemy.hp <= 0) {
+                    clearInterval(combatInterval);
+                    logCombat(`🎉 VICTORY! Boss defeated!`, 'heal');
+                    equipBtn.disabled = false;
+                }
+                if (gameState.player.hp <= 0) {
+                    clearInterval(combatInterval);
+                    logCombat(`💀 DEFEAT! Player died.`, 'damage');
+                    equipBtn.disabled = false;
+                }
+            }, 100);
+        }
+
+        function reset() {
+            if (combatInterval) clearInterval(combatInterval);
+
+            gameState.init();
+            gameState.startGame('Tester');
+            combatLog = [];
+
+            equipBtn.disabled = false;
+            startBtn.disabled = true;
+
+            updateUI();
+            logCombat('🔄 Game reset', 'effect');
+        }
+
+        function updateUI() {
+            // Player HP
+            const playerHpPct = (gameState.player.hp / gameState.player.maxHp) * 100;
+            document.getElementById('playerHpBar').style.width = `${playerHpPct}%`;
+            document.getElementById('playerHpText').textContent = `${Math.floor(gameState.player.hp)} / ${gameState.player.maxHp}`;
+
+            // Enemy HP
+            const bossHpPct = (gameState.enemy.hp / originalBossHp) * 100;
+            document.getElementById('bossHpBar').style.width = `${Math.max(0, bossHpPct)}%`;
+            document.getElementById('bossHpText').textContent = `${Math.floor(Math.max(0, gameState.enemy.hp))} / ${originalBossHp}`;
+            document.getElementById('bossName').textContent = gameState.enemy.name || 'Boss';
+
+            // Player Items
+            playerItemsEl.innerHTML = gameState.activeSlots.map(item => {
+                if (!item) return '<div class="item-slot"><div class="icon">❓</div><div class="name">Empty</div></div>';
+                return `<div class="item-slot">
+                    <div class="icon">${item.icon}</div>
+                    <div class="name">${item.name}</div>
+                </div>`;
+            }).join('');
+
+            // Set Bonuses
+            const buffs = BuffSystem.calculateGlobalBonuses(gameState.activeSlots);
+            bonusListEl.innerHTML = buffs.setBonuses.map(b =>
+                `<div class="bonus ${b.active ? 'active' : 'inactive'}">
+                    ${b.active ? '✅' : '⬜'} ${b.name}: ${b.description}
+                </div>`
+            ).join('');
+        }
+
+        function logCombat(message, type) {
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            combatLogEl.appendChild(entry);
+            combatLogEl.scrollTop = combatLogEl.scrollHeight;
+        }
+
+        // Event Listeners
+        equipBtn.addEventListener('click', equipSet);
+        startBtn.addEventListener('click', startFight);
+        resetBtn.addEventListener('click', reset);
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+
+</html>

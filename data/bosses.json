@@ -6,7 +6,7 @@
     "hp": 100,
     "introText": "A giant rat blocks your path, squeaking menacingly.",
     "items": [
-      "dagger_common"
+      "molten_shield"
     ]
   },
   {
@@ -16,8 +16,8 @@
     "hp": 800,
     "introText": "He wants your gold and your life.",
     "items": [
-      "sword_common",
-      "shield_common"
+      "saints_tome",
+      "vulcans_anvil"
     ]
   },
   {
@@ -27,8 +27,8 @@
     "hp": 2500,
     "introText": "The trees whisper warnings as the Guardian approaches.",
     "items": [
-      "axe_rare",
-      "relic_speed"
+      "angelic_blade",
+      "divine_bulwark"
     ]
   },
   {
@@ -38,9 +38,8 @@
     "hp": 5000,
     "introText": "A massive pile of rocks begins to move.",
     "items": [
-      "shield_common",
-      "shield_common",
-      "sword_common"
+      "natures_grasp",
+      "windrunner_boots"
     ]
   },
   {
@@ -50,9 +49,9 @@
     "hp": 10000,
     "introText": "Armor animated by dark magic.",
     "items": [
-      "axe_rare",
-      "shield_common",
-      "relic_multihit"
+      "grave_dirt",
+      "vampire_fangs",
+      "vulcans_anvil"
     ]
   },
   {
@@ -62,9 +61,9 @@
     "hp": 25000,
     "introText": "Thousands of eyes stare at you from the darkness.",
     "items": [
-      "dagger_epic",
-      "relic_speed",
-      "relic_speed"
+      "valor_shield",
+      "guardians_seal",
+      "sacred_oil"
     ]
   },
   {
@@ -74,8 +73,9 @@
     "hp": 50000,
     "introText": "The air freezes as he steps forward.",
     "items": [
-      "axe_rare",
-      "shield_common"
+      "grave_dirt",
+      "bone_scythe",
+      "lichs_phylactery"
     ]
   },
   {
@@ -85,10 +85,10 @@
     "hp": 100000,
     "introText": "Flames engulf the arena.",
     "items": [
-      "sword_common",
-      "dagger_epic",
-      "relic_multihit",
-      "relic_speed"
+      "demon_horn",
+      "blazing_heart",
+      "vulcans_anvil",
+      "chaos_wand"
     ]
   },
   {
@@ -98,10 +98,10 @@
     "hp": 250000,
     "introText": "He walks between dimensions.",
     "items": [
-      "dagger_epic",
-      "wand_holy",
-      "relic_multihit",
-      "relic_speed"
+      "smoke_bomb",
+      "masters_mark",
+      "dark_cloak",
+      "vipers_fang"
     ]
   },
   {
@@ -111,11 +111,11 @@
     "hp": 1000000,
     "introText": "The final challenge awaits.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -126,11 +126,11 @@
     "itemStarLevel": 1,
     "introText": "The Tower Master returns, stronger than before.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -141,11 +141,11 @@
     "itemStarLevel": 2,
     "introText": "You've only scratched the surface of his power.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -156,11 +156,11 @@
     "itemStarLevel": 3,
     "introText": "His equipment begins to glow with power.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -171,11 +171,11 @@
     "itemStarLevel": 4,
     "introText": "The tower trembles under his footsteps.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -186,11 +186,11 @@
     "itemStarLevel": 5,
     "introText": "Halfway to true mastery.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -201,11 +201,11 @@
     "itemStarLevel": 6,
     "introText": "He is becoming one with the tower.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -216,11 +216,11 @@
     "itemStarLevel": 7,
     "introText": "The air crackles with energy around him.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -231,11 +231,11 @@
     "itemStarLevel": 8,
     "introText": "Only a true hero can withstand this power.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
@@ -246,26 +246,26 @@
     "itemStarLevel": 9,
     "introText": "Almost unbeatable. Almost.",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   },
   {
     "level": 20,
     "name": "The Tower Master - Final Form",
     "icon": "🐉",
-    "hp": 100000000000,
+    "hp": 1000000000000,
     "itemStarLevel": 10,
     "introText": "The ultimate test of your strength. This is it!",
     "items": [
-      "dagger_epic",
-      "axe_rare",
-      "relic_multihit",
-      "relic_multihit",
-      "relic_speed"
+      "lava_charm",
+      "magma_saber",
+      "molten_shield",
+      "obsidian_shard",
+      "saints_tome"
     ]
   }
 ]
