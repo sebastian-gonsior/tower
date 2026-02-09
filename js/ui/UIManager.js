@@ -1092,7 +1092,7 @@ export class UIManager {
         let displayItem = item;
         let isPreview = false;
 
-        // Handle Preview Mode (Alt Key)
+        // --- Preview Mode Logic (Alt Key) ---
         if (this.isAltPressed && item.starLevel < 10) {
             if (typeof item.getPreview === 'function') {
                 const previewData = item.getPreview(item.starLevel + 1);
@@ -1111,167 +1111,296 @@ export class UIManager {
         const el = this.elements.itemTooltip;
         el.className = `item-tooltip rarity-${displayItem.rarity}`;
 
-        // Get Combined Stats (Applied stats include global sets/blessings)
+        // Get Combined Stats
+        // 1. Calculate final combat stats including all global sources
         const combined = BuffSystem.getItemCombinedStats(displayItem, slots || gameState.activeSlots);
         const base = displayItem.stats || {};
 
-        // 1. Header
-        let html = `
-            ${isPreview ? '<div style="background: #4caf50; color: white; text-align: center; padding: 4px; border-radius: 6px; font-weight: bold; margin-bottom: 10px; font-size: 0.8em;">NEXT LEVEL PREVIEW</div>' : ''}
+        let html = '';
+
+        // --- 0. Preview Banner ---
+        if (isPreview) {
+            html += `<div style="background: rgba(76, 175, 80, 0.2); color: #81c784; text-align: center; padding: 6px; border-radius: 8px; font-weight: 800; margin-bottom: 12px; border: 1px solid rgba(76, 175, 80, 0.4); box-shadow: 0 0 10px rgba(76,175,80,0.2);">Build Preview (Next Star)</div>`;
+        }
+
+        // --- 1. Header (Identity) ---
+        const metaInfo = [
+            displayItem.type.toUpperCase(),
+            displayItem.subtype ? `• ${displayItem.subtype}` : '',
+            `• ⭐${displayItem.starLevel || 1}`
+        ].join(' ');
+
+        html += `
             <div class="tooltip-header">
                 <div class="tooltip-icon">${displayItem.icon}</div>
-                <div class="tooltip-title">
+                <div class="tooltip-info">
                     <div class="tooltip-name">${displayItem.getDisplayName ? displayItem.getDisplayName() : displayItem.name}</div>
-                    <div class="tooltip-rarity rarity-text-${displayItem.rarity}">${displayItem.rarity}</div>
-                    <div class="tooltip-type">${displayItem.type} ${displayItem.subtype ? `• ${displayItem.subtype}` : ''}</div>
-                    ${displayItem.set ? `<div class="tooltip-set rarity-text-${displayItem.rarity}">Set: ${dataManager.getAllSets().find(s => s.id === displayItem.set)?.name || displayItem.set}</div>` : ''}
+                    <div class="tooltip-meta">
+                        <span>${metaInfo}</span>
+                        <div class="tooltip-rarity-pill">${displayItem.rarity}</div>
+                    </div>
                 </div>
             </div>
         `;
 
-        // 2. Base Stats
-        html += '<div class="tooltip-sub-header">Base Item Stats</div>';
-        html += '<div class="stats-grid">';
-
-        if (base.damage) html += `<div class="stat-box"><span class="stat-label-small">Damage</span><span class="stat-value-main">${base.damage}</span></div>`;
-        if (base.cooldown) html += `<div class="stat-box"><span class="stat-label-small">Cooldown</span><span class="stat-value-main">${base.cooldown}s</span></div>`;
-        if (base.shield) html += `<div class="stat-box"><span class="stat-label-small">Shield</span><span class="stat-value-main">${base.shield}</span></div>`;
-        if (base.block) html += `<div class="stat-box"><span class="stat-label-small">Block</span><span class="stat-value-main">${Math.round(base.block * 100)}%</span></div>`;
-        if (base.attackSpeed) html += `<div class="stat-box"><span class="stat-label-small">Speed</span><span class="stat-value-main">+${Math.round(base.attackSpeed * 100)}%</span></div>`;
-        if (base.critChance) html += `<div class="stat-box"><span class="stat-label-small">Crit %</span><span class="stat-value-main">+${Math.round(base.critChance * 100)}%</span></div>`;
-
-        html += '</div>';
-
-        // 3. Crit Tiers
-        const critChance = combined.critChance;
-        if (critChance > 0) {
-            html += '<div class="tooltip-sub-header">Crit Tiers</div>';
-
-            const normalCrit = Math.min(1.0, critChance) * (1 - 0.2);
-            const superCrit = Math.min(1.0, critChance) * 0.2 * (1 - 0.2);
-            const hyperCrit = Math.min(1.0, critChance) * 0.2 * 0.2;
-
-            html += `
-                <div class="crit-tier crit-tier-normal"><span>Crit (2x)</span><span>${Math.round(normalCrit * 100)}%</span></div>
-                <div class="crit-tier crit-tier-super"><span>SuperCrit (3x)</span><span>${Math.round(superCrit * 100)}%</span></div>
-                <div class="crit-tier crit-tier-hyper"><span>HyperCrit (5x)</span><span>${Math.round(hyperCrit * 100)}%</span></div>
-            `;
-        }
-
-        // 3. Total Applied Stats (The final combat values)
-        html += '<div class="tooltip-sub-header">Total Applied (Combat)</div>';
-        html += '<div class="stats-grid">';
-
-        // Damage remains same if no global damage buffs exist yet
-        html += `<div class="stat-box highlight"><span class="stat-label-small">Damage</span><span class="stat-value-main">${combined.damage}</span></div>`;
-
-        // Final Attack Speed
-        const finalAs = combined.attackSpeed.toFixed(2);
-        html += `<div class="stat-box highlight"><span class="stat-label-small">Atk Speed</span><span class="stat-value-main">${finalAs}/s</span></div>`;
-
-        // Final Crit Chance
-        html += `<div class="stat-box highlight"><span class="stat-label-small">Crit Chance</span><span class="stat-value-main">${Math.round(combined.critChance * 100)}%</span></div>`;
-
-        // Final Crit Damage
-        html += `<div class="stat-box highlight"><span class="stat-label-small">Crit Dmg</span><span class="stat-value-main">x${combined.critDmg.toFixed(1)}</span></div>`;
-
-        // Multihit
-        if (combined.multihitCount > 1) {
-            html += `<div class="stat-box highlight"><span class="stat-label-small">Hits</span><span class="stat-value-main">x${combined.multihitCount}</span></div>`;
-        }
-
-        // Lifesteal
-        if (combined.lifesteal > 0) {
-            html += `<div class="stat-box highlight"><span class="stat-label-small">Lifesteal</span><span class="stat-value-main">${Math.round(combined.lifesteal * 100)}%</span></div>`;
-        }
-
-        // Shield (Absorb)
-        if (combined.shield > 0) {
-            html += `<div class="stat-box highlight"><span class="stat-label-small">Shield</span><span class="stat-value-main">${combined.shield}</span></div>`;
-        }
-
-        // Block (Reduction)
-        if (combined.block > 0) {
-            html += `<div class="stat-box highlight"><span class="stat-label-small">Block</span><span class="stat-value-main">${Math.round(combined.block * 100)}%</span></div>`;
-        }
-
-        html += '</div>';
-
-        // 5. All Set Bonuses
-        if (combined.setBonuses && combined.setBonuses.length > 0) {
-            const relevantBonuses = combined.setBonuses.filter(sb => sb.setId === displayItem.set);
-
-            if (relevantBonuses.length > 0) {
-                html += '<div class="tooltip-sub-header">Set Progression</div>';
-                relevantBonuses.forEach(sb => {
-                    const statusClass = sb.active ? '' : 'inactive';
-                    html += `
-                        <div class="set-bonus-line ${statusClass}">
-                            <span class="set-bonus-dot">${sb.active ? '●' : '○'}</span>
-                            <span class="set-bonus-text">${sb.name}: ${sb.description}</span>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        // 6. Bonus Sources (Active only)
-        const activeSources = combined.sources;
-        if (activeSources.length > 0) {
-            html += '<div class="tooltip-sub-header">Active Bonuses</div>';
-            activeSources.forEach(src => {
+        // --- 2. Global Sources (The "Why") ---
+        // Show this BEFORE stats so players know why stats are high
+        if (combined.sources && combined.sources.length > 0) {
+            html += `<div class="tooltip-section global-section">`;
+            html += `<div class="section-title">✨ Global Effects Active</div>`;
+            combined.sources.forEach(src => {
                 html += `
-                    <div class="bonus-source source-type-${src.type}">
-                        <span style="flex:1">${src.name}</span>
-                        <span style="font-weight:bold">${src.bonus}</span>
+                    <div class="global-tag">
+                        <span>${src.type === 'blessing' ? '🙏' : src.type === 'relic' ? '💍' : '📦'}</span>
+                        <span>${src.name}</span>
                     </div>
                 `;
             });
+            html += `</div>`;
         }
 
-        // 7. Effects
-        const effects = combined.modifiedEffects;
-        if (Object.keys(effects).length > 0) {
-            html += '<div class="tooltip-sub-header">Special Effects</div>';
-            html += '<div class="tooltip-effects">';
-            for (const [type, data] of Object.entries(effects)) {
-                let effectDesc = '';
-                // Chance removed - using implicit 100%
+        // --- 3. Combat Ready Stats ---
+        // Helper to check for boosts
+        const isBoosted = (final, original) => final > original + 0.001;
+        const fmtStat = (val, suffix = '') => `${val}${suffix}`;
 
-                if (type === 'goldOnHit') effectDesc = `+${data.amount} Gold on Hit`;
-                else if (type === 'poison') effectDesc = `Poison: ${data.damagePerTick} dmg (${data.duration}s)`;
-                else if (type === 'shadow') effectDesc = `Shadow: ${data.damagePerTick} dmg (${data.duration}s)`;
-                else if (type === 'curse') effectDesc = `Curse: ${data.damagePerTick} dmg (${data.duration}s)`;
-                else if (type === 'bleed') {
-                    effectDesc = `Bleed: ${data.damagePerTick} dmg`;
-                    if (data.isModified) {
-                        effectDesc += ` <span class="effect-mod-label">(Base: ${data.original.damagePerTick})</span>`;
-                    }
-                    effectDesc += ` (${data.duration}s)`;
-                    if (data.tickInterval && data.tickInterval < 1000) {
-                        effectDesc += ` <span class="effect-mod-label">Rapid Ticks!</span>`;
-                    }
-                }
-                else if (type === 'fire') effectDesc = `Burn: ${data.damagePerTick} dmg (${data.duration}s)`;
-                else if (type === 'frozen') effectDesc = `Freeze Target`;
-                else if (type === 'holy') effectDesc = `Heal ${data.heal} & +${data.maxHpGain || 0} MaxHP`;
-                else if (type === 'multihit') effectDesc = `Multihit: x${data.count}`;
-                else if (type === 'lifesteal') effectDesc = `Lifesteal: ${Math.round((data.factor || 0) * 100)}%`;
-                else effectDesc = type.charAt(0).toUpperCase() + type.slice(1);
+        html += `<div class="tooltip-section">`;
+        html += `<div class="section-title">⚔️ Combat Stats</div>`;
+        html += `<div class="stats-grid">`;
 
-                const modClass = data.isModified ? 'modified' : '';
-                html += `<div class="effect-row ${modClass}">✦ ${effectDesc}</div>`;
+        // Helper to determine if a relic should show this stat
+        // Relics only show stats they explicitly provide
+        const shouldShow = (statKey) => {
+            if (displayItem.type !== 'relic') return true; // Weapons/Shields show everything
+            if (statKey === 'multihit') return (base.multihitCount > 0 || (displayItem.effects && displayItem.effects.multihit));
+            return (base[statKey] !== undefined && base[statKey] !== 0);
+        };
+
+        // Damage
+        const baseDmg = base.damage || 0;
+        const finalDmg = combined.damage;
+        if (finalDmg > 0 && shouldShow('damage')) {
+            const boosted = isBoosted(finalDmg, baseDmg);
+            html += `
+                <div class="stat-row ${boosted ? 'boosted' : ''}">
+                    <span class="stat-label">⚔️ Damage</span>
+                    <span class="stat-val ${boosted ? 'boosted-text' : ''}">
+                        ${finalDmg} ${boosted ? '<span class="boost-icon">▲</span>' : ''}
+                    </span>
+                </div>`;
+        }
+
+        // Attack Speed (APS)
+        const baseAvgSpeed = base.cooldown ? (1 / base.cooldown) : 0;
+        const finalSpeed = combined.attackSpeed;
+
+        if (displayItem.type === 'relic' && base.attackSpeed) {
+            // Relics show % increase
+            const pct = Math.round(base.attackSpeed * 100);
+            html += `
+                <div class="stat-row">
+                    <span class="stat-label">⚡ Speed</span>
+                    <span class="stat-val">+${pct}%</span>
+                </div>`;
+        } else if (finalSpeed > 0 && base.cooldown) {
+            const boosted = isBoosted(finalSpeed, baseAvgSpeed);
+            let boostText = '';
+            if (boosted && baseAvgSpeed > 0) {
+                const pct = Math.round(((finalSpeed / baseAvgSpeed) - 1) * 100);
+                if (pct > 0) boostText = ` <span style="font-size:0.8em; opacity:0.8">(+${pct}%)</span>`;
             }
-            html += '</div>';
+
+            html += `
+                <div class="stat-row ${boosted ? 'boosted' : ''}">
+                    <span class="stat-label">⚡ Speed</span>
+                    <span class="stat-val ${boosted ? 'boosted-text' : ''}">
+                        ${finalSpeed.toFixed(2)}/s ${boosted ? '<span class="boost-icon">▲</span>' : ''}${boostText}
+                    </span>
+                </div>`;
         }
 
-        // 6. Price
+        // Crit Chance
+        const baseCrit = base.critChance || 0;
+        const finalCrit = combined.critChance;
+        const boostedCrit = isBoosted(finalCrit, baseCrit);
+        if (shouldShow('critChance')) {
+            html += `
+                <div class="stat-row ${boostedCrit ? 'boosted' : ''}">
+                    <span class="stat-label">🎯 Crit %</span>
+                    <span class="stat-val ${boostedCrit ? 'boosted-text' : ''}">
+                        ${Math.round(finalCrit * 100)}% ${boostedCrit ? '<span class="boost-icon">▲</span>' : ''}
+                    </span>
+                </div>`;
+        }
+
+        // Crit Dmg
+        const baseCritDmg = base.critDmg || 2.0;
+        const finalCritDmg = combined.critDmg;
+        const boostedCD = isBoosted(finalCritDmg, baseCritDmg);
+        if (finalCritDmg > 0 && shouldShow('critDmg')) {
+            html += `
+                <div class="stat-row ${boostedCD ? 'boosted' : ''}">
+                    <span class="stat-label">💥 Crit Dmg</span>
+                    <span class="stat-val ${boostedCD ? 'boosted-text' : ''}">
+                        x${finalCritDmg.toFixed(1)} ${boostedCD ? '<span class="boost-icon">▲</span>' : ''}
+                    </span>
+                </div>`;
+        }
+
+        // Multihit
+        if (combined.multihitCount > 1 && shouldShow('multihit')) {
+            html += `
+                <div class="stat-row boosted">
+                    <span class="stat-label">🌪️ Multihit</span>
+                    <span class="stat-val boosted-text">x${combined.multihitCount}</span>
+                </div>`;
+        }
+
+        // Block & Shield
+        if (combined.block > 0 && shouldShow('block')) {
+            html += `
+                <div class="stat-row">
+                    <span class="stat-label">🛡️ Block</span>
+                    <span class="stat-val">${Math.round(combined.block * 100)}%</span>
+                </div>`;
+        }
+
+        // Ensure Shield HP is shown if present
+        if (base.shield > 0) {
+            html += `
+                <div class="stat-row">
+                    <span class="stat-label">🛡️ Shield</span>
+                    <span class="stat-val">${base.shield}</span>
+                </div>`;
+        }
+
+        html += `</div></div>`; // End Stats Section
+
+        // --- 4. Special Effects & Abilities ---
+        const effects = combined.modifiedEffects;
+        // Filter out keys that are actually stats (already shown in stats section)
+        const statKeys = ['critChance', 'attackSpeed', 'damage', 'health', 'defense', 'block', 'shield'];
+        const effectKeys = Object.keys(effects).filter(k => !statKeys.includes(k));
+
+        if (effectKeys.length > 0) {
+            html += `<div class="tooltip-section">`;
+            html += `<div class="section-title">🔮 Passives & Abilities</div>`;
+
+            effectKeys.forEach(type => {
+                const data = effects[type];
+                let icon = '✨';
+                let text = '';
+
+                // Icon Mapping
+                if (type === 'poison') icon = '☠️';
+                if (type === 'fire') icon = '🔥';
+                if (type === 'bleed') icon = '🩸';
+                if (type === 'frozen') icon = '❄️';
+                if (type === 'goldOnHit') icon = '💰';
+                if (type === 'multihit') icon = '⚔️';
+                if (type === 'lifesteal') icon = '❤️';
+                if (type === 'holy') icon = '✨';
+                if (type === 'curse') icon = '🧿';
+                if (type === 'shadow') icon = '🌑';
+
+                // Description Construction
+                if (type === 'goldOnHit') text = `Gain <b>${data.amount} Gold</b> on hit`;
+                else if (type === 'poison') text = `Apply <b>Poison</b>: ${data.damagePerTick} dmg/s for ${data.duration}s`;
+                else if (type === 'bleed') text = `Apply <b>Bleed</b>: ${data.damagePerTick} dmg (${data.duration}s)`;
+                else if (type === 'fire') text = `Apply <b>Burn</b>: ${data.damagePerTick} dmg/s for ${data.duration}s`;
+                else if (type === 'shadow') text = `Apply <b>Shadow</b>: ${data.damagePerTick} dmg/s for ${data.duration}s`;
+                else if (type === 'curse') text = `Apply <b>Curse</b>: ${data.damagePerTick} dmg/s for ${data.duration}s`;
+                else if (type === 'frozen') text = `Apply <b>Frozen</b>: Slows enemy (10 stacks = Freeze)`;
+                else if (type === 'lifesteal') text = `Heal for <b>${Math.round((data.factor || 0) * 100)}%</b> of damage dealt`;
+                else if (type === 'holy') {
+                    text = `Heal <b>${data.heal || 0} HP</b>`;
+                    if (data.maxHpGain) text += ` & Gain <b>${data.maxHpGain} MaxHP</b>`;
+                    text += ` on hit`;
+                }
+                else if (type === 'multihit') text = `<b>${Math.round((data.chance || 0) * 100)}% Chance</b> to hit additional targets`;
+                else {
+                    // Cleaner default text
+                    text = `<b>${type.charAt(0).toUpperCase() + type.slice(1)}</b>: Effect Active`;
+                }
+
+                // Modification check
+                const isModded = data.isModified;
+
+                html += `
+                    <div class="ability-row ${isModded ? 'boosted' : ''}">
+                        <div class="ability-icon">${icon}</div>
+                        <div>
+                            ${text}
+                            ${isModded ? `<div style="font-size:0.8em; color:#66bb6a; margin-top:2px;">✨ Buffed by Set Bonus</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+        }
+
+        // --- 5. Set Bonuses (Progression Tracker) ---
+        if (combined.setBonuses && combined.setBonuses.length > 0) {
+            // Group by Set
+            const sets = {};
+            combined.setBonuses.forEach(sb => {
+                if (!sets[sb.setId]) sets[sb.setId] = [];
+                sets[sb.setId].push(sb);
+            });
+
+            // Iterate Sets - ONLY show the set belonging to this item
+            Object.keys(sets).forEach(setId => {
+                // User Request: Show ONLY the bonus from the item itself
+                if (setId !== displayItem.set) return;
+
+                const bonuses = sets[setId];
+                const activeCount = bonuses.filter(b => b.active).length;
+                // Calculate total needed based on max threshold
+                const maxThreshold = Math.max(...bonuses.map(b => b.threshold));
+
+                // Try to find set name
+                const setName = bonuses[0].name || setId;
+
+                html += `<div class="tooltip-section set-section set-${setId}">`;
+                html += `
+                    <div class="set-title">
+                        <span>${setName} SET</span>
+                        <span class="set-progress">${activeCount}/${maxThreshold}</span>
+                    </div>
+                `;
+
+                // --- UPDATED LOGIC: Show ALL Bonuses (User Request) ---
+                // We still sort them by threshold
+                bonuses.sort((a, b) => a.threshold - b.threshold).forEach(sb => {
+                    html += `
+                        <div class="set-bonus-item ${sb.active ? 'active' : 'inactive'}">
+                            <div class="set-check">${sb.active ? '✔' : '○'}</div>
+                            <div>
+                                <b>(${sb.threshold})</b> ${sb.description}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            });
+        }
+
+        // --- 6. Footer (Price) ---
         if (displayItem.price) {
-            html += `<div class="tooltip-price">BUY PRICE: ${displayItem.price}G</div>`;
+            html += `<div class="tooltip-section" style="padding-top:0">
+                <div class="tooltip-price">
+                    <span>💰</span> ${displayItem.price} G
+                </div>
+            </div>`;
         }
 
         el.innerHTML = html;
-        el.classList.remove('hidden');
+
+        // Show and Position
+        el.classList.add('visible');
+        el.classList.remove('hidden'); // Legacy support
+
         this.updateTooltipPosition(x, y);
     }
 
