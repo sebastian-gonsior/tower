@@ -234,7 +234,14 @@ export class CombatSystem {
             (gameState.combatState.enemyStackingDamage || 0);
         damage = Math.floor(damage * (1 + stackingDamage));
 
-        if (damage > 0) this.applyDamage(targetType, damage, BuffSystem.calculateBuffs(targetType === 'enemy' ? gameState.enemySlots : gameState.activeSlots).blockChance);
+        if (damage > 0) {
+            this.applyDamage(targetType, damage, BuffSystem.calculateBuffs(targetType === 'enemy' ? gameState.enemySlots : gameState.activeSlots).blockChance, {
+                isCrit: isCrit,
+                critType: critType,
+                sourceItem: item,
+                sourceType: 'attack'
+            });
+        }
 
         if (modifiedEffects || item.effects) {
             this.applyEffects(modifiedEffects || item.effects, targetType, sourceType, damage);
@@ -265,14 +272,6 @@ export class CombatSystem {
                 soundManager.playCritSound(critType);
             }
         }
-
-        bus.emit('DAMAGE_DEALT', {
-            target: targetType,
-            damage: damage,
-            isCrit: isCrit,
-            critType: critType,
-            sourceItem: item
-        });
     }
 
     /**
@@ -432,16 +431,9 @@ export class CombatSystem {
 
                 if (debuff.tickTimer >= tickInterval) {
                     debuff.tickTimer -= tickInterval;
-                    this.applyDamage(targetType, debuff.damagePerTick); // Debuffs ignore block for now? Or apply same mitigation? 
-                    // Let's assume Debuffs ignore block reduction (Internal damage), or maybe apply it?
-                    // User said "Block should be a value that reduced the damge done by enemy".
-                    // Usually DoTs are internal.
-                    // But for consistency let's leave DoTs as True Damage for now unless requested.
 
-                    // Emit damage event for UI
-                    bus.emit('DAMAGE_DEALT', {
-                        target: targetType,
-                        damage: debuff.damagePerTick,
+                    // Pass context to applyDamage
+                    this.applyDamage(targetType, debuff.damagePerTick, 0, {
                         isCrit: false,
                         critType: "",
                         sourceItem: null,
@@ -458,11 +450,17 @@ export class CombatSystem {
         }
     }
 
-    applyDamage(targetType, damage, blockChance = 0) {
+    applyDamage(targetType, damage, blockChance = 0, context = {}) {
         const target = targetType === 'enemy' ? gameState.enemy : gameState.player;
-        const attackerType = targetType === 'enemy' ? 'player' : 'enemy';
 
-
+        // Default context
+        const {
+            isCrit = false,
+            critType = "",
+            sourceItem = null,
+            sourceType = 'attack',
+            debuffType = null
+        } = context;
 
         // 1. Apply Block (Percentage Reduction)
         let blockedAmount = 0;
@@ -501,32 +499,11 @@ export class CombatSystem {
 
         // Global Buff: Reflect
         // If player has reflect buff and absorbs damage with shield, reflect 50% of TAKEN damage
-        // Wait, "Reflect 50% of damage". Usually implies reflected damage is dealt to attacker.
-        // Let's reflect 50% of damage that hit the shield (absorbed) or just 50% of incoming?
-        // "Shield always reflect 50% of damage" -> When shield takes damage.
         if (targetType === 'player' && globalBuffSystem.hasBuff('SHIELD_REFLECT_10') && absorbed > 0) {
             const reflectAmount = Math.ceil(absorbed * 0.1);
-            // Recursively apply damage to attacker (enemy) - BE CAREFUL of infinite loops if enemy reflects too (enemy doesn't have buffs yet)
-            // But we call applyDamage on enemy. Enemy has no shield reflect buff. Safe.
 
-            // We need to defer this slightly or just apply it directly
-            // Direct application might trigger events while current processing? Should be fine.
-            // console.log(`Reflecting ${reflectAmount} damage`);
-            this.applyDamage('enemy', reflectAmount);
-
-            bus.emit('DAMAGE_DEALT', {
-                target: 'enemy',
-                damage: reflectAmount,
-                isCrit: false,
-                critType: "",
-                sourceItem: null,
-                sourceType: 'reflect',
-                blocked: 0
-            });
-
-            bus.emit('SHOW_FLOATING_TEXT', {
-                target: 'enemy',
-                damage: reflectAmount,
+            // Recursively apply damage to attacker
+            this.applyDamage('enemy', reflectAmount, 0, {
                 isCrit: false,
                 sourceType: 'reflect'
             });
@@ -537,7 +514,11 @@ export class CombatSystem {
                 target: targetType,
                 damage: remainingDamage,
                 blocked: blockedAmount + absorbed, // Total mitigated damage
-                isCrit: false
+                isCrit: isCrit,
+                critType: critType,
+                sourceItem: sourceItem,
+                sourceType: sourceType,
+                debuffType: debuffType
             });
         }
 
