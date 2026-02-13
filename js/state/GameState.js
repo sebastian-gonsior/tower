@@ -32,6 +32,8 @@ export const RARITY_CONFIG = {
  *
  * Item Rarity: Higher rarity items require higher player level to purchase.
  */
+import { LUCKY_ROLL_CHANCE, STAR_SHARD_CHANCE, FREE_REROLLS_ITEM_CHANCE, REROLLS_PER_TOKEN } from '../GAME_CONSTANTS.js';
+
 export const PHASES = {
     START_SCREEN: 'START_SCREEN',
     SHOPPING: 'SHOPPING',
@@ -53,12 +55,15 @@ class GameState {
         this.level = 1;
         this.lives = 3;
         this.rerollCost = 5;
+        this.freeRerolls = 0;
 
         this.activeSlots = new Array(GAME_CONFIG.slotsCount).fill(null);
         this.enemySlots = new Array(GAME_CONFIG.slotsCount).fill(null);
         this.stashSlots = new Array(GAME_CONFIG.stashCount).fill(null);
 
         this.shopItems = []; // Current items in shop
+        this.isLuckyRoll = false;
+        this.shopLocked = false;
 
         this.phase = PHASES.START_SCREEN;
 
@@ -97,8 +102,10 @@ class GameState {
         this.lives = 3;
 
         // Reset Inventory
-        this.activeSlots.fill(null);
-        this.stashSlots.fill(null);
+        this.activeSlots = new Array(GAME_CONFIG.slotsCount).fill(null);
+        this.enemySlots = new Array(GAME_CONFIG.slotsCount).fill(null);
+        this.stashSlots = new Array(GAME_CONFIG.stashCount).fill(null);
+        bus.emit('SLOT_COUNT_UPDATED');
 
         // Reset Max HP
         this.player.maxHp = GAME_CONFIG.playerMaxHp;
@@ -190,48 +197,78 @@ class GameState {
     }
 
     generateShop() {
+        if (this.shopLocked) {
+            console.log("[SHOP] Shop is locked. Skipping generation.");
+            this.shopLocked = false; // Reset lock for next round
+            bus.emit('SHOP_UPDATED', { items: this.shopItems, isLuckyRoll: this.isLuckyRoll });
+            return;
+        }
+
         this.shopItems = [];
-        const allItems = dataManager.getAllItems();
+        this.isLuckyRoll = Math.random() < LUCKY_ROLL_CHANCE;
 
         // Get rarity chances for current level (capped at lvl 5)
         const currentLevel = Math.min(this.level, 5);
         const chances = RARITY_CONFIG[currentLevel] || RARITY_CONFIG[1];
+        const rarities = ['legendary', 'epic', 'rare', 'uncommon', 'common'];
 
         // Pick 6 random items
         for (let i = 0; i < 6; i++) {
-            // Roll for rarity (Highest to lowest)
+            // 0. Roll for Star Shard (1%)
+            if (Math.random() < STAR_SHARD_CHANCE) {
+                this.shopItems.push(ItemFactory.createItem('star_shard', 0));
+                continue;
+            }
+
+            // 0.1 Roll for Fortune Coin (5%)
+            if (Math.random() < FREE_REROLLS_ITEM_CHANCE) {
+                this.shopItems.push(ItemFactory.createItem('reroll_token', 0));
+                continue;
+            }
+
+            // 1. Roll for rarity
+            const roll = Math.random();
             let rolledRarity = 'common';
-            if (Math.random() < chances.legendary) rolledRarity = 'legendary';
-            else if (Math.random() < chances.epic) rolledRarity = 'epic';
-            else if (Math.random() < chances.rare) rolledRarity = 'rare';
-            else if (Math.random() < chances.uncommon) rolledRarity = 'uncommon';
-            else rolledRarity = 'common';
 
-            // Filter items by rolled rarity
-            let availableItems = allItems.filter(item => item.rarity === rolledRarity);
+            if (roll < chances.legendary) rolledRarity = 'legendary';
+            else if (roll < chances.epic) rolledRarity = 'epic';
+            else if (roll < chances.rare) rolledRarity = 'rare';
+            else if (roll < chances.uncommon) rolledRarity = 'uncommon';
 
-            // Fallback: If no items found for this rarity, try lower rarities until we find one
+            // 2. Selection with fallback
+            let availableItems = dataManager.getItemsByRarity(rolledRarity);
+
+            // Fallback: If no items found for this rarity, try lower rarities
             if (availableItems.length === 0) {
-                const rarities = ['legendary', 'epic', 'rare', 'uncommon', 'common'];
                 const startIndex = rarities.indexOf(rolledRarity);
                 for (let j = startIndex + 1; j < rarities.length; j++) {
-                    availableItems = allItems.filter(item => item.rarity === rarities[j]);
+                    availableItems = dataManager.getItemsByRarity(rarities[j]);
                     if (availableItems.length > 0) break;
                 }
             }
 
+            // 3. Final Selection
             if (availableItems.length > 0) {
                 const randomItemTemplate = availableItems[Math.floor(Math.random() * availableItems.length)];
-                this.shopItems.push(ItemFactory.createItem(randomItemTemplate.id));
+                const starLevel = this.isLuckyRoll ? 1 : 0;
+                this.shopItems.push(ItemFactory.createItem(randomItemTemplate.id, starLevel));
             } else {
                 // Extreme fallback: just pick any item if even common is empty (should not happen)
+                const allItems = dataManager.getAllItems();
                 if (allItems.length > 0) {
                     const randomItemTemplate = allItems[Math.floor(Math.random() * allItems.length)];
-                    this.shopItems.push(ItemFactory.createItem(randomItemTemplate.id));
+                    const starLevel = this.isLuckyRoll ? 1 : 0;
+                    this.shopItems.push(ItemFactory.createItem(randomItemTemplate.id, starLevel));
                 }
             }
         }
-        bus.emit('SHOP_UPDATED', this.shopItems);
+        bus.emit('SHOP_UPDATED', { items: this.shopItems, isLuckyRoll: this.isLuckyRoll });
+    }
+
+    toggleLockShop() {
+        this.shopLocked = !this.shopLocked;
+        console.log(`[SHOP] Shop locked: ${this.shopLocked}`);
+        return this.shopLocked;
     }
 
     /**
@@ -239,6 +276,14 @@ class GameState {
      * Generates a new set of random items in the shop.
      */
     rerollShop() {
+        if (this.freeRerolls > 0) {
+            this.freeRerolls--;
+            bus.emit('REROLL_COST_UPDATED', this.rerollCost); // Re-emit to update UI button text
+            this.generateShop();
+            console.log(`Shop rerolled using free reroll. Remaining: ${this.freeRerolls}`);
+            return;
+        }
+
         if (this.gold >= this.rerollCost) {
             this.gold -= this.rerollCost;
             const oldCost = this.rerollCost;
@@ -257,6 +302,18 @@ class GameState {
         if (!item) return false;
 
         if (this.gold >= item.price) {
+            // Special handling for Reroll Token
+            if (item.templateId === 'reroll_token') {
+                this.gold -= item.price;
+                this.freeRerolls += REROLLS_PER_TOKEN;
+                this.shopItems[shopIndex] = null;
+                bus.emit('GOLD_UPDATED', this.gold);
+                bus.emit('REROLL_COST_UPDATED', this.rerollCost); // Trigger UI update for button
+                bus.emit('SHOP_UPDATED', this.shopItems);
+                console.log(`Purchased Fortune Coin! Total free rerolls: ${this.freeRerolls}`);
+                return true;
+            }
+
             // Find empty stash slot
             const emptyIdx = this.stashSlots.findIndex(s => s === null);
             if (emptyIdx !== -1) {
@@ -287,10 +344,10 @@ class GameState {
 
         const item = arr[index];
         const sellPrice = Math.floor(item.price * 0.8);
-        
+
         this.addGold(sellPrice);
         arr[index] = null;
-        
+
         bus.emit('SLOTS_UPDATED');
         bus.emit('ITEM_SOLD', { item, price: sellPrice });
         console.log(`Sold ${item.name} for ${sellPrice} gold`);
@@ -351,6 +408,33 @@ class GameState {
         }
     }
 
+    applyConsumable(fromType, fromIdx, toType, toIdx) {
+        const fromArr = this.getArray(fromType);
+        const toArr = this.getArray(toType);
+
+        if (!fromArr || !toArr || !fromArr[fromIdx] || !toArr[toIdx]) return false;
+
+        const consumable = fromArr[fromIdx];
+        const target = toArr[toIdx];
+
+        if (consumable.templateId === 'star_shard') {
+            if (target.starLevel < 10) {
+                const upgraded = ItemFactory.createItem(target.templateId, target.starLevel + 1);
+                if (upgraded) {
+                    toArr[toIdx] = upgraded;
+                    fromArr[fromIdx] = null; // Consume
+                    bus.emit('SLOTS_UPDATED');
+                    if (toType === 'shop') bus.emit('SHOP_UPDATED', this.shopItems);
+                    console.log(`Used Star Shard to upgrade ${target.name} to ${upgraded.getStarDisplay()}`);
+                    return true;
+                }
+            } else {
+                console.log("Item already at max star level");
+            }
+        }
+        return false;
+    }
+
     addGold(amount) {
         this.gold += amount;
         bus.emit('GOLD_UPDATED', this.gold);
@@ -407,9 +491,12 @@ class GameState {
             this.addGold(200);
         } else if (buffId === 'MAXHP_3500') {
             this.updateMaxHp('player', 3500);
-        } else if (buffId === 'MAXHP_PCT_100') {
-            const added = this.player.maxHp; // +100%
+        } else if (buffId === 'MAXHP_PCT_1000') {
+            const added = this.player.maxHp * 10; // +1000%
             this.updateMaxHp('player', added);
+        } else if (buffId === 'SLOT_PLUS_1') {
+            this.activeSlots.push(null);
+            bus.emit('SLOT_COUNT_UPDATED');
         } else if (buffId === 'HP_2000') {
             this.updateMaxHp('player', 2000);
         } else if (buffId === 'GOLD_1000') {
@@ -443,7 +530,7 @@ class GameState {
     /**
      * Item Fusion System:
      * - 3 identical items (same templateId AND same starLevel) can be fused
-     * - Fusing creates 1 item with starLevel + 1 (doubled stats)
+     * - Fusing creates 1 item with starLevel + 1
      * - Max star level is 10
      * - Fusion is checked automatically after buying items
      * - Now considers items in BOTH stashSlots and activeSlots

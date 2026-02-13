@@ -35,6 +35,16 @@
             "label": "2x Speed"
           }
         }
+      },
+      {
+        "threshold": 6,
+        "id": "dwarf_6",
+        "name": "Dwarf 6pc",
+        "description": "Master Blacksmith: +100 Damage, +50% Crit Chance",
+        "stats": {
+          "damage": 100,
+          "critChance": 0.5
+        }
       }
     ]
   },
@@ -72,6 +82,21 @@
           "poison": {
             "tickInterval": 500,
             "label": "2x Speed"
+          }
+        }
+      },
+      {
+        "threshold": 6,
+        "id": "elf_6",
+        "name": "Elf 6pc",
+        "description": "Nature's Wrath: +50% Speed, x4 Poison Dmg",
+        "stats": {
+          "speedBonus": 0.5
+        },
+        "modifiers": {
+          "poison": {
+            "damageMult": 4,
+            "label": "x4"
           }
         }
       }
@@ -113,6 +138,21 @@
             "label": "2x Speed"
           }
         }
+      },
+      {
+        "threshold": 6,
+        "id": "undead_6",
+        "name": "Undead 6pc",
+        "description": "Soul Reaper: +40% Lifesteal, x4 Shadow Dmg",
+        "stats": {
+          "lifesteal": 0.4
+        },
+        "modifiers": {
+          "shadow": {
+            "damageMult": 4,
+            "label": "x4"
+          }
+        }
       }
     ]
   },
@@ -148,6 +188,21 @@
         "description": "+1 Multihit (Total +2)",
         "stats": {
           "multihitCount": 1
+        }
+      },
+      {
+        "threshold": 6,
+        "id": "celestial_6",
+        "name": "Celestial 6pc",
+        "description": "Divine Echo: +3 Multihit, x4 Holy Heal",
+        "stats": {
+          "multihitCount": 3
+        },
+        "modifiers": {
+          "holy": {
+            "damageMult": 4,
+            "label": "x4"
+          }
         }
       }
     ]
@@ -188,6 +243,21 @@
             "label": "2x Speed"
           }
         }
+      },
+      {
+        "threshold": 6,
+        "id": "infernal_6",
+        "name": "Infernal 6pc",
+        "description": "Supernova: +200 Damage, x4 Fire Dmg",
+        "stats": {
+          "damage": 200
+        },
+        "modifiers": {
+          "fire": {
+            "damageMult": 4,
+            "label": "x4"
+          }
+        }
       }
     ]
   },
@@ -225,6 +295,21 @@
           "shield": 200,
           "block": 0.1
         }
+      },
+      {
+        "threshold": 6,
+        "id": "oceanic_6",
+        "name": "Oceanic 6pc",
+        "description": "Absolute Zero: +500 Shield, x4 Frozen Chance",
+        "stats": {
+          "shield": 500
+        },
+        "modifiers": {
+          "frozen": {
+            "chanceMult": 4,
+            "label": "x4 Chance"
+          }
+        }
       }
     ]
   },
@@ -260,6 +345,21 @@
         "description": "+1.0x Crit Dmg",
         "stats": {
           "critDmg": 1
+        }
+      },
+      {
+        "threshold": 6,
+        "id": "assassin_6",
+        "name": "Assassin 6pc",
+        "description": "Executioner: +2.0x Crit Dmg, x4 Poison Dmg",
+        "stats": {
+          "critDmg": 2
+        },
+        "modifiers": {
+          "poison": {
+            "damageMult": 4,
+            "label": "x4"
+          }
         }
       }
     ]
@@ -297,6 +397,16 @@
         "stats": {
           "critChance": 0.2,
           "block": 0.1
+        }
+      },
+      {
+        "threshold": 6,
+        "id": "paladin_6",
+        "name": "Paladin 6pc",
+        "description": "Holy Barrier: +1000 Shield, +30% Block",
+        "stats": {
+          "shield": 1000,
+          "block": 0.3
         }
       }
     ]
@@ -340,6 +450,22 @@
             "label": "2x Speed"
           }
         }
+      },
+      {
+        "threshold": 6,
+        "id": "warlock_6",
+        "name": "Warlock 6pc",
+        "description": "Void Lord: x4 Curse Dmg, x4 Shadow Dmg",
+        "modifiers": {
+          "curse": {
+            "damageMult": 4,
+            "label": "x4"
+          },
+          "shadow": {
+            "damageMult": 4,
+            "label": "x4"
+          }
+        }
       }
     ]
   },
@@ -373,6 +499,16 @@
         "stats": {
           "damage": 50,
           "block": 0.15
+        }
+      },
+      {
+        "threshold": 6,
+        "id": "titan_6",
+        "name": "Titan 6pc",
+        "description": "World Crusher: +300 Damage, +5 Multihit",
+        "stats": {
+          "damage": 300,
+          "multihitCount": 5
         }
       }
     ]

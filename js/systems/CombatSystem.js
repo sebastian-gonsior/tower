@@ -163,26 +163,7 @@ export class CombatSystem {
     }
 
     performAttack(item, targetType, sourceType, buffs, effectiveCritChance, modifiedEffects = null) {
-        // Visual: Trigger Attack Animation (Lunge)
-        const isPlayer = sourceType === 'player';
-        const panelSelector = isPlayer ? '.player-panel' : '.enemy-panel';
-        const panel = document.querySelector(panelSelector);
 
-        if (panel) {
-            const animClass = isPlayer ? 'anim-lunge-right' : 'anim-shake'; // Enemies just shake for attack for now
-
-            // Remove class to reset animation if it's currently running
-            panel.classList.remove('anim-lunge-right');
-            // Force reflow
-            void panel.offsetWidth;
-
-            if (isPlayer) {
-                panel.classList.add('anim-lunge-right');
-            } else {
-                // For enemy attack, maybe just a small bounce or nothing special yet
-                // The implementation plan mentioned "Lunge", let's just do lunge right for player only
-            }
-        }
 
         let hits = 1;
 
@@ -430,7 +411,8 @@ export class CombatSystem {
 
         bus.emit('SHOW_FLOATING_TEXT', {
             target: targetType,
-            damage: `+${amount} MaxHP`,
+            type: 'heal',
+            damage: `${amount} MaxHP`,
             isCrit: true,
             critType: 'heal',
             sourceType: 'heal'
@@ -480,21 +462,7 @@ export class CombatSystem {
         const target = targetType === 'enemy' ? gameState.enemy : gameState.player;
         const attackerType = targetType === 'enemy' ? 'player' : 'enemy';
 
-        // Visual: Trigger Hit Reaction (Shake + Flash)
-        const panelSelector = targetType === 'enemy' ? '.enemy-panel' : '.player-panel';
-        const panel = document.querySelector(panelSelector);
-        if (panel) {
-            panel.classList.remove('anim-shake');
-            panel.classList.remove('hit-flash');
-            void panel.offsetWidth; // Force reflow
-            panel.classList.add('anim-shake');
-            panel.classList.add('hit-flash');
 
-            // Remove flash after short delay (CSS transition handles fade, but class needs removal)
-            setTimeout(() => {
-                panel.classList.remove('hit-flash');
-            }, 150);
-        }
 
         // 1. Apply Block (Percentage Reduction)
         let blockedAmount = 0;

@@ -187,6 +187,11 @@ body {
     border-radius: 5px;
 }
 
+.shop-controls {
+    display: flex;
+    gap: 10px;
+}
+
 .shop-items-grid {
     display: flex;
     flex-wrap: wrap;
@@ -220,6 +225,109 @@ body {
     border-color: #ffb74d;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 183, 77, 0.4);
     z-index: 10;
+}
+
+/* Shop Highlighting */
+.shop-item.highlight-set {
+    border-color: #4dd0e1 !important;
+    /* Cyan */
+    box-shadow: 0 0 15px rgba(77, 208, 225, 0.5), inset 0 0 10px rgba(77, 208, 225, 0.2);
+}
+
+.shop-item.highlight-fusion {
+    border-color: #ffb74d !important;
+    /* Gold */
+    box-shadow: 0 0 20px rgba(255, 183, 77, 0.8);
+    animation: shop-fusion-pulse 1.5s infinite alternate;
+}
+
+@keyframes shop-fusion-pulse {
+    from {
+        box-shadow: 0 0 10px rgba(255, 183, 77, 0.4);
+        transform: scale(1);
+    }
+
+    to {
+        box-shadow: 0 0 25px rgba(255, 183, 77, 1), 0 0 8px #fff;
+        transform: scale(1.02);
+    }
+}
+
+/* Lucky Roll Styles */
+.shop-container.lucky-roll {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.shop-container.lucky-roll::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+            #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+    z-index: 10;
+    animation: rainbow-slide 2s linear infinite;
+    background-size: 200% 100%;
+}
+
+@keyframes rainbow-slide {
+    0% {
+        background-position: 100% 0%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.lucky-roll-text {
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(0, 255, 136, 0.6);
+    animation: rainbow-text 3s linear infinite;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@keyframes rainbow-text {
+    0% {
+        color: #ff0000;
+    }
+
+    14% {
+        color: #ff7f00;
+    }
+
+    28% {
+        color: #ffff00;
+    }
+
+    42% {
+        color: #00ff00;
+    }
+
+    56% {
+        color: #0000ff;
+    }
+
+    70% {
+        color: #4b0082;
+    }
+
+    84% {
+        color: #9400d3;
+    }
+
+    100% {
+        color: #ff0000;
+    }
 }
 
 .shop-item-price {
@@ -324,6 +432,39 @@ body {
 
 .btn-reroll:hover {
     background: #673ab7;
+}
+
+.btn-lock {
+    background: #607d8b;
+    border-color: #455a64;
+    min-width: 130px;
+}
+
+.btn-lock:hover {
+    background: #78909c;
+}
+
+.btn-lock.locked {
+    background: #ff8f00;
+    border-color: #e65100;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(255, 143, 0, 0.5);
+}
+
+.btn-reroll.free-reroll {
+    background: #00c853;
+    border-color: #009624;
+    animation: free-reroll-pulse 1s infinite alternate;
+}
+
+@keyframes free-reroll-pulse {
+    from {
+        box-shadow: 0 0 5px rgba(0, 200, 83, 0.4);
+    }
+
+    to {
+        box-shadow: 0 0 15px rgba(0, 200, 83, 0.8), 0 0 5px #fff;
+    }
 }
 
 /* Shop Inventory Preview */
@@ -2078,8 +2219,20 @@ body {
 
 /* --- Item Tooltip Redesign --- */
 /* --- New Item Tooltip Design --- */
+.tooltip-summary {
+    font-style: italic;
+    color: #ccc;
+    font-size: 0.9em;
+    padding: 12px 20px;
+    margin: 15px 0;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    line-height: 1.5;
+}
+
 .item-tooltip {
-    position: absolute;
+    position: fixed;
     background: rgba(12, 12, 16, 0.98);
     border: 1px solid #444;
     border-radius: 16px;

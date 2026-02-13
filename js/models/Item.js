@@ -5,8 +5,7 @@
  * - Items start at 0 stars (base item)
  * - Combining 3 identical items (same templateId and starLevel) creates a 1-star item
  * - 3 identical 1-star items create a 2-star item, and so on up to 10 stars
- * - Each star level DOUBLES all stats (damage, block, effects, etc.)
- * - Stat multiplier = 2^starLevel (0 stars = x1, 1 star = x2, 2 stars = x4, etc.)
+ * - Star level (0-10): each star level applies manual bonuses defined in the item template
  */
 export class Item {
     constructor(data, starLevel = 0) {
@@ -19,26 +18,30 @@ export class Item {
         this.set = data.set;
         this.rarity = data.rarity;
         this.price = data.price;
+        this.customDescription = data.description || null;
 
-        // Star level (0-10): each star doubles stats
+        // Star level (0-10)
         this.starLevel = Math.min(10, Math.max(0, starLevel));
-        this.statMultiplier = Math.pow(2, this.starLevel);
 
-        // Base stats (before star multiplier)
-        this.baseStats = data.stats || {};
-        this.baseEffects = JSON.parse(JSON.stringify(data.effects || {})); // Deep copy
+        // Base stats and effects
+        this.stats = { ...(data.stats || {}) };
+        this.effects = JSON.parse(JSON.stringify(data.effects || {}));
+        this.starLevelSummary = null;
 
-        // Apply star multiplier to stats
-        this.stats = this.applyStarMultiplier(this.baseStats);
+        // Store original data for preview generation
+        this.rawStarsData = data.stars;
+        this.baseStats = data.stats; // Keep for getTemplateData
+        this.baseEffects = data.effects; // Keep for getTemplateData
+
+        // Apply manual star bonuses
+        this.applyManualStarBonuses(data);
+
         this.damage = this.stats.damage || 0;
         this.critChance = this.stats.critChance || 0;
 
-        // Cooldown in MS. JSON has seconds. (Cooldown does NOT scale with stars)
-        this.cooldown = (this.baseStats.cooldown || 0) * 1000;
+        // Cooldown in MS. JSON has seconds.
+        this.cooldown = (this.stats.cooldown || 0) * 1000;
         this.currentCooldown = 0;
-
-        // Apply star multiplier to effects
-        this.effects = this.applyStarMultiplierToEffects(this.baseEffects, this.statMultiplier, this.starLevel);
 
         this.description = this.generateDescription();
 
@@ -47,68 +50,72 @@ export class Item {
     }
 
     /**
-     * Apply star level multiplier to stats.
-     * Damage, block, and attackSpeed scale with stars. Cooldown and chances do not.
+     * Apply manual star bonuses from the item data.
+     * Bonuses define the TOTAL added stats for that specific star level.
      */
-    /**
-     * Apply star level multiplier to stats.
-     * Damage, block, and attackSpeed scale with stars. Cooldown and chances do not.
-     */
-    applyStarMultiplier(baseStats, customMult = null) {
-        const mult = customMult !== null ? customMult : this.statMultiplier;
-        const scaled = { ...baseStats };
-        if (scaled.damage) scaled.damage = Math.floor(scaled.damage * mult);
-        if (scaled.block) scaled.block = scaled.block * mult;
-        if (scaled.shield) scaled.shield = Math.floor(scaled.shield * mult);
-        if (scaled.attackSpeed) scaled.attackSpeed = scaled.attackSpeed * mult;
-        return scaled;
-    }
+    applyManualStarBonuses(data) {
+        if (!data.stars || this.starLevel === 0) return;
 
-    /**
-     * Apply star level multiplier to effect damage values.
-     * damagePerTick and heal scale with stars. Chances and durations do not.
-     */
-    /**
-     * Apply star level multiplier to effect values.
-     * Most effects (damage, heal, count) scale with stars.
-     * Multihit is a special case: chance * mult, count + starLevel.
-     */
-    applyStarMultiplierToEffects(baseEffects, customMult = null, targetStarLevel = null) {
-        const mult = customMult !== null ? customMult : this.statMultiplier;
-        const level = targetStarLevel !== null ? targetStarLevel : this.starLevel;
-        const scaled = JSON.parse(JSON.stringify(baseEffects)); // Deep copy
-
-        for (const [key, effect] of Object.entries(scaled)) {
-            if (key === 'multihit') {
-                // Special scaling for multihit:
-                // Count scales linearly (count + starLevel)
-                // Chance does NOT scale with stars
-                effect.count = effect.count + level;
-                continue; // Skip generic scaling below
+        const starData = data.stars[this.starLevel.toString()];
+        if (starData) {
+            // Apply Stats
+            if (starData.stats) {
+                for (const [key, val] of Object.entries(starData.stats)) {
+                    this.stats[key] = (this.stats[key] || 0) + val;
+                }
             }
 
-            if (effect.damagePerTick) {
-                effect.damagePerTick = Math.floor(effect.damagePerTick * mult);
+            // Apply Effects
+            if (starData.effects) {
+                for (const [key, val] of Object.entries(starData.effects)) {
+                    if (!this.effects[key]) {
+                        this.effects[key] = { ...val };
+                    } else {
+                        // Merge logic for specific effect types
+                        if (key === 'multihit') {
+                            this.effects[key].count = (this.effects[key].count || 0) + (val.count || 0);
+                        } else if (val.damagePerTick) {
+                            this.effects[key].damagePerTick = (this.effects[key].damagePerTick || 0) + val.damagePerTick;
+                        } else if (val.heal) {
+                            this.effects[key].heal = (this.effects[key].heal || 0) + val.heal;
+                        } else if (val.maxHpGain) {
+                            this.effects[key].maxHpGain = (this.effects[key].maxHpGain || 0) + val.maxHpGain;
+                        }
+                    }
+                }
             }
-            if (effect.heal) {
-                effect.heal = Math.floor(effect.heal * mult);
-            }
-            if (effect.maxHpGain) {
-                effect.maxHpGain = Math.floor(effect.maxHpGain * mult);
-            }
+
+            // Capture the summary
+            this.starLevelSummary = starData.summary || null;
         }
-        return scaled;
     }
 
+    /**
+     * Get a preview of the item at a specific target star level.
+     * Returns a full Item instance for accurate UI/Stat calculations.
+     */
     getPreview(targetLevel) {
         if (targetLevel > 10) return null;
-        // Multiplier = 2^level (matches constructor: Math.pow(2, starLevel))
-        const mult = Math.pow(2, targetLevel);
+        return new Item(this.getTemplateData(), targetLevel);
+    }
 
+    /**
+     * Internal helper to get the original template data
+     */
+    getTemplateData() {
         return {
-            starLevel: targetLevel,
-            stats: this.applyStarMultiplier(this.baseStats, mult),
-            effects: this.applyStarMultiplierToEffects(this.baseEffects, mult, targetLevel)
+            id: this.templateId,
+            name: this.name,
+            type: this.type,
+            subtype: this.subtype,
+            icon: this.baseIcon,
+            set: this.set,
+            rarity: this.rarity,
+            price: this.price,
+            description: this.customDescription,
+            stats: this.baseStats,
+            effects: this.baseEffects,
+            stars: this.rawStarsData // We need to store this in constructor
         };
     }
 
@@ -132,12 +139,60 @@ export class Item {
         return "📦";
     }
 
+    /**
+     * Returns a human-readable summary of the item's stats and effects.
+     */
+    getStatSummary() {
+        if (this.type === 'consumable' || this.type === 'utility') {
+            return this.customDescription || "";
+        }
+
+        let parts = [];
+        const s = this.stats;
+
+        if (s.damage) parts.push(`<b>${s.damage}</b> Damage`);
+        if (s.attackSpeed) parts.push(`+<b>${Math.round(s.attackSpeed * 100)}%</b> Haste`);
+        if (s.critChance) parts.push(`+<b>${Math.round(s.critChance * 100)}%</b> Crit Chance`);
+        if (s.critDmg) parts.push(`+<b>${(s.critDmg).toFixed(1)}x</b> Crit Dmg`);
+        if (s.block) parts.push(`+<b>${Math.round(s.block * 100)}%</b> Block`);
+        if (s.shield) parts.push(`+<b>${s.shield}</b> Shield`);
+
+        // Effects
+        for (const [key, val] of Object.entries(this.effects)) {
+            if (key === 'poison') parts.push(`<b>${val.damagePerTick}</b> Poison dmg`);
+            else if (key === 'bleed') parts.push(`<b>${val.damagePerTick}</b> Bleed dmg`);
+            else if (key === 'fire') parts.push(`<b>${val.damagePerTick}</b> Burn dmg`);
+            else if (key === 'lifesteal') parts.push(`<b>${Math.round(val.factor * 100)}%</b> Lifesteal`);
+            else if (key === 'multihit') parts.push(`<b>+${val.count}</b> Additional Hits`);
+            else if (key === 'holy') parts.push(`<b>${val.heal}</b> Heal on hit`);
+        }
+
+        if (parts.length === 0) return "";
+
+        // Join with "and" for the last element
+        if (parts.length === 1) return `Provides ${parts[0]}.`;
+        const last = parts.pop();
+        let summaryText = `Provides ${parts.join(', ')} and ${last}.`;
+
+        // Add Manual Star Bonus Text
+        if (this.starLevel > 0 && this.starLevelSummary) {
+            summaryText += `<br><span style="color: #ffd700;">${'⭐'.repeat(this.starLevel)} Additional ${this.starLevelSummary}</span>`;
+        }
+
+        return summaryText;
+    }
+
     generateDescription() {
         let parts = [];
 
+        if (this.customDescription) {
+            parts.push(this.customDescription);
+            parts.push(""); // Spacer
+        }
+
         // Show star level if upgraded
         if (this.starLevel > 0) {
-            parts.push(`${this.getStarDisplay()} (x${this.statMultiplier} stats)`);
+            parts.push(`${this.getStarDisplay()} Level ${this.starLevel}`);
         }
 
         if (this.damage > 0) parts.push(`Dmg: ${this.damage}`);
@@ -150,7 +205,7 @@ export class Item {
             // Pretty print effects
             if (key === 'poison') parts.push(`Poison: ${val.damagePerTick}dmg/${val.duration}s`);
             else if (key === 'bleed') parts.push(`Bleed: ${val.damagePerTick}dmg/${val.duration}s`);
-            else if (key === 'multihit') parts.push(`Multihit: x${val.count} (${(val.chance * 100).toFixed(0)}%)`);
+            else if (key === 'multihit') parts.push(`Additional Hits: +${val.count}`);
             else if (key === 'holy') {
                 let desc = `Holy: ${val.heal} heal`;
                 if (val.maxHpGain) desc += ` & +${val.maxHpGain} MaxHP`;

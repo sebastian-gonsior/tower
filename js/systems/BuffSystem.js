@@ -231,7 +231,6 @@ export class BuffSystem {
             speedBonus: globals.speedBonus,
             critDmg: 2.0 + globals.critDmg,
             critChance: globals.critChance,
-            multihitChance: 0,
             multihitCount: globals.multihitCount,
             damageBonus: globals.damageBonus,
             shieldBonus: globals.shieldBonus,
@@ -243,7 +242,6 @@ export class BuffSystem {
             if (item) {
                 // Effects that act as buffs
                 if (item.effects && item.effects.multihit) {
-                    stats.multihitChance += item.effects.multihit.chance;
                     // We don't add multihitCount here because it's handled differently in combat
                     // or should it? In calculateGlobalBonuses it's already summed for relics etc.
                 }

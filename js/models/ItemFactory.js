@@ -7,7 +7,7 @@ import { dataManager } from '../managers/DataManager.js';
  * Star Level System:
  * - Items can be created with a specific star level (0-10)
  * - 3 identical items (same templateId + starLevel) can be fused into a higher star item
- * - Each star level doubles the item's stats
+ * - Each star level applies manual bonuses from the template
  */
 export class ItemFactory {
     /**
@@ -24,7 +24,7 @@ export class ItemFactory {
         }
         return new Item(template, starLevel);
     }
-    
+
     /**
      * Create an upgraded (fused) item from an existing item.
      * Used when 3 identical items are combined.

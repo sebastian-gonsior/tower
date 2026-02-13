@@ -59,6 +59,7 @@ export class UIManager {
             shopItems: document.getElementById('shop-items'),
             shopGoldDisplay: document.getElementById('shop-gold-display'),
             rerollShopBtn: document.getElementById('reroll-shop-btn'),
+            lockShopBtn: document.getElementById('lock-shop-btn'),
             nextFloorNum: document.getElementById('next-floor-num'),
             shopActivePreview: document.getElementById('shop-active-preview'),
             shopStashPreview: document.getElementById('shop-stash-preview'),
@@ -116,6 +117,12 @@ export class UIManager {
         }
         if (this.elements.rerollShopBtn) {
             this.elements.rerollShopBtn.onclick = () => gameState.rerollShop();
+        }
+        if (this.elements.lockShopBtn) {
+            this.elements.lockShopBtn.onclick = () => {
+                gameState.toggleLockShop();
+                this.updateShopUI();
+            };
         }
         if (this.elements.proceedToEquipBtn) {
             this.elements.proceedToEquipBtn.onclick = () => gameState.startEquipPhase();
@@ -245,11 +252,21 @@ export class UIManager {
                 }
             }
         });
+        bus.on('SLOT_COUNT_UPDATED', () => {
+            this.generateSlots();
+            this.renderSlots();
+        });
     }
 
     updateRerollButton(cost) {
         if (this.elements.rerollShopBtn) {
-            this.elements.rerollShopBtn.innerHTML = `🎲 Reroll Shop (${cost}g)`;
+            if (gameState.freeRerolls > 0) {
+                this.elements.rerollShopBtn.innerHTML = `🎲 FREE Reroll (${gameState.freeRerolls})`;
+                this.elements.rerollShopBtn.classList.add('free-reroll');
+            } else {
+                this.elements.rerollShopBtn.innerHTML = `🎲 Reroll Shop (${cost}g)`;
+                this.elements.rerollShopBtn.classList.remove('free-reroll');
+            }
         }
     }
 
@@ -488,6 +505,48 @@ export class UIManager {
             this.elements.shopGoldDisplay.innerText = gameState.gold;
         }
 
+        const shopShelves = container.closest('.shop-shelves-container');
+        if (shopShelves) {
+            if (gameState.isLuckyRoll) {
+                shopShelves.classList.add('lucky-roll');
+                // Add lucky roll text if not present
+                if (!shopShelves.querySelector('.lucky-roll-text')) {
+                    const luckyText = document.createElement('div');
+                    luckyText.className = 'lucky-roll-text';
+                    luckyText.innerText = '🌈 LUCKY ROLL! ALL ITEMS ★1 🌈';
+                    shopShelves.insertBefore(luckyText, container);
+                }
+            } else {
+                shopShelves.classList.remove('lucky-roll');
+                const luckyText = shopShelves.querySelector('.lucky-roll-text');
+                if (luckyText) luckyText.remove();
+            }
+        }
+
+        // Update Lock Button State
+        if (this.elements.lockShopBtn) {
+            if (gameState.shopLocked) {
+                this.elements.lockShopBtn.classList.add('locked');
+                this.elements.lockShopBtn.innerHTML = '🔒 Shop Locked';
+            } else {
+                this.elements.lockShopBtn.classList.remove('locked');
+                this.elements.lockShopBtn.innerHTML = '🔓 Lock Shop';
+            }
+        }
+
+        // Logic for highlighting:
+        // 1. Highlight Sets: if player has at least one piece of the set equipped
+        const equippedSets = globalBuffSystem.getActiveSetBonuses();
+
+        // 2. Highlight Fusion: if player has 2 identical items (template + star) in inventory (active or stash)
+        const ownedCounts = {}; // { "templateId|starLevel": count }
+        [...gameState.activeSlots, ...gameState.stashSlots].forEach(owned => {
+            if (owned) {
+                const key = `${owned.templateId}|${owned.starLevel}`;
+                ownedCounts[key] = (ownedCounts[key] || 0) + 1;
+            }
+        });
+
         gameState.shopItems.forEach((item, index) => {
             const el = document.createElement('div');
             el.className = 'shop-item';
@@ -504,6 +563,16 @@ export class UIManager {
             }
 
             el.classList.add(`rarity-${item.rarity}`);
+
+            // Apply Highlights
+            const fusionKey = `${item.templateId}|${item.starLevel}`;
+            if (ownedCounts[fusionKey] >= 2) {
+                el.classList.add('highlight-fusion');
+                el.title = "Ready for Fusion! (You have 2 pieces)";
+            } else if (item.set && equippedSets[item.set]) {
+                el.classList.add('highlight-set');
+                el.title = `Matches equipped ${item.set} set!`;
+            }
 
             const setClass = item.set ? `set-badge-${item.set.toLowerCase()}` : '';
             el.innerHTML = `
@@ -641,8 +710,8 @@ export class UIManager {
             }
         };
 
-        createSlots(this.elements.activeSlots, GAME_CONFIG.slotsCount, 'active');
-        createSlots(this.elements.enemySlots, GAME_CONFIG.slotsCount, 'enemy');
+        createSlots(this.elements.activeSlots, gameState.activeSlots.length, 'active');
+        createSlots(this.elements.enemySlots, gameState.enemySlots.length, 'enemy');
         createSlots(this.elements.stashSlots, GAME_CONFIG.stashCount, 'stash');
 
         // Setup Sell Zone
@@ -714,6 +783,14 @@ export class UIManager {
         if (fromArr && toArr) {
             const item = fromArr[fromIdx];
             const target = toArr[toIdx];
+
+            // Handle Consumables
+            if (item && item.type === 'consumable' && target && target.type !== 'consumable') {
+                if (gameState.applyConsumable(fromType, fromIdx, toType, toIdx)) {
+                    this.refreshTooltip();
+                    return;
+                }
+            }
 
             fromArr[fromIdx] = target;
             toArr[toIdx] = item;
@@ -798,31 +875,7 @@ export class UIManager {
     }
 
     triggerHitEffect(target, isCrit) {
-        const panel = target === 'player' ? this.elements.playerPanel : this.elements.enemyPanel;
-        const sprite = target === 'player' ? this.elements.playerSprite : this.elements.enemySprite;
-        const screenFlash = document.getElementById('screen-flash');
-
-        if (panel) {
-            const shakeClass = isCrit ? 'crit-shake' : 'shake';
-            panel.classList.remove('shake', 'crit-shake');
-            void panel.offsetWidth; // Trigger reflow
-            panel.classList.add(shakeClass);
-            setTimeout(() => panel.classList.remove(shakeClass), 500);
-        }
-
-        if (sprite) {
-            sprite.classList.remove('hit-flash', 'sprite-impact');
-            void sprite.offsetWidth; // Trigger reflow
-            sprite.classList.add('hit-flash', 'sprite-impact');
-            setTimeout(() => sprite.classList.remove('hit-flash', 'sprite-impact'), 500);
-        }
-
-        // Global screen flash for crits
-        if (isCrit && screenFlash) {
-            screenFlash.classList.remove('flash-active');
-            void screenFlash.offsetWidth;
-            screenFlash.classList.add('flash-active');
-        }
+        // Visual effects disabled
     }
 
 
@@ -902,10 +955,10 @@ export class UIManager {
         const isEnemyFrozen = (gameState.combatState.enemyFrozenTimer || 0) > 0;
 
         if (this.elements.playerPanel) {
-            this.elements.playerPanel.classList.toggle('state-frozen', isPlayerFrozen);
+            this.elements.playerPanel.classList.remove('state-frozen');
         }
         if (this.elements.enemyPanel) {
-            this.elements.enemyPanel.classList.toggle('state-frozen', isEnemyFrozen);
+            this.elements.enemyPanel.classList.remove('state-frozen');
         }
     }
 
@@ -1095,14 +1148,9 @@ export class UIManager {
         // --- Preview Mode Logic (Alt Key) ---
         if (this.isAltPressed && item.starLevel < 10) {
             if (typeof item.getPreview === 'function') {
-                const previewData = item.getPreview(item.starLevel + 1);
-                if (previewData) {
-                    displayItem = {
-                        ...item,
-                        starLevel: previewData.starLevel,
-                        stats: previewData.stats,
-                        effects: previewData.effects
-                    };
+                const previewItem = item.getPreview(item.starLevel + 1);
+                if (previewItem) {
+                    displayItem = previewItem;
                     isPreview = true;
                 }
             }
@@ -1142,6 +1190,12 @@ export class UIManager {
                 </div>
             </div>
         `;
+
+        // --- 1.1 Stat Summary (Contextual Sentence) ---
+        const summary = displayItem.getStatSummary ? displayItem.getStatSummary() : "";
+        if (summary) {
+            html += `<div class="tooltip-summary">${summary}</div>`;
+        }
 
         // --- 2. Global Sources (The "Why") ---
         // Show this BEFORE stats so players know why stats are high
@@ -1317,7 +1371,10 @@ export class UIManager {
                     if (data.maxHpGain) text += ` & Gain <b>${data.maxHpGain} MaxHP</b>`;
                     text += ` on hit`;
                 }
-                else if (type === 'multihit') text = `<b>${Math.round((data.chance || 0) * 100)}% Chance</b> to hit additional targets`;
+                else if (type === 'multihit') {
+                    const hits = data.count || 0;
+                    text = `<b>+${hits}</b> Additional hits`;
+                }
                 else {
                     // Cleaner default text
                     text = `<b>${type.charAt(0).toUpperCase() + type.slice(1)}</b>: Effect Active`;

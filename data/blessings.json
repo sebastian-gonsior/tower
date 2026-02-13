@@ -33,9 +33,9 @@
     ],
     "3": [
         {
-            "id": "MAXHP_PCT_100",
+            "id": "MAXHP_PCT_1000",
             "name": "Hyper Growth",
-            "description": "Add 100% Max HP permanently",
+            "description": "Add 1000% Max HP permanently",
             "type": "passive",
             "icon": "💪"
         },
@@ -93,6 +93,15 @@
             "description": "Critical Hits deal 3x damage (up from 2x)",
             "type": "passive",
             "icon": "☠️"
+        }
+    ],
+    "7": [
+        {
+            "id": "SLOT_PLUS_1",
+            "name": "Master Armory",
+            "description": "+1 Equipment Slot",
+            "type": "passive",
+            "icon": "🛡️"
         }
     ],
     "generic": [

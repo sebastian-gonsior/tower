@@ -142,6 +142,18 @@ export const FUSION_NOTIFICATION_DURATION_MS = 2500;
 /** Victory/Defeat delay before phase change (milliseconds) */
 export const RESULT_DELAY_MS = 2000;
 
+/** Chance for all shop items to be star level 1 (1% = 0.01) */
+export const LUCKY_ROLL_CHANCE = 0.01;
+
+/** Chance for each shop slot to be a Star Shard (1% = 0.01) */
+export const STAR_SHARD_CHANCE = 0.01;
+
+/** Chance for each shop slot to be a Fortune Coin (5% = 0.05) */
+export const FREE_REROLLS_ITEM_CHANCE = 0.05;
+
+/** Number of free rerolls granted by a Fortune Coin */
+export const REROLLS_PER_TOKEN = 4;
+
 // =============================================================================
 // LEVEL PROGRESSION
 // =============================================================================

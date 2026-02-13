@@ -4,6 +4,13 @@ export class DataManager {
         this.bosses = [];
         this.blessings = {};
         this.sets = [];
+        this.itemsByRarity = {
+            common: [],
+            uncommon: [],
+            rare: [],
+            epic: [],
+            legendary: []
+        };
         this.loaded = false;
     }
 
@@ -12,7 +19,12 @@ export class DataManager {
             console.log("Loading data...");
             const itemsResp = await fetch('data/items.json');
             const items = await itemsResp.json();
-            items.forEach(item => this.items.set(item.id, item));
+            items.forEach(item => {
+                this.items.set(item.id, item);
+                if (item.rarity && this.itemsByRarity[item.rarity]) {
+                    this.itemsByRarity[item.rarity].push(item);
+                }
+            });
 
             const bossesResp = await fetch('data/bosses.json');
             this.bosses = await bossesResp.json();
@@ -54,7 +66,7 @@ export class DataManager {
     }
 
     getItemsByRarity(rarity) {
-        return this.getAllItems().filter(i => i.rarity === rarity);
+        return this.itemsByRarity[rarity] || [];
     }
 }
 

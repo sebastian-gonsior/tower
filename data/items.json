@@ -17,6 +17,128 @@
         "damagePerTick": 3
       }
     },
+    "stars": {
+      "1": {
+        "stats": {
+          "damage": 5
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 27
+          }
+        },
+        "summary": "5 damage and 27 damage per tick"
+      },
+      "2": {
+        "stats": {
+          "damage": 10
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 57
+          }
+        },
+        "summary": "10 damage and 57 damage per tick"
+      },
+      "3": {
+        "stats": {
+          "damage": 15
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 90
+          }
+        },
+        "summary": "15 damage and 90 damage per tick"
+      },
+      "4": {
+        "stats": {
+          "damage": 25
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 130
+          }
+        },
+        "summary": "25 damage and 130 damage per tick"
+      },
+      "5": {
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 180
+          }
+        },
+        "summary": "40 damage and 180 damage per tick"
+      },
+      "6": {
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 250
+          }
+        },
+        "summary": "60 damage and 250 damage per tick"
+      },
+      "7": {
+        "stats": {
+          "damage": 90
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 350
+          }
+        },
+        "summary": "90 damage and 350 damage per tick"
+      },
+      "8": {
+        "stats": {
+          "damage": 130
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 500
+          }
+        },
+        "summary": "130 damage and 500 damage per tick"
+      },
+      "9": {
+        "stats": {
+          "damage": 180
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 750
+          }
+        },
+        "summary": "180 damage and 750 damage per tick"
+      },
+      "10": {
+        "stats": {
+          "damage": 300
+        },
+        "effects": {
+          "bleed": {
+            "duration": 10,
+            "damagePerTick": 1200
+          }
+        },
+        "summary": "300 damage and 1200 damage per tick"
+      }
+    },
     "price": 20
   },
   {
@@ -38,7 +160,139 @@
         "damagePerTick": 5
       }
     },
-    "price": 35
+    "price": 35,
+    "stars": {
+      "1": {
+        "summary": "8 damage, 1% crit chance and 10 bleed damage per tick",
+        "stats": {
+          "damage": 8,
+          "critChance": 0.01
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 10,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "16 damage, 3% crit chance and 20 bleed damage per tick",
+        "stats": {
+          "damage": 16,
+          "critChance": 0.03
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 20,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "24 damage, 4% crit chance and 30 bleed damage per tick",
+        "stats": {
+          "damage": 24,
+          "critChance": 0.04
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 30,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "32 damage, 6% crit chance and 40 bleed damage per tick",
+        "stats": {
+          "damage": 32,
+          "critChance": 0.06
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 40,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "40 damage, 7% crit chance and 50 bleed damage per tick",
+        "stats": {
+          "damage": 40,
+          "critChance": 0.07
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 50,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "48 damage, 9% crit chance and 60 bleed damage per tick",
+        "stats": {
+          "damage": 48,
+          "critChance": 0.09
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 60,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "56 damage, 10% crit chance and 70 bleed damage per tick",
+        "stats": {
+          "damage": 56,
+          "critChance": 0.1
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 70,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "64 damage, 12% crit chance and 80 bleed damage per tick",
+        "stats": {
+          "damage": 64,
+          "critChance": 0.12
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 80,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "72 damage, 14% crit chance and 90 bleed damage per tick",
+        "stats": {
+          "damage": 72,
+          "critChance": 0.14
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 90,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "80 damage, 15% crit chance and 100 bleed damage per tick",
+        "stats": {
+          "damage": 80,
+          "critChance": 0.15
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 100,
+            "duration": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "runic_cleaver",
@@ -59,7 +313,139 @@
         "damagePerTick": 8
       }
     },
-    "price": 60
+    "price": 60,
+    "stars": {
+      "1": {
+        "summary": "10 damage, 2% crit chance and 16 bleed damage per tick",
+        "stats": {
+          "damage": 10,
+          "critChance": 0.02
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 16,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "20 damage, 4% crit chance and 32 bleed damage per tick",
+        "stats": {
+          "damage": 20,
+          "critChance": 0.04
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 32,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "30 damage, 7% crit chance and 48 bleed damage per tick",
+        "stats": {
+          "damage": 30,
+          "critChance": 0.07
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 48,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "40 damage, 9% crit chance and 64 bleed damage per tick",
+        "stats": {
+          "damage": 40,
+          "critChance": 0.09
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 64,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "50 damage, 11% crit chance and 80 bleed damage per tick",
+        "stats": {
+          "damage": 50,
+          "critChance": 0.11
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 80,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "60 damage, 14% crit chance and 96 bleed damage per tick",
+        "stats": {
+          "damage": 60,
+          "critChance": 0.14
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 96,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "70 damage, 16% crit chance and 112 bleed damage per tick",
+        "stats": {
+          "damage": 70,
+          "critChance": 0.16
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 112,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "80 damage, 18% crit chance and 128 bleed damage per tick",
+        "stats": {
+          "damage": 80,
+          "critChance": 0.18
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 128,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "90 damage, 20% crit chance and 144 bleed damage per tick",
+        "stats": {
+          "damage": 90,
+          "critChance": 0.2
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 144,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "100 damage, 22% crit chance and 160 bleed damage per tick",
+        "stats": {
+          "damage": 100,
+          "critChance": 0.22
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 160,
+            "duration": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "stonebreaker",
@@ -80,7 +466,139 @@
         "damagePerTick": 12
       }
     },
-    "price": 100
+    "price": 100,
+    "stars": {
+      "1": {
+        "summary": "14 damage, 3% crit chance and 24 bleed damage per tick",
+        "stats": {
+          "damage": 14,
+          "critChance": 0.03
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 24,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "28 damage, 6% crit chance and 48 bleed damage per tick",
+        "stats": {
+          "damage": 28,
+          "critChance": 0.06
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 48,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "42 damage, 9% crit chance and 72 bleed damage per tick",
+        "stats": {
+          "damage": 42,
+          "critChance": 0.09
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 72,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "56 damage, 12% crit chance and 96 bleed damage per tick",
+        "stats": {
+          "damage": 56,
+          "critChance": 0.12
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 96,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "70 damage, 15% crit chance and 120 bleed damage per tick",
+        "stats": {
+          "damage": 70,
+          "critChance": 0.15
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 120,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "84 damage, 18% crit chance and 144 bleed damage per tick",
+        "stats": {
+          "damage": 84,
+          "critChance": 0.18
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 144,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "98 damage, 21% crit chance and 168 bleed damage per tick",
+        "stats": {
+          "damage": 98,
+          "critChance": 0.21
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 168,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "112 damage, 24% crit chance and 192 bleed damage per tick",
+        "stats": {
+          "damage": 112,
+          "critChance": 0.24
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 192,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "126 damage, 27% crit chance and 216 bleed damage per tick",
+        "stats": {
+          "damage": 126,
+          "critChance": 0.27
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 216,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "140 damage, 30% crit chance and 240 bleed damage per tick",
+        "stats": {
+          "damage": 140,
+          "critChance": 0.3
+        },
+        "effects": {
+          "bleed": {
+            "damagePerTick": 240,
+            "duration": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "mountainguard_shield",
@@ -94,7 +612,79 @@
       "shield": 150,
       "block": 1
     },
-    "price": 30
+    "price": 30,
+    "stars": {
+      "1": {
+        "summary": "60 shield and 15% block",
+        "stats": {
+          "shield": 60,
+          "block": 0.15
+        }
+      },
+      "2": {
+        "summary": "120 shield and 30% block",
+        "stats": {
+          "shield": 120,
+          "block": 0.3
+        }
+      },
+      "3": {
+        "summary": "180 shield and 45% block",
+        "stats": {
+          "shield": 180,
+          "block": 0.45
+        }
+      },
+      "4": {
+        "summary": "240 shield and 60% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.6
+        }
+      },
+      "5": {
+        "summary": "300 shield and 75% block",
+        "stats": {
+          "shield": 300,
+          "block": 0.75
+        }
+      },
+      "6": {
+        "summary": "360 shield and 90% block",
+        "stats": {
+          "shield": 360,
+          "block": 0.9
+        }
+      },
+      "7": {
+        "summary": "420 shield and 105% block",
+        "stats": {
+          "shield": 420,
+          "block": 1.05
+        }
+      },
+      "8": {
+        "summary": "480 shield and 120% block",
+        "stats": {
+          "shield": 480,
+          "block": 1.2
+        }
+      },
+      "9": {
+        "summary": "540 shield and 135% block",
+        "stats": {
+          "shield": 540,
+          "block": 1.35
+        }
+      },
+      "10": {
+        "summary": "600 shield and 150% block",
+        "stats": {
+          "shield": 600,
+          "block": 1.5
+        }
+      }
+    }
   },
   {
     "id": "ale_mug_relic",
@@ -106,7 +696,69 @@
     "stats": {
       "critChance": 0.05
     },
-    "price": 25
+    "price": 25,
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "3": {
+        "summary": "2% crit chance",
+        "stats": {
+          "critChance": 0.02
+        }
+      },
+      "4": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "5": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "6": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "7": {
+        "summary": "5% crit chance",
+        "stats": {
+          "critChance": 0.05
+        }
+      },
+      "8": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "9": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "10": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      }
+    }
   },
   {
     "id": "anvil_charm",
@@ -118,7 +770,69 @@
     "stats": {
       "attackSpeed": 0.1
     },
-    "price": 25
+    "price": 25,
+    "stars": {
+      "1": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% haste",
+        "stats": {
+          "attackSpeed": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% haste",
+        "stats": {
+          "attackSpeed": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% haste",
+        "stats": {
+          "attackSpeed": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% haste",
+        "stats": {
+          "attackSpeed": 0.15
+        }
+      }
+    }
   },
   {
     "id": "miners_pickaxe",
@@ -137,7 +851,69 @@
         "amount": 3
       }
     },
-    "price": 30
+    "price": 30,
+    "stars": {
+      "1": {
+        "summary": "4 damage",
+        "stats": {
+          "damage": 4
+        }
+      },
+      "2": {
+        "summary": "8 damage",
+        "stats": {
+          "damage": 8
+        }
+      },
+      "3": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "4": {
+        "summary": "16 damage",
+        "stats": {
+          "damage": 16
+        }
+      },
+      "5": {
+        "summary": "20 damage",
+        "stats": {
+          "damage": 20
+        }
+      },
+      "6": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "7": {
+        "summary": "28 damage",
+        "stats": {
+          "damage": 28
+        }
+      },
+      "8": {
+        "summary": "32 damage",
+        "stats": {
+          "damage": 32
+        }
+      },
+      "9": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "10": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      }
+    }
   },
   {
     "id": "forgefire_ring",
@@ -149,7 +925,69 @@
     "stats": {
       "critChance": 0.1
     },
-    "price": 50
+    "price": 50,
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% crit chance",
+        "stats": {
+          "critChance": 0.15
+        }
+      }
+    }
   },
   {
     "id": "runemasters_tome",
@@ -162,7 +1000,79 @@
       "attackSpeed": 0.15,
       "critChance": 0.05
     },
-    "price": 80
+    "price": 80,
+    "stars": {
+      "1": {
+        "summary": "2% haste and 1% crit chance",
+        "stats": {
+          "attackSpeed": 0.02,
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "4% haste and 1% crit chance",
+        "stats": {
+          "attackSpeed": 0.04,
+          "critChance": 0.01
+        }
+      },
+      "3": {
+        "summary": "7% haste and 2% crit chance",
+        "stats": {
+          "attackSpeed": 0.07,
+          "critChance": 0.02
+        }
+      },
+      "4": {
+        "summary": "9% haste and 3% crit chance",
+        "stats": {
+          "attackSpeed": 0.09,
+          "critChance": 0.03
+        }
+      },
+      "5": {
+        "summary": "11% haste and 4% crit chance",
+        "stats": {
+          "attackSpeed": 0.11,
+          "critChance": 0.04
+        }
+      },
+      "6": {
+        "summary": "14% haste and 4% crit chance",
+        "stats": {
+          "attackSpeed": 0.14,
+          "critChance": 0.04
+        }
+      },
+      "7": {
+        "summary": "16% haste and 5% crit chance",
+        "stats": {
+          "attackSpeed": 0.16,
+          "critChance": 0.05
+        }
+      },
+      "8": {
+        "summary": "18% haste and 6% crit chance",
+        "stats": {
+          "attackSpeed": 0.18,
+          "critChance": 0.06
+        }
+      },
+      "9": {
+        "summary": "20% haste and 7% crit chance",
+        "stats": {
+          "attackSpeed": 0.2,
+          "critChance": 0.07
+        }
+      },
+      "10": {
+        "summary": "22% haste and 7% crit chance",
+        "stats": {
+          "attackSpeed": 0.22,
+          "critChance": 0.07
+        }
+      }
+    }
   },
   {
     "id": "elven_longbow",
@@ -182,7 +1092,129 @@
         "damagePerTick": 4
       }
     },
-    "subtype": "wand"
+    "subtype": "wand",
+    "stars": {
+      "1": {
+        "summary": "4 damage and 8 poison damage per tick",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 8,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage and 16 poison damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 16,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage and 24 poison damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 24,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage and 32 poison damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 32,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage and 40 poison damage per tick",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 40,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage and 48 poison damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 48,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage and 56 poison damage per tick",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 56,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage and 64 poison damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 64,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage and 72 poison damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 72,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage and 80 poison damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 80,
+            "duration": 15
+          }
+        }
+      }
+    }
   },
   {
     "id": "forest_edge",
@@ -202,7 +1234,129 @@
         "damagePerTick": 2
       }
     },
-    "subtype": "sword"
+    "subtype": "sword",
+    "stars": {
+      "1": {
+        "summary": "6 damage and 4 poison damage per tick",
+        "stats": {
+          "damage": 6
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 4,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "12 damage and 8 poison damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 8,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "18 damage and 12 poison damage per tick",
+        "stats": {
+          "damage": 18
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 12,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "24 damage and 16 poison damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 16,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "30 damage and 20 poison damage per tick",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 20,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "36 damage and 24 poison damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 24,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "42 damage and 28 poison damage per tick",
+        "stats": {
+          "damage": 42
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 28,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "48 damage and 32 poison damage per tick",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 32,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "54 damage and 36 poison damage per tick",
+        "stats": {
+          "damage": 54
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 36,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "60 damage and 40 poison damage per tick",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 40,
+            "duration": 15
+          }
+        }
+      }
+    }
   },
   {
     "id": "natures_grasp",
@@ -214,6 +1368,68 @@
     "price": 60,
     "stats": {
       "attackSpeed": 0.08
+    },
+    "stars": {
+      "1": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "2": {
+        "summary": "2% haste",
+        "stats": {
+          "attackSpeed": 0.02
+        }
+      },
+      "3": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "4": {
+        "summary": "5% haste",
+        "stats": {
+          "attackSpeed": 0.05
+        }
+      },
+      "5": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "6": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "7": {
+        "summary": "8% haste",
+        "stats": {
+          "attackSpeed": 0.08
+        }
+      },
+      "8": {
+        "summary": "10% haste",
+        "stats": {
+          "attackSpeed": 0.1
+        }
+      },
+      "9": {
+        "summary": "11% haste",
+        "stats": {
+          "attackSpeed": 0.11
+        }
+      },
+      "10": {
+        "summary": "12% haste",
+        "stats": {
+          "attackSpeed": 0.12
+        }
+      }
     }
   },
   {
@@ -228,6 +1444,78 @@
       "cooldown": 4.5,
       "shield": 200,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "160 shield and 4% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "320 shield and 9% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "400 shield and 11% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "480 shield and 14% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "560 shield and 16% block",
+        "stats": {
+          "shield": 560,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "640 shield and 18% block",
+        "stats": {
+          "shield": 640,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "720 shield and 20% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "800 shield and 22% block",
+        "stats": {
+          "shield": 800,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -243,6 +1531,98 @@
         "duration": 15,
         "damagePerTick": 5
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "10 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 10,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "20 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 20,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "30 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 30,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "40 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 40,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "50 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 50,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "60 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 60,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "70 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 70,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "80 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 80,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "90 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 90,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "100 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 100,
+            "duration": 15
+          }
+        }
+      }
     }
   },
   {
@@ -255,6 +1635,68 @@
     "price": 50,
     "stats": {
       "attackSpeed": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "2% haste",
+        "stats": {
+          "attackSpeed": 0.02
+        }
+      },
+      "2": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "3": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "4": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "5": {
+        "summary": "11% haste",
+        "stats": {
+          "attackSpeed": 0.11
+        }
+      },
+      "6": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "7": {
+        "summary": "16% haste",
+        "stats": {
+          "attackSpeed": 0.16
+        }
+      },
+      "8": {
+        "summary": "18% haste",
+        "stats": {
+          "attackSpeed": 0.18
+        }
+      },
+      "9": {
+        "summary": "20% haste",
+        "stats": {
+          "attackSpeed": 0.2
+        }
+      },
+      "10": {
+        "summary": "22% haste",
+        "stats": {
+          "attackSpeed": 0.22
+        }
+      }
     }
   },
   {
@@ -275,7 +1717,129 @@
         "damagePerTick": 8
       }
     },
-    "subtype": "wand"
+    "subtype": "wand",
+    "stars": {
+      "1": {
+        "summary": "8 damage and 16 poison damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 16,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "16 damage and 32 poison damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 32,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "24 damage and 48 poison damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 48,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "32 damage and 64 poison damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 64,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "40 damage and 80 poison damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 80,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "48 damage and 96 poison damage per tick",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 96,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "56 damage and 112 poison damage per tick",
+        "stats": {
+          "damage": 56
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 112,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "64 damage and 128 poison damage per tick",
+        "stats": {
+          "damage": 64
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 128,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "72 damage and 144 poison damage per tick",
+        "stats": {
+          "damage": 72
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 144,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "80 damage and 160 poison damage per tick",
+        "stats": {
+          "damage": 80
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 160,
+            "duration": 15
+          }
+        }
+      }
+    }
   },
   {
     "id": "pixie_dust",
@@ -287,6 +1851,68 @@
     "price": 90,
     "stats": {
       "critChance": 0.05
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "3": {
+        "summary": "2% crit chance",
+        "stats": {
+          "critChance": 0.02
+        }
+      },
+      "4": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "5": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "6": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "7": {
+        "summary": "5% crit chance",
+        "stats": {
+          "critChance": 0.05
+        }
+      },
+      "8": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "9": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "10": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      }
     }
   },
   {
@@ -299,6 +1925,68 @@
     "price": 40,
     "stats": {
       "shield": 100
+    },
+    "stars": {
+      "1": {
+        "summary": "40 shield",
+        "stats": {
+          "shield": 40
+        }
+      },
+      "2": {
+        "summary": "80 shield",
+        "stats": {
+          "shield": 80
+        }
+      },
+      "3": {
+        "summary": "120 shield",
+        "stats": {
+          "shield": 120
+        }
+      },
+      "4": {
+        "summary": "160 shield",
+        "stats": {
+          "shield": 160
+        }
+      },
+      "5": {
+        "summary": "200 shield",
+        "stats": {
+          "shield": 200
+        }
+      },
+      "6": {
+        "summary": "240 shield",
+        "stats": {
+          "shield": 240
+        }
+      },
+      "7": {
+        "summary": "280 shield",
+        "stats": {
+          "shield": 280
+        }
+      },
+      "8": {
+        "summary": "320 shield",
+        "stats": {
+          "shield": 320
+        }
+      },
+      "9": {
+        "summary": "360 shield",
+        "stats": {
+          "shield": 360
+        }
+      },
+      "10": {
+        "summary": "400 shield",
+        "stats": {
+          "shield": 400
+        }
+      }
     }
   },
   {
@@ -315,6 +2003,118 @@
     "effects": {
       "multihit": {
         "count": 2
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "1% haste and 1 additional hits",
+        "stats": {
+          "attackSpeed": 0.01
+        },
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "3% haste and 2 additional hits",
+        "stats": {
+          "attackSpeed": 0.03
+        },
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "4% haste and 3 additional hits",
+        "stats": {
+          "attackSpeed": 0.04
+        },
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "6% haste and 4 additional hits",
+        "stats": {
+          "attackSpeed": 0.06
+        },
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "7% haste and 5 additional hits",
+        "stats": {
+          "attackSpeed": 0.07
+        },
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "9% haste and 6 additional hits",
+        "stats": {
+          "attackSpeed": 0.09
+        },
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "10% haste and 7 additional hits",
+        "stats": {
+          "attackSpeed": 0.1
+        },
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "12% haste and 8 additional hits",
+        "stats": {
+          "attackSpeed": 0.12
+        },
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "14% haste and 9 additional hits",
+        "stats": {
+          "attackSpeed": 0.14
+        },
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "15% haste and 10 additional hits",
+        "stats": {
+          "attackSpeed": 0.15
+        },
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
       }
     }
   },
@@ -336,7 +2136,129 @@
         "damagePerTick": 5
       }
     },
-    "subtype": "axe"
+    "subtype": "axe",
+    "stars": {
+      "1": {
+        "summary": "4 damage and 10 shadow damage per tick",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 10,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage and 20 shadow damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 20,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage and 30 shadow damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 30,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage and 40 shadow damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 40,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage and 50 shadow damage per tick",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 50,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage and 60 shadow damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 60,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage and 70 shadow damage per tick",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 70,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage and 80 shadow damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 80,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage and 90 shadow damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 90,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage and 100 shadow damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 100,
+            "duration": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "soul_eater",
@@ -356,7 +2278,129 @@
         "damagePerTick": 3
       }
     },
-    "subtype": "sword"
+    "subtype": "sword",
+    "stars": {
+      "1": {
+        "summary": "6 damage and 6 shadow damage per tick",
+        "stats": {
+          "damage": 6
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 6,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "12 damage and 12 shadow damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 12,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "18 damage and 18 shadow damage per tick",
+        "stats": {
+          "damage": 18
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 18,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "24 damage and 24 shadow damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 24,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "30 damage and 30 shadow damage per tick",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 30,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "36 damage and 36 shadow damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 36,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "42 damage and 42 shadow damage per tick",
+        "stats": {
+          "damage": 42
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 42,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "48 damage and 48 shadow damage per tick",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 48,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "54 damage and 54 shadow damage per tick",
+        "stats": {
+          "damage": 54
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 54,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "60 damage and 60 shadow damage per tick",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 60,
+            "duration": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "grave_dirt",
@@ -370,6 +2414,98 @@
       "shadow": {
         "duration": 10,
         "damagePerTick": 2
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "4 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 4,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "8 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 8,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "12 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 12,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "16 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 16,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "20 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 20,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "24 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 24,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "28 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 28,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "32 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 32,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "36 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 36,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "40 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 40,
+            "duration": 10
+          }
+        }
       }
     }
   },
@@ -385,6 +2521,78 @@
       "cooldown": 4.5,
       "shield": 200,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "160 shield and 4% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "320 shield and 9% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "400 shield and 11% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "480 shield and 14% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "560 shield and 16% block",
+        "stats": {
+          "shield": 560,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "640 shield and 18% block",
+        "stats": {
+          "shield": 640,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "720 shield and 20% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "800 shield and 22% block",
+        "stats": {
+          "shield": 800,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -399,6 +2607,88 @@
       "lifesteal": {
         "factor": 0.1
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "5% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.05
+          }
+        }
+      },
+      "2": {
+        "summary": "10% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.1
+          }
+        }
+      },
+      "3": {
+        "summary": "15% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.15
+          }
+        }
+      },
+      "4": {
+        "summary": "20% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.2
+          }
+        }
+      },
+      "5": {
+        "summary": "25% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.25
+          }
+        }
+      },
+      "6": {
+        "summary": "30% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.3
+          }
+        }
+      },
+      "7": {
+        "summary": "35% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.35
+          }
+        }
+      },
+      "8": {
+        "summary": "40% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.4
+          }
+        }
+      },
+      "9": {
+        "summary": "45% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.45
+          }
+        }
+      },
+      "10": {
+        "summary": "50% lifesteal",
+        "effects": {
+          "lifesteal": {
+            "factor": 0.5
+          }
+        }
+      }
     }
   },
   {
@@ -411,6 +2701,68 @@
     "price": 50,
     "stats": {
       "attackSpeed": 0.12
+    },
+    "stars": {
+      "1": {
+        "summary": "2% haste",
+        "stats": {
+          "attackSpeed": 0.02
+        }
+      },
+      "2": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "3": {
+        "summary": "5% haste",
+        "stats": {
+          "attackSpeed": 0.05
+        }
+      },
+      "4": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "5": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "6": {
+        "summary": "11% haste",
+        "stats": {
+          "attackSpeed": 0.11
+        }
+      },
+      "7": {
+        "summary": "13% haste",
+        "stats": {
+          "attackSpeed": 0.13
+        }
+      },
+      "8": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "9": {
+        "summary": "16% haste",
+        "stats": {
+          "attackSpeed": 0.16
+        }
+      },
+      "10": {
+        "summary": "18% haste",
+        "stats": {
+          "attackSpeed": 0.18
+        }
+      }
     }
   },
   {
@@ -424,6 +2776,88 @@
     "effects": {
       "multihit": {
         "count": 2
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
       }
     }
   },
@@ -440,6 +2874,98 @@
         "duration": 20,
         "damagePerTick": 4
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "8 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 8,
+            "duration": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "16 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 16,
+            "duration": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "24 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 24,
+            "duration": 20
+          }
+        }
+      },
+      "4": {
+        "summary": "32 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 32,
+            "duration": 20
+          }
+        }
+      },
+      "5": {
+        "summary": "40 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 40,
+            "duration": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "48 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 48,
+            "duration": 20
+          }
+        }
+      },
+      "7": {
+        "summary": "56 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 56,
+            "duration": 20
+          }
+        }
+      },
+      "8": {
+        "summary": "64 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 64,
+            "duration": 20
+          }
+        }
+      },
+      "9": {
+        "summary": "72 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 72,
+            "duration": 20
+          }
+        }
+      },
+      "10": {
+        "summary": "80 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 80,
+            "duration": 20
+          }
+        }
+      }
     }
   },
   {
@@ -454,6 +2980,98 @@
       "shadow": {
         "duration": 10,
         "damagePerTick": 6
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "12 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 12,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "24 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 24,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "36 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 36,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "48 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 48,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "60 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 60,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "72 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 72,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "84 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 84,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "96 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 96,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "108 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 108,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "120 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 120,
+            "duration": 10
+          }
+        }
       }
     }
   },
@@ -475,7 +3093,129 @@
         "damagePerTick": 10
       }
     },
-    "subtype": "dagger"
+    "subtype": "dagger",
+    "stars": {
+      "1": {
+        "summary": "8 damage and 20 shadow damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 20,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "16 damage and 40 shadow damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 40,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "24 damage and 60 shadow damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 60,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "32 damage and 80 shadow damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 80,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "40 damage and 100 shadow damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 100,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "48 damage and 120 shadow damage per tick",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 120,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "56 damage and 140 shadow damage per tick",
+        "stats": {
+          "damage": 56
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 140,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "64 damage and 160 shadow damage per tick",
+        "stats": {
+          "damage": 64
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 160,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "72 damage and 180 shadow damage per tick",
+        "stats": {
+          "damage": 72
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 180,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "80 damage and 200 shadow damage per tick",
+        "stats": {
+          "damage": 80
+        },
+        "effects": {
+          "shadow": {
+            "damagePerTick": 200,
+            "duration": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "sunspear",
@@ -495,7 +3235,129 @@
         "maxHpGain": 2
       }
     },
-    "subtype": "spear"
+    "subtype": "spear",
+    "stars": {
+      "1": {
+        "summary": "4 damage, 20 heal and 4 max hp",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "holy": {
+            "heal": 20,
+            "maxHpGain": 4
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage, 40 heal and 8 max hp",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "holy": {
+            "heal": 40,
+            "maxHpGain": 8
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage, 60 heal and 12 max hp",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "holy": {
+            "heal": 60,
+            "maxHpGain": 12
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage, 80 heal and 16 max hp",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "holy": {
+            "heal": 80,
+            "maxHpGain": 16
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage, 100 heal and 20 max hp",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "holy": {
+            "heal": 100,
+            "maxHpGain": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage, 120 heal and 24 max hp",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "holy": {
+            "heal": 120,
+            "maxHpGain": 24
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage, 140 heal and 28 max hp",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "holy": {
+            "heal": 140,
+            "maxHpGain": 28
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage, 160 heal and 32 max hp",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "holy": {
+            "heal": 160,
+            "maxHpGain": 32
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage, 180 heal and 36 max hp",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "holy": {
+            "heal": 180,
+            "maxHpGain": 36
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage, 200 heal and 40 max hp",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "holy": {
+            "heal": 200,
+            "maxHpGain": 40
+          }
+        }
+      }
+    }
   },
   {
     "id": "angelic_blade",
@@ -515,7 +3377,129 @@
         "maxHpGain": 2
       }
     },
-    "subtype": "sword"
+    "subtype": "sword",
+    "stars": {
+      "1": {
+        "summary": "6 damage, 16 heal and 4 max hp",
+        "stats": {
+          "damage": 6
+        },
+        "effects": {
+          "holy": {
+            "heal": 16,
+            "maxHpGain": 4
+          }
+        }
+      },
+      "2": {
+        "summary": "12 damage, 32 heal and 8 max hp",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "holy": {
+            "heal": 32,
+            "maxHpGain": 8
+          }
+        }
+      },
+      "3": {
+        "summary": "18 damage, 48 heal and 12 max hp",
+        "stats": {
+          "damage": 18
+        },
+        "effects": {
+          "holy": {
+            "heal": 48,
+            "maxHpGain": 12
+          }
+        }
+      },
+      "4": {
+        "summary": "24 damage, 64 heal and 16 max hp",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "holy": {
+            "heal": 64,
+            "maxHpGain": 16
+          }
+        }
+      },
+      "5": {
+        "summary": "30 damage, 80 heal and 20 max hp",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "holy": {
+            "heal": 80,
+            "maxHpGain": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "36 damage, 96 heal and 24 max hp",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "holy": {
+            "heal": 96,
+            "maxHpGain": 24
+          }
+        }
+      },
+      "7": {
+        "summary": "42 damage, 112 heal and 28 max hp",
+        "stats": {
+          "damage": 42
+        },
+        "effects": {
+          "holy": {
+            "heal": 112,
+            "maxHpGain": 28
+          }
+        }
+      },
+      "8": {
+        "summary": "48 damage, 128 heal and 32 max hp",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "holy": {
+            "heal": 128,
+            "maxHpGain": 32
+          }
+        }
+      },
+      "9": {
+        "summary": "54 damage, 144 heal and 36 max hp",
+        "stats": {
+          "damage": 54
+        },
+        "effects": {
+          "holy": {
+            "heal": 144,
+            "maxHpGain": 36
+          }
+        }
+      },
+      "10": {
+        "summary": "60 damage, 160 heal and 40 max hp",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "holy": {
+            "heal": 160,
+            "maxHpGain": 40
+          }
+        }
+      }
+    }
   },
   {
     "id": "holy_grail",
@@ -529,6 +3513,98 @@
       "holy": {
         "heal": 15,
         "maxHpGain": 5
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "30 heal and 10 max hp",
+        "effects": {
+          "holy": {
+            "heal": 30,
+            "maxHpGain": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "60 heal and 20 max hp",
+        "effects": {
+          "holy": {
+            "heal": 60,
+            "maxHpGain": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "90 heal and 30 max hp",
+        "effects": {
+          "holy": {
+            "heal": 90,
+            "maxHpGain": 30
+          }
+        }
+      },
+      "4": {
+        "summary": "120 heal and 40 max hp",
+        "effects": {
+          "holy": {
+            "heal": 120,
+            "maxHpGain": 40
+          }
+        }
+      },
+      "5": {
+        "summary": "150 heal and 50 max hp",
+        "effects": {
+          "holy": {
+            "heal": 150,
+            "maxHpGain": 50
+          }
+        }
+      },
+      "6": {
+        "summary": "180 heal and 60 max hp",
+        "effects": {
+          "holy": {
+            "heal": 180,
+            "maxHpGain": 60
+          }
+        }
+      },
+      "7": {
+        "summary": "210 heal and 70 max hp",
+        "effects": {
+          "holy": {
+            "heal": 210,
+            "maxHpGain": 70
+          }
+        }
+      },
+      "8": {
+        "summary": "240 heal and 80 max hp",
+        "effects": {
+          "holy": {
+            "heal": 240,
+            "maxHpGain": 80
+          }
+        }
+      },
+      "9": {
+        "summary": "270 heal and 90 max hp",
+        "effects": {
+          "holy": {
+            "heal": 270,
+            "maxHpGain": 90
+          }
+        }
+      },
+      "10": {
+        "summary": "300 heal and 100 max hp",
+        "effects": {
+          "holy": {
+            "heal": 300,
+            "maxHpGain": 100
+          }
+        }
       }
     }
   },
@@ -544,6 +3620,78 @@
       "cooldown": 4.5,
       "shield": 200,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "160 shield and 4% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "320 shield and 9% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "400 shield and 11% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "480 shield and 14% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "560 shield and 16% block",
+        "stats": {
+          "shield": 560,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "640 shield and 18% block",
+        "stats": {
+          "shield": 640,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "720 shield and 20% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "800 shield and 22% block",
+        "stats": {
+          "shield": 800,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -556,6 +3704,68 @@
     "price": 30,
     "stats": {
       "attackSpeed": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% haste",
+        "stats": {
+          "attackSpeed": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% haste",
+        "stats": {
+          "attackSpeed": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% haste",
+        "stats": {
+          "attackSpeed": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% haste",
+        "stats": {
+          "attackSpeed": 0.15
+        }
+      }
     }
   },
   {
@@ -570,6 +3780,88 @@
       "multihit": {
         "count": 2
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -582,6 +3874,68 @@
     "price": 70,
     "stats": {
       "critChance": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% crit chance",
+        "stats": {
+          "critChance": 0.15
+        }
+      }
     }
   },
   {
@@ -597,6 +3951,98 @@
         "heal": 12,
         "maxHpGain": 5
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "24 heal and 10 max hp",
+        "effects": {
+          "holy": {
+            "heal": 24,
+            "maxHpGain": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "48 heal and 20 max hp",
+        "effects": {
+          "holy": {
+            "heal": 48,
+            "maxHpGain": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "72 heal and 30 max hp",
+        "effects": {
+          "holy": {
+            "heal": 72,
+            "maxHpGain": 30
+          }
+        }
+      },
+      "4": {
+        "summary": "96 heal and 40 max hp",
+        "effects": {
+          "holy": {
+            "heal": 96,
+            "maxHpGain": 40
+          }
+        }
+      },
+      "5": {
+        "summary": "120 heal and 50 max hp",
+        "effects": {
+          "holy": {
+            "heal": 120,
+            "maxHpGain": 50
+          }
+        }
+      },
+      "6": {
+        "summary": "144 heal and 60 max hp",
+        "effects": {
+          "holy": {
+            "heal": 144,
+            "maxHpGain": 60
+          }
+        }
+      },
+      "7": {
+        "summary": "168 heal and 70 max hp",
+        "effects": {
+          "holy": {
+            "heal": 168,
+            "maxHpGain": 70
+          }
+        }
+      },
+      "8": {
+        "summary": "192 heal and 80 max hp",
+        "effects": {
+          "holy": {
+            "heal": 192,
+            "maxHpGain": 80
+          }
+        }
+      },
+      "9": {
+        "summary": "216 heal and 90 max hp",
+        "effects": {
+          "holy": {
+            "heal": 216,
+            "maxHpGain": 90
+          }
+        }
+      },
+      "10": {
+        "summary": "240 heal and 100 max hp",
+        "effects": {
+          "holy": {
+            "heal": 240,
+            "maxHpGain": 100
+          }
+        }
+      }
     }
   },
   {
@@ -611,6 +4057,98 @@
       "holy": {
         "heal": 20,
         "maxHpGain": 1
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "40 heal and 2 max hp",
+        "effects": {
+          "holy": {
+            "heal": 40,
+            "maxHpGain": 2
+          }
+        }
+      },
+      "2": {
+        "summary": "80 heal and 4 max hp",
+        "effects": {
+          "holy": {
+            "heal": 80,
+            "maxHpGain": 4
+          }
+        }
+      },
+      "3": {
+        "summary": "120 heal and 6 max hp",
+        "effects": {
+          "holy": {
+            "heal": 120,
+            "maxHpGain": 6
+          }
+        }
+      },
+      "4": {
+        "summary": "160 heal and 8 max hp",
+        "effects": {
+          "holy": {
+            "heal": 160,
+            "maxHpGain": 8
+          }
+        }
+      },
+      "5": {
+        "summary": "200 heal and 10 max hp",
+        "effects": {
+          "holy": {
+            "heal": 200,
+            "maxHpGain": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "240 heal and 12 max hp",
+        "effects": {
+          "holy": {
+            "heal": 240,
+            "maxHpGain": 12
+          }
+        }
+      },
+      "7": {
+        "summary": "280 heal and 14 max hp",
+        "effects": {
+          "holy": {
+            "heal": 280,
+            "maxHpGain": 14
+          }
+        }
+      },
+      "8": {
+        "summary": "320 heal and 16 max hp",
+        "effects": {
+          "holy": {
+            "heal": 320,
+            "maxHpGain": 16
+          }
+        }
+      },
+      "9": {
+        "summary": "360 heal and 18 max hp",
+        "effects": {
+          "holy": {
+            "heal": 360,
+            "maxHpGain": 18
+          }
+        }
+      },
+      "10": {
+        "summary": "400 heal and 20 max hp",
+        "effects": {
+          "holy": {
+            "heal": 400,
+            "maxHpGain": 20
+          }
+        }
       }
     }
   },
@@ -632,7 +4170,129 @@
         "maxHpGain": 10
       }
     },
-    "subtype": "axe"
+    "subtype": "axe",
+    "stars": {
+      "1": {
+        "summary": "8 damage, 30 heal and 20 max hp",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "holy": {
+            "heal": 30,
+            "maxHpGain": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "16 damage, 60 heal and 40 max hp",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "holy": {
+            "heal": 60,
+            "maxHpGain": 40
+          }
+        }
+      },
+      "3": {
+        "summary": "24 damage, 90 heal and 60 max hp",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "holy": {
+            "heal": 90,
+            "maxHpGain": 60
+          }
+        }
+      },
+      "4": {
+        "summary": "32 damage, 120 heal and 80 max hp",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "holy": {
+            "heal": 120,
+            "maxHpGain": 80
+          }
+        }
+      },
+      "5": {
+        "summary": "40 damage, 150 heal and 100 max hp",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "holy": {
+            "heal": 150,
+            "maxHpGain": 100
+          }
+        }
+      },
+      "6": {
+        "summary": "48 damage, 180 heal and 120 max hp",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "holy": {
+            "heal": 180,
+            "maxHpGain": 120
+          }
+        }
+      },
+      "7": {
+        "summary": "56 damage, 210 heal and 140 max hp",
+        "stats": {
+          "damage": 56
+        },
+        "effects": {
+          "holy": {
+            "heal": 210,
+            "maxHpGain": 140
+          }
+        }
+      },
+      "8": {
+        "summary": "64 damage, 240 heal and 160 max hp",
+        "stats": {
+          "damage": 64
+        },
+        "effects": {
+          "holy": {
+            "heal": 240,
+            "maxHpGain": 160
+          }
+        }
+      },
+      "9": {
+        "summary": "72 damage, 270 heal and 180 max hp",
+        "stats": {
+          "damage": 72
+        },
+        "effects": {
+          "holy": {
+            "heal": 270,
+            "maxHpGain": 180
+          }
+        }
+      },
+      "10": {
+        "summary": "80 damage, 300 heal and 200 max hp",
+        "stats": {
+          "damage": 80
+        },
+        "effects": {
+          "holy": {
+            "heal": 300,
+            "maxHpGain": 200
+          }
+        }
+      }
+    }
   },
   {
     "id": "hellfire_greataxe",
@@ -652,7 +4312,129 @@
         "damagePerTick": 8
       }
     },
-    "subtype": "axe"
+    "subtype": "axe",
+    "stars": {
+      "1": {
+        "summary": "4 damage and 16 fire damage per tick",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 16,
+            "duration": 5
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage and 32 fire damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 32,
+            "duration": 5
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage and 48 fire damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 48,
+            "duration": 5
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage and 64 fire damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 64,
+            "duration": 5
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage and 80 fire damage per tick",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 80,
+            "duration": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage and 96 fire damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 96,
+            "duration": 5
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage and 112 fire damage per tick",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 112,
+            "duration": 5
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage and 128 fire damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 128,
+            "duration": 5
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage and 144 fire damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 144,
+            "duration": 5
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage and 160 fire damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 160,
+            "duration": 5
+          }
+        }
+      }
+    }
   },
   {
     "id": "magma_saber",
@@ -672,7 +4454,129 @@
         "damagePerTick": 6
       }
     },
-    "subtype": "sword"
+    "subtype": "sword",
+    "stars": {
+      "1": {
+        "summary": "6 damage and 12 fire damage per tick",
+        "stats": {
+          "damage": 6
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 12,
+            "duration": 5
+          }
+        }
+      },
+      "2": {
+        "summary": "12 damage and 24 fire damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 24,
+            "duration": 5
+          }
+        }
+      },
+      "3": {
+        "summary": "18 damage and 36 fire damage per tick",
+        "stats": {
+          "damage": 18
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 36,
+            "duration": 5
+          }
+        }
+      },
+      "4": {
+        "summary": "24 damage and 48 fire damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 48,
+            "duration": 5
+          }
+        }
+      },
+      "5": {
+        "summary": "30 damage and 60 fire damage per tick",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 60,
+            "duration": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "36 damage and 72 fire damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 72,
+            "duration": 5
+          }
+        }
+      },
+      "7": {
+        "summary": "42 damage and 84 fire damage per tick",
+        "stats": {
+          "damage": 42
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 84,
+            "duration": 5
+          }
+        }
+      },
+      "8": {
+        "summary": "48 damage and 96 fire damage per tick",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 96,
+            "duration": 5
+          }
+        }
+      },
+      "9": {
+        "summary": "54 damage and 108 fire damage per tick",
+        "stats": {
+          "damage": 54
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 108,
+            "duration": 5
+          }
+        }
+      },
+      "10": {
+        "summary": "60 damage and 120 fire damage per tick",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "fire": {
+            "damagePerTick": 120,
+            "duration": 5
+          }
+        }
+      }
+    }
   },
   {
     "id": "blazing_heart",
@@ -686,6 +4590,98 @@
       "fire": {
         "duration": 5,
         "damagePerTick": 4
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "8 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 8,
+            "duration": 5
+          }
+        }
+      },
+      "2": {
+        "summary": "16 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 16,
+            "duration": 5
+          }
+        }
+      },
+      "3": {
+        "summary": "24 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 24,
+            "duration": 5
+          }
+        }
+      },
+      "4": {
+        "summary": "32 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 32,
+            "duration": 5
+          }
+        }
+      },
+      "5": {
+        "summary": "40 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 40,
+            "duration": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "48 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 48,
+            "duration": 5
+          }
+        }
+      },
+      "7": {
+        "summary": "56 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 56,
+            "duration": 5
+          }
+        }
+      },
+      "8": {
+        "summary": "64 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 64,
+            "duration": 5
+          }
+        }
+      },
+      "9": {
+        "summary": "72 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 72,
+            "duration": 5
+          }
+        }
+      },
+      "10": {
+        "summary": "80 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 80,
+            "duration": 5
+          }
+        }
       }
     }
   },
@@ -701,6 +4697,78 @@
       "cooldown": 4.5,
       "shield": 200,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "160 shield and 4% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "320 shield and 9% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "400 shield and 11% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "480 shield and 14% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "560 shield and 16% block",
+        "stats": {
+          "shield": 560,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "640 shield and 18% block",
+        "stats": {
+          "shield": 640,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "720 shield and 20% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "800 shield and 22% block",
+        "stats": {
+          "shield": 800,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -713,6 +4781,68 @@
     "price": 30,
     "stats": {
       "attackSpeed": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "2% haste",
+        "stats": {
+          "attackSpeed": 0.02
+        }
+      },
+      "2": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "3": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "4": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "5": {
+        "summary": "11% haste",
+        "stats": {
+          "attackSpeed": 0.11
+        }
+      },
+      "6": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "7": {
+        "summary": "16% haste",
+        "stats": {
+          "attackSpeed": 0.16
+        }
+      },
+      "8": {
+        "summary": "18% haste",
+        "stats": {
+          "attackSpeed": 0.18
+        }
+      },
+      "9": {
+        "summary": "20% haste",
+        "stats": {
+          "attackSpeed": 0.2
+        }
+      },
+      "10": {
+        "summary": "22% haste",
+        "stats": {
+          "attackSpeed": 0.22
+        }
+      }
     }
   },
   {
@@ -725,6 +4855,68 @@
     "price": 50,
     "stats": {
       "damage": 15
+    },
+    "stars": {
+      "1": {
+        "summary": "6 damage",
+        "stats": {
+          "damage": 6
+        }
+      },
+      "2": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "3": {
+        "summary": "18 damage",
+        "stats": {
+          "damage": 18
+        }
+      },
+      "4": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "5": {
+        "summary": "30 damage",
+        "stats": {
+          "damage": 30
+        }
+      },
+      "6": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "7": {
+        "summary": "42 damage",
+        "stats": {
+          "damage": 42
+        }
+      },
+      "8": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "9": {
+        "summary": "54 damage",
+        "stats": {
+          "damage": 54
+        }
+      },
+      "10": {
+        "summary": "60 damage",
+        "stats": {
+          "damage": 60
+        }
+      }
     }
   },
   {
@@ -740,6 +4932,98 @@
         "duration": 5,
         "damagePerTick": 10
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "20 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 20,
+            "duration": 5
+          }
+        }
+      },
+      "2": {
+        "summary": "40 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 40,
+            "duration": 5
+          }
+        }
+      },
+      "3": {
+        "summary": "60 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 60,
+            "duration": 5
+          }
+        }
+      },
+      "4": {
+        "summary": "80 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 80,
+            "duration": 5
+          }
+        }
+      },
+      "5": {
+        "summary": "100 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 100,
+            "duration": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "120 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 120,
+            "duration": 5
+          }
+        }
+      },
+      "7": {
+        "summary": "140 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 140,
+            "duration": 5
+          }
+        }
+      },
+      "8": {
+        "summary": "160 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 160,
+            "duration": 5
+          }
+        }
+      },
+      "9": {
+        "summary": "180 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 180,
+            "duration": 5
+          }
+        }
+      },
+      "10": {
+        "summary": "200 fire damage per tick",
+        "effects": {
+          "fire": {
+            "damagePerTick": 200,
+            "duration": 5
+          }
+        }
+      }
     }
   },
   {
@@ -752,6 +5036,68 @@
     "price": 90,
     "stats": {
       "critChance": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% crit chance",
+        "stats": {
+          "critChance": 0.15
+        }
+      }
     }
   },
   {
@@ -766,6 +5112,88 @@
       "multihit": {
         "count": 2
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -778,6 +5206,68 @@
     "price": 60,
     "stats": {
       "damage": 25
+    },
+    "stars": {
+      "1": {
+        "summary": "10 damage",
+        "stats": {
+          "damage": 10
+        }
+      },
+      "2": {
+        "summary": "20 damage",
+        "stats": {
+          "damage": 20
+        }
+      },
+      "3": {
+        "summary": "30 damage",
+        "stats": {
+          "damage": 30
+        }
+      },
+      "4": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      },
+      "5": {
+        "summary": "50 damage",
+        "stats": {
+          "damage": 50
+        }
+      },
+      "6": {
+        "summary": "60 damage",
+        "stats": {
+          "damage": 60
+        }
+      },
+      "7": {
+        "summary": "70 damage",
+        "stats": {
+          "damage": 70
+        }
+      },
+      "8": {
+        "summary": "80 damage",
+        "stats": {
+          "damage": 80
+        }
+      },
+      "9": {
+        "summary": "90 damage",
+        "stats": {
+          "damage": 90
+        }
+      },
+      "10": {
+        "summary": "100 damage",
+        "stats": {
+          "damage": 100
+        }
+      }
     }
   },
   {
@@ -795,7 +5285,69 @@
     "effects": {
       "frozen": {}
     },
-    "subtype": "spear"
+    "subtype": "spear",
+    "stars": {
+      "1": {
+        "summary": "4 damage",
+        "stats": {
+          "damage": 4
+        }
+      },
+      "2": {
+        "summary": "8 damage",
+        "stats": {
+          "damage": 8
+        }
+      },
+      "3": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "4": {
+        "summary": "16 damage",
+        "stats": {
+          "damage": 16
+        }
+      },
+      "5": {
+        "summary": "20 damage",
+        "stats": {
+          "damage": 20
+        }
+      },
+      "6": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "7": {
+        "summary": "28 damage",
+        "stats": {
+          "damage": 28
+        }
+      },
+      "8": {
+        "summary": "32 damage",
+        "stats": {
+          "damage": 32
+        }
+      },
+      "9": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "10": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      }
+    }
   },
   {
     "id": "frostbite_dagger",
@@ -812,7 +5364,69 @@
     "effects": {
       "frozen": {}
     },
-    "subtype": "dagger"
+    "subtype": "dagger",
+    "stars": {
+      "1": {
+        "summary": "6 damage",
+        "stats": {
+          "damage": 6
+        }
+      },
+      "2": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "3": {
+        "summary": "18 damage",
+        "stats": {
+          "damage": 18
+        }
+      },
+      "4": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "5": {
+        "summary": "30 damage",
+        "stats": {
+          "damage": 30
+        }
+      },
+      "6": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "7": {
+        "summary": "42 damage",
+        "stats": {
+          "damage": 42
+        }
+      },
+      "8": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "9": {
+        "summary": "54 damage",
+        "stats": {
+          "damage": 54
+        }
+      },
+      "10": {
+        "summary": "60 damage",
+        "stats": {
+          "damage": 60
+        }
+      }
+    }
   },
   {
     "id": "leviathan_scale",
@@ -824,6 +5438,68 @@
     "price": 60,
     "stats": {
       "shield": 50
+    },
+    "stars": {
+      "1": {
+        "summary": "20 shield",
+        "stats": {
+          "shield": 20
+        }
+      },
+      "2": {
+        "summary": "40 shield",
+        "stats": {
+          "shield": 40
+        }
+      },
+      "3": {
+        "summary": "60 shield",
+        "stats": {
+          "shield": 60
+        }
+      },
+      "4": {
+        "summary": "80 shield",
+        "stats": {
+          "shield": 80
+        }
+      },
+      "5": {
+        "summary": "100 shield",
+        "stats": {
+          "shield": 100
+        }
+      },
+      "6": {
+        "summary": "120 shield",
+        "stats": {
+          "shield": 120
+        }
+      },
+      "7": {
+        "summary": "140 shield",
+        "stats": {
+          "shield": 140
+        }
+      },
+      "8": {
+        "summary": "160 shield",
+        "stats": {
+          "shield": 160
+        }
+      },
+      "9": {
+        "summary": "180 shield",
+        "stats": {
+          "shield": 180
+        }
+      },
+      "10": {
+        "summary": "200 shield",
+        "stats": {
+          "shield": 200
+        }
+      }
     }
   },
   {
@@ -838,6 +5514,78 @@
       "cooldown": 4.5,
       "shield": 200,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "160 shield and 4% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "320 shield and 9% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "400 shield and 11% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "480 shield and 14% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "560 shield and 16% block",
+        "stats": {
+          "shield": 560,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "640 shield and 18% block",
+        "stats": {
+          "shield": 640,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "720 shield and 20% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "800 shield and 22% block",
+        "stats": {
+          "shield": 800,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -852,6 +5600,88 @@
       "multihit": {
         "count": 3
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -864,6 +5694,68 @@
     "price": 50,
     "stats": {
       "critChance": 0.08
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "2% crit chance",
+        "stats": {
+          "critChance": 0.02
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "5% crit chance",
+        "stats": {
+          "critChance": 0.05
+        }
+      },
+      "5": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "6": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "7": {
+        "summary": "8% crit chance",
+        "stats": {
+          "critChance": 0.08
+        }
+      },
+      "8": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "9": {
+        "summary": "11% crit chance",
+        "stats": {
+          "critChance": 0.11
+        }
+      },
+      "10": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      }
     }
   },
   {
@@ -876,6 +5768,38 @@
     "price": 70,
     "effects": {
       "frozen": {}
+    },
+    "stars": {
+      "1": {
+        "summary": ""
+      },
+      "2": {
+        "summary": ""
+      },
+      "3": {
+        "summary": ""
+      },
+      "4": {
+        "summary": ""
+      },
+      "5": {
+        "summary": ""
+      },
+      "6": {
+        "summary": ""
+      },
+      "7": {
+        "summary": ""
+      },
+      "8": {
+        "summary": ""
+      },
+      "9": {
+        "summary": ""
+      },
+      "10": {
+        "summary": ""
+      }
     }
   },
   {
@@ -888,6 +5812,68 @@
     "price": 90,
     "stats": {
       "attackSpeed": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% haste",
+        "stats": {
+          "attackSpeed": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% haste",
+        "stats": {
+          "attackSpeed": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% haste",
+        "stats": {
+          "attackSpeed": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% haste",
+        "stats": {
+          "attackSpeed": 0.15
+        }
+      }
     }
   },
   {
@@ -905,7 +5891,69 @@
     "effects": {
       "frozen": {}
     },
-    "subtype": "axe"
+    "subtype": "axe",
+    "stars": {
+      "1": {
+        "summary": "8 damage",
+        "stats": {
+          "damage": 8
+        }
+      },
+      "2": {
+        "summary": "16 damage",
+        "stats": {
+          "damage": 16
+        }
+      },
+      "3": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "4": {
+        "summary": "32 damage",
+        "stats": {
+          "damage": 32
+        }
+      },
+      "5": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      },
+      "6": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "7": {
+        "summary": "56 damage",
+        "stats": {
+          "damage": 56
+        }
+      },
+      "8": {
+        "summary": "64 damage",
+        "stats": {
+          "damage": 64
+        }
+      },
+      "9": {
+        "summary": "72 damage",
+        "stats": {
+          "damage": 72
+        }
+      },
+      "10": {
+        "summary": "80 damage",
+        "stats": {
+          "damage": 80
+        }
+      }
+    }
   },
   {
     "id": "ice_crystal",
@@ -917,6 +5965,38 @@
     "price": 60,
     "effects": {
       "frozen": {}
+    },
+    "stars": {
+      "1": {
+        "summary": ""
+      },
+      "2": {
+        "summary": ""
+      },
+      "3": {
+        "summary": ""
+      },
+      "4": {
+        "summary": ""
+      },
+      "5": {
+        "summary": ""
+      },
+      "6": {
+        "summary": ""
+      },
+      "7": {
+        "summary": ""
+      },
+      "8": {
+        "summary": ""
+      },
+      "9": {
+        "summary": ""
+      },
+      "10": {
+        "summary": ""
+      }
     }
   },
   {
@@ -938,7 +6018,129 @@
         "damagePerTick": 3
       }
     },
-    "subtype": "dagger"
+    "subtype": "dagger",
+    "stars": {
+      "1": {
+        "summary": "4 damage and 6 poison damage per tick",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 6,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage and 12 poison damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 12,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage and 18 poison damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 18,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage and 24 poison damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 24,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage and 30 poison damage per tick",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 30,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage and 36 poison damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 36,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage and 42 poison damage per tick",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 42,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage and 48 poison damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 48,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage and 54 poison damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 54,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage and 60 poison damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "poison": {
+            "damagePerTick": 60,
+            "duration": 15
+          }
+        }
+      }
+    }
   },
   {
     "id": "hidden_blade",
@@ -955,7 +6157,69 @@
     "effects": {
       "critChance": 0.15
     },
-    "subtype": "dagger"
+    "subtype": "dagger",
+    "stars": {
+      "1": {
+        "summary": "6 damage",
+        "stats": {
+          "damage": 6
+        }
+      },
+      "2": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "3": {
+        "summary": "18 damage",
+        "stats": {
+          "damage": 18
+        }
+      },
+      "4": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "5": {
+        "summary": "30 damage",
+        "stats": {
+          "damage": 30
+        }
+      },
+      "6": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "7": {
+        "summary": "42 damage",
+        "stats": {
+          "damage": 42
+        }
+      },
+      "8": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "9": {
+        "summary": "54 damage",
+        "stats": {
+          "damage": 54
+        }
+      },
+      "10": {
+        "summary": "60 damage",
+        "stats": {
+          "damage": 60
+        }
+      }
+    }
   },
   {
     "id": "assassins_hood",
@@ -967,6 +6231,68 @@
     "price": 60,
     "stats": {
       "critChance": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% crit chance",
+        "stats": {
+          "critChance": 0.15
+        }
+      }
     }
   },
   {
@@ -979,6 +6305,68 @@
     "price": 80,
     "stats": {
       "attackSpeed": 0.2
+    },
+    "stars": {
+      "1": {
+        "summary": "3% haste",
+        "stats": {
+          "attackSpeed": 0.03
+        }
+      },
+      "2": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "3": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "4": {
+        "summary": "12% haste",
+        "stats": {
+          "attackSpeed": 0.12
+        }
+      },
+      "5": {
+        "summary": "15% haste",
+        "stats": {
+          "attackSpeed": 0.15
+        }
+      },
+      "6": {
+        "summary": "18% haste",
+        "stats": {
+          "attackSpeed": 0.18
+        }
+      },
+      "7": {
+        "summary": "21% haste",
+        "stats": {
+          "attackSpeed": 0.21
+        }
+      },
+      "8": {
+        "summary": "24% haste",
+        "stats": {
+          "attackSpeed": 0.24
+        }
+      },
+      "9": {
+        "summary": "27% haste",
+        "stats": {
+          "attackSpeed": 0.27
+        }
+      },
+      "10": {
+        "summary": "30% haste",
+        "stats": {
+          "attackSpeed": 0.3
+        }
+      }
     }
   },
   {
@@ -994,6 +6382,98 @@
         "duration": 15,
         "damagePerTick": 5
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "10 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 10,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "20 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 20,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "30 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 30,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "40 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 40,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "50 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 50,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "60 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 60,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "70 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 70,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "80 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 80,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "90 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 90,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "100 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 100,
+            "duration": 15
+          }
+        }
+      }
     }
   },
   {
@@ -1008,6 +6488,88 @@
       "multihit": {
         "count": 2
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -1020,6 +6582,68 @@
     "price": 70,
     "stats": {
       "shield": 60
+    },
+    "stars": {
+      "1": {
+        "summary": "24 shield",
+        "stats": {
+          "shield": 24
+        }
+      },
+      "2": {
+        "summary": "48 shield",
+        "stats": {
+          "shield": 48
+        }
+      },
+      "3": {
+        "summary": "72 shield",
+        "stats": {
+          "shield": 72
+        }
+      },
+      "4": {
+        "summary": "96 shield",
+        "stats": {
+          "shield": 96
+        }
+      },
+      "5": {
+        "summary": "120 shield",
+        "stats": {
+          "shield": 120
+        }
+      },
+      "6": {
+        "summary": "144 shield",
+        "stats": {
+          "shield": 144
+        }
+      },
+      "7": {
+        "summary": "168 shield",
+        "stats": {
+          "shield": 168
+        }
+      },
+      "8": {
+        "summary": "192 shield",
+        "stats": {
+          "shield": 192
+        }
+      },
+      "9": {
+        "summary": "216 shield",
+        "stats": {
+          "shield": 216
+        }
+      },
+      "10": {
+        "summary": "240 shield",
+        "stats": {
+          "shield": 240
+        }
+      }
     }
   },
   {
@@ -1035,6 +6659,98 @@
         "duration": 15,
         "damagePerTick": 8
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "16 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 16,
+            "duration": 15
+          }
+        }
+      },
+      "2": {
+        "summary": "32 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 32,
+            "duration": 15
+          }
+        }
+      },
+      "3": {
+        "summary": "48 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 48,
+            "duration": 15
+          }
+        }
+      },
+      "4": {
+        "summary": "64 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 64,
+            "duration": 15
+          }
+        }
+      },
+      "5": {
+        "summary": "80 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 80,
+            "duration": 15
+          }
+        }
+      },
+      "6": {
+        "summary": "96 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 96,
+            "duration": 15
+          }
+        }
+      },
+      "7": {
+        "summary": "112 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 112,
+            "duration": 15
+          }
+        }
+      },
+      "8": {
+        "summary": "128 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 128,
+            "duration": 15
+          }
+        }
+      },
+      "9": {
+        "summary": "144 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 144,
+            "duration": 15
+          }
+        }
+      },
+      "10": {
+        "summary": "160 poison damage per tick",
+        "effects": {
+          "poison": {
+            "damagePerTick": 160,
+            "duration": 15
+          }
+        }
+      }
     }
   },
   {
@@ -1047,6 +6763,68 @@
     "price": 40,
     "stats": {
       "critChance": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "2% crit chance",
+        "stats": {
+          "critChance": 0.02
+        }
+      },
+      "2": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "3": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "4": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "5": {
+        "summary": "11% crit chance",
+        "stats": {
+          "critChance": 0.11
+        }
+      },
+      "6": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "7": {
+        "summary": "16% crit chance",
+        "stats": {
+          "critChance": 0.16
+        }
+      },
+      "8": {
+        "summary": "18% crit chance",
+        "stats": {
+          "critChance": 0.18
+        }
+      },
+      "9": {
+        "summary": "20% crit chance",
+        "stats": {
+          "critChance": 0.2
+        }
+      },
+      "10": {
+        "summary": "22% crit chance",
+        "stats": {
+          "critChance": 0.22
+        }
+      }
     }
   },
   {
@@ -1059,6 +6837,68 @@
     "price": 60,
     "stats": {
       "damage": 30
+    },
+    "stars": {
+      "1": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "2": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "3": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "4": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "5": {
+        "summary": "60 damage",
+        "stats": {
+          "damage": 60
+        }
+      },
+      "6": {
+        "summary": "72 damage",
+        "stats": {
+          "damage": 72
+        }
+      },
+      "7": {
+        "summary": "84 damage",
+        "stats": {
+          "damage": 84
+        }
+      },
+      "8": {
+        "summary": "96 damage",
+        "stats": {
+          "damage": 96
+        }
+      },
+      "9": {
+        "summary": "108 damage",
+        "stats": {
+          "damage": 108
+        }
+      },
+      "10": {
+        "summary": "120 damage",
+        "stats": {
+          "damage": 120
+        }
+      }
     }
   },
   {
@@ -1078,7 +6918,119 @@
         "heal": 5
       }
     },
-    "subtype": "sword"
+    "subtype": "sword",
+    "stars": {
+      "1": {
+        "summary": "4 damage and 10 heal",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "holy": {
+            "heal": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage and 20 heal",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "holy": {
+            "heal": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage and 30 heal",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "holy": {
+            "heal": 30
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage and 40 heal",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "holy": {
+            "heal": 40
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage and 50 heal",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "holy": {
+            "heal": 50
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage and 60 heal",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "holy": {
+            "heal": 60
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage and 70 heal",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "holy": {
+            "heal": 70
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage and 80 heal",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "holy": {
+            "heal": 80
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage and 90 heal",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "holy": {
+            "heal": 90
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage and 100 heal",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "holy": {
+            "heal": 100
+          }
+        }
+      }
+    }
   },
   {
     "id": "valor_shield",
@@ -1092,6 +7044,78 @@
       "cooldown": 3.5,
       "shield": 100,
       "block": 0.08
+    },
+    "stars": {
+      "1": {
+        "summary": "40 shield and 1% block",
+        "stats": {
+          "shield": 40,
+          "block": 0.01
+        }
+      },
+      "2": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "3": {
+        "summary": "120 shield and 4% block",
+        "stats": {
+          "shield": 120,
+          "block": 0.04
+        }
+      },
+      "4": {
+        "summary": "160 shield and 5% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.05
+        }
+      },
+      "5": {
+        "summary": "200 shield and 6% block",
+        "stats": {
+          "shield": 200,
+          "block": 0.06
+        }
+      },
+      "6": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "7": {
+        "summary": "280 shield and 8% block",
+        "stats": {
+          "shield": 280,
+          "block": 0.08
+        }
+      },
+      "8": {
+        "summary": "320 shield and 10% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.1
+        }
+      },
+      "9": {
+        "summary": "360 shield and 11% block",
+        "stats": {
+          "shield": 360,
+          "block": 0.11
+        }
+      },
+      "10": {
+        "summary": "400 shield and 12% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.12
+        }
+      }
     }
   },
   {
@@ -1111,7 +7135,119 @@
         "heal": 15
       }
     },
-    "subtype": "sword"
+    "subtype": "sword",
+    "stars": {
+      "1": {
+        "summary": "8 damage and 30 heal",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "holy": {
+            "heal": 30
+          }
+        }
+      },
+      "2": {
+        "summary": "16 damage and 60 heal",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "holy": {
+            "heal": 60
+          }
+        }
+      },
+      "3": {
+        "summary": "24 damage and 90 heal",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "holy": {
+            "heal": 90
+          }
+        }
+      },
+      "4": {
+        "summary": "32 damage and 120 heal",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "holy": {
+            "heal": 120
+          }
+        }
+      },
+      "5": {
+        "summary": "40 damage and 150 heal",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "holy": {
+            "heal": 150
+          }
+        }
+      },
+      "6": {
+        "summary": "48 damage and 180 heal",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "holy": {
+            "heal": 180
+          }
+        }
+      },
+      "7": {
+        "summary": "56 damage and 210 heal",
+        "stats": {
+          "damage": 56
+        },
+        "effects": {
+          "holy": {
+            "heal": 210
+          }
+        }
+      },
+      "8": {
+        "summary": "64 damage and 240 heal",
+        "stats": {
+          "damage": 64
+        },
+        "effects": {
+          "holy": {
+            "heal": 240
+          }
+        }
+      },
+      "9": {
+        "summary": "72 damage and 270 heal",
+        "stats": {
+          "damage": 72
+        },
+        "effects": {
+          "holy": {
+            "heal": 270
+          }
+        }
+      },
+      "10": {
+        "summary": "80 damage and 300 heal",
+        "stats": {
+          "damage": 80
+        },
+        "effects": {
+          "holy": {
+            "heal": 300
+          }
+        }
+      }
+    }
   },
   {
     "id": "knights_banner",
@@ -1123,6 +7259,68 @@
     "price": 80,
     "stats": {
       "attackSpeed": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% haste",
+        "stats": {
+          "attackSpeed": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% haste",
+        "stats": {
+          "attackSpeed": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% haste",
+        "stats": {
+          "attackSpeed": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% haste",
+        "stats": {
+          "attackSpeed": 0.15
+        }
+      }
     }
   },
   {
@@ -1135,6 +7333,68 @@
     "price": 30,
     "stats": {
       "shield": 100
+    },
+    "stars": {
+      "1": {
+        "summary": "40 shield",
+        "stats": {
+          "shield": 40
+        }
+      },
+      "2": {
+        "summary": "80 shield",
+        "stats": {
+          "shield": 80
+        }
+      },
+      "3": {
+        "summary": "120 shield",
+        "stats": {
+          "shield": 120
+        }
+      },
+      "4": {
+        "summary": "160 shield",
+        "stats": {
+          "shield": 160
+        }
+      },
+      "5": {
+        "summary": "200 shield",
+        "stats": {
+          "shield": 200
+        }
+      },
+      "6": {
+        "summary": "240 shield",
+        "stats": {
+          "shield": 240
+        }
+      },
+      "7": {
+        "summary": "280 shield",
+        "stats": {
+          "shield": 280
+        }
+      },
+      "8": {
+        "summary": "320 shield",
+        "stats": {
+          "shield": 320
+        }
+      },
+      "9": {
+        "summary": "360 shield",
+        "stats": {
+          "shield": 360
+        }
+      },
+      "10": {
+        "summary": "400 shield",
+        "stats": {
+          "shield": 400
+        }
+      }
     }
   },
   {
@@ -1147,6 +7407,68 @@
     "price": 50,
     "stats": {
       "damage": 10
+    },
+    "stars": {
+      "1": {
+        "summary": "4 damage",
+        "stats": {
+          "damage": 4
+        }
+      },
+      "2": {
+        "summary": "8 damage",
+        "stats": {
+          "damage": 8
+        }
+      },
+      "3": {
+        "summary": "12 damage",
+        "stats": {
+          "damage": 12
+        }
+      },
+      "4": {
+        "summary": "16 damage",
+        "stats": {
+          "damage": 16
+        }
+      },
+      "5": {
+        "summary": "20 damage",
+        "stats": {
+          "damage": 20
+        }
+      },
+      "6": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "7": {
+        "summary": "28 damage",
+        "stats": {
+          "damage": 28
+        }
+      },
+      "8": {
+        "summary": "32 damage",
+        "stats": {
+          "damage": 32
+        }
+      },
+      "9": {
+        "summary": "36 damage",
+        "stats": {
+          "damage": 36
+        }
+      },
+      "10": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      }
     }
   },
   {
@@ -1161,6 +7483,88 @@
       "holy": {
         "heal": 10
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "20 heal",
+        "effects": {
+          "holy": {
+            "heal": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "40 heal",
+        "effects": {
+          "holy": {
+            "heal": 40
+          }
+        }
+      },
+      "3": {
+        "summary": "60 heal",
+        "effects": {
+          "holy": {
+            "heal": 60
+          }
+        }
+      },
+      "4": {
+        "summary": "80 heal",
+        "effects": {
+          "holy": {
+            "heal": 80
+          }
+        }
+      },
+      "5": {
+        "summary": "100 heal",
+        "effects": {
+          "holy": {
+            "heal": 100
+          }
+        }
+      },
+      "6": {
+        "summary": "120 heal",
+        "effects": {
+          "holy": {
+            "heal": 120
+          }
+        }
+      },
+      "7": {
+        "summary": "140 heal",
+        "effects": {
+          "holy": {
+            "heal": 140
+          }
+        }
+      },
+      "8": {
+        "summary": "160 heal",
+        "effects": {
+          "holy": {
+            "heal": 160
+          }
+        }
+      },
+      "9": {
+        "summary": "180 heal",
+        "effects": {
+          "holy": {
+            "heal": 180
+          }
+        }
+      },
+      "10": {
+        "summary": "200 heal",
+        "effects": {
+          "holy": {
+            "heal": 200
+          }
+        }
+      }
     }
   },
   {
@@ -1173,6 +7577,68 @@
     "price": 90,
     "stats": {
       "shield": 200
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield",
+        "stats": {
+          "shield": 80
+        }
+      },
+      "2": {
+        "summary": "160 shield",
+        "stats": {
+          "shield": 160
+        }
+      },
+      "3": {
+        "summary": "240 shield",
+        "stats": {
+          "shield": 240
+        }
+      },
+      "4": {
+        "summary": "320 shield",
+        "stats": {
+          "shield": 320
+        }
+      },
+      "5": {
+        "summary": "400 shield",
+        "stats": {
+          "shield": 400
+        }
+      },
+      "6": {
+        "summary": "480 shield",
+        "stats": {
+          "shield": 480
+        }
+      },
+      "7": {
+        "summary": "560 shield",
+        "stats": {
+          "shield": 560
+        }
+      },
+      "8": {
+        "summary": "640 shield",
+        "stats": {
+          "shield": 640
+        }
+      },
+      "9": {
+        "summary": "720 shield",
+        "stats": {
+          "shield": 720
+        }
+      },
+      "10": {
+        "summary": "800 shield",
+        "stats": {
+          "shield": 800
+        }
+      }
     }
   },
   {
@@ -1187,6 +7653,88 @@
       "multihit": {
         "count": 2
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -1200,6 +7748,88 @@
     "effects": {
       "holy": {
         "heal": 20
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "40 heal",
+        "effects": {
+          "holy": {
+            "heal": 40
+          }
+        }
+      },
+      "2": {
+        "summary": "80 heal",
+        "effects": {
+          "holy": {
+            "heal": 80
+          }
+        }
+      },
+      "3": {
+        "summary": "120 heal",
+        "effects": {
+          "holy": {
+            "heal": 120
+          }
+        }
+      },
+      "4": {
+        "summary": "160 heal",
+        "effects": {
+          "holy": {
+            "heal": 160
+          }
+        }
+      },
+      "5": {
+        "summary": "200 heal",
+        "effects": {
+          "holy": {
+            "heal": 200
+          }
+        }
+      },
+      "6": {
+        "summary": "240 heal",
+        "effects": {
+          "holy": {
+            "heal": 240
+          }
+        }
+      },
+      "7": {
+        "summary": "280 heal",
+        "effects": {
+          "holy": {
+            "heal": 280
+          }
+        }
+      },
+      "8": {
+        "summary": "320 heal",
+        "effects": {
+          "holy": {
+            "heal": 320
+          }
+        }
+      },
+      "9": {
+        "summary": "360 heal",
+        "effects": {
+          "holy": {
+            "heal": 360
+          }
+        }
+      },
+      "10": {
+        "summary": "400 heal",
+        "effects": {
+          "holy": {
+            "heal": 400
+          }
+        }
       }
     }
   },
@@ -1221,7 +7851,129 @@
         "damagePerTick": 5
       }
     },
-    "subtype": "wand"
+    "subtype": "wand",
+    "stars": {
+      "1": {
+        "summary": "4 damage and 10 curse damage per tick",
+        "stats": {
+          "damage": 4
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 10,
+            "duration": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "8 damage and 20 curse damage per tick",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 20,
+            "duration": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "12 damage and 30 curse damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 30,
+            "duration": 20
+          }
+        }
+      },
+      "4": {
+        "summary": "16 damage and 40 curse damage per tick",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 40,
+            "duration": 20
+          }
+        }
+      },
+      "5": {
+        "summary": "20 damage and 50 curse damage per tick",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 50,
+            "duration": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "24 damage and 60 curse damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 60,
+            "duration": 20
+          }
+        }
+      },
+      "7": {
+        "summary": "28 damage and 70 curse damage per tick",
+        "stats": {
+          "damage": 28
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 70,
+            "duration": 20
+          }
+        }
+      },
+      "8": {
+        "summary": "32 damage and 80 curse damage per tick",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 80,
+            "duration": 20
+          }
+        }
+      },
+      "9": {
+        "summary": "36 damage and 90 curse damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 90,
+            "duration": 20
+          }
+        }
+      },
+      "10": {
+        "summary": "40 damage and 100 curse damage per tick",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 100,
+            "duration": 20
+          }
+        }
+      }
+    }
   },
   {
     "id": "void_staff",
@@ -1241,7 +7993,129 @@
         "damagePerTick": 8
       }
     },
-    "subtype": "wand"
+    "subtype": "wand",
+    "stars": {
+      "1": {
+        "summary": "6 damage and 16 curse damage per tick",
+        "stats": {
+          "damage": 6
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 16,
+            "duration": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "12 damage and 32 curse damage per tick",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 32,
+            "duration": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "18 damage and 48 curse damage per tick",
+        "stats": {
+          "damage": 18
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 48,
+            "duration": 20
+          }
+        }
+      },
+      "4": {
+        "summary": "24 damage and 64 curse damage per tick",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 64,
+            "duration": 20
+          }
+        }
+      },
+      "5": {
+        "summary": "30 damage and 80 curse damage per tick",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 80,
+            "duration": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "36 damage and 96 curse damage per tick",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 96,
+            "duration": 20
+          }
+        }
+      },
+      "7": {
+        "summary": "42 damage and 112 curse damage per tick",
+        "stats": {
+          "damage": 42
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 112,
+            "duration": 20
+          }
+        }
+      },
+      "8": {
+        "summary": "48 damage and 128 curse damage per tick",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 128,
+            "duration": 20
+          }
+        }
+      },
+      "9": {
+        "summary": "54 damage and 144 curse damage per tick",
+        "stats": {
+          "damage": 54
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 144,
+            "duration": 20
+          }
+        }
+      },
+      "10": {
+        "summary": "60 damage and 160 curse damage per tick",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "curse": {
+            "damagePerTick": 160,
+            "duration": 20
+          }
+        }
+      }
+    }
   },
   {
     "id": "eye_of_abyss",
@@ -1255,6 +8129,98 @@
       "shadow": {
         "duration": 10,
         "damagePerTick": 10
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "20 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 20,
+            "duration": 10
+          }
+        }
+      },
+      "2": {
+        "summary": "40 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 40,
+            "duration": 10
+          }
+        }
+      },
+      "3": {
+        "summary": "60 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 60,
+            "duration": 10
+          }
+        }
+      },
+      "4": {
+        "summary": "80 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 80,
+            "duration": 10
+          }
+        }
+      },
+      "5": {
+        "summary": "100 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 100,
+            "duration": 10
+          }
+        }
+      },
+      "6": {
+        "summary": "120 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 120,
+            "duration": 10
+          }
+        }
+      },
+      "7": {
+        "summary": "140 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 140,
+            "duration": 10
+          }
+        }
+      },
+      "8": {
+        "summary": "160 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 160,
+            "duration": 10
+          }
+        }
+      },
+      "9": {
+        "summary": "180 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 180,
+            "duration": 10
+          }
+        }
+      },
+      "10": {
+        "summary": "200 shadow damage per tick",
+        "effects": {
+          "shadow": {
+            "damagePerTick": 200,
+            "duration": 10
+          }
+        }
       }
     }
   },
@@ -1270,6 +8236,78 @@
       "cooldown": 4.5,
       "shield": 200,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "80 shield and 2% block",
+        "stats": {
+          "shield": 80,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "160 shield and 4% block",
+        "stats": {
+          "shield": 160,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "240 shield and 7% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "320 shield and 9% block",
+        "stats": {
+          "shield": 320,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "400 shield and 11% block",
+        "stats": {
+          "shield": 400,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "480 shield and 14% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "560 shield and 16% block",
+        "stats": {
+          "shield": 560,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "640 shield and 18% block",
+        "stats": {
+          "shield": 640,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "720 shield and 20% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "800 shield and 22% block",
+        "stats": {
+          "shield": 800,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -1282,6 +8320,68 @@
     "price": 30,
     "stats": {
       "attackSpeed": 0.12
+    },
+    "stars": {
+      "1": {
+        "summary": "2% haste",
+        "stats": {
+          "attackSpeed": 0.02
+        }
+      },
+      "2": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "3": {
+        "summary": "5% haste",
+        "stats": {
+          "attackSpeed": 0.05
+        }
+      },
+      "4": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "5": {
+        "summary": "9% haste",
+        "stats": {
+          "attackSpeed": 0.09
+        }
+      },
+      "6": {
+        "summary": "11% haste",
+        "stats": {
+          "attackSpeed": 0.11
+        }
+      },
+      "7": {
+        "summary": "13% haste",
+        "stats": {
+          "attackSpeed": 0.13
+        }
+      },
+      "8": {
+        "summary": "14% haste",
+        "stats": {
+          "attackSpeed": 0.14
+        }
+      },
+      "9": {
+        "summary": "16% haste",
+        "stats": {
+          "attackSpeed": 0.16
+        }
+      },
+      "10": {
+        "summary": "18% haste",
+        "stats": {
+          "attackSpeed": 0.18
+        }
+      }
     }
   },
   {
@@ -1297,6 +8397,98 @@
         "duration": 20,
         "damagePerTick": 6
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "12 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 12,
+            "duration": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "24 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 24,
+            "duration": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "36 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 36,
+            "duration": 20
+          }
+        }
+      },
+      "4": {
+        "summary": "48 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 48,
+            "duration": 20
+          }
+        }
+      },
+      "5": {
+        "summary": "60 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 60,
+            "duration": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "72 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 72,
+            "duration": 20
+          }
+        }
+      },
+      "7": {
+        "summary": "84 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 84,
+            "duration": 20
+          }
+        }
+      },
+      "8": {
+        "summary": "96 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 96,
+            "duration": 20
+          }
+        }
+      },
+      "9": {
+        "summary": "108 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 108,
+            "duration": 20
+          }
+        }
+      },
+      "10": {
+        "summary": "120 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 120,
+            "duration": 20
+          }
+        }
+      }
     }
   },
   {
@@ -1311,6 +8503,88 @@
       "multihit": {
         "count": 3
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -1323,6 +8597,68 @@
     "price": 90,
     "stats": {
       "damage": 20
+    },
+    "stars": {
+      "1": {
+        "summary": "8 damage",
+        "stats": {
+          "damage": 8
+        }
+      },
+      "2": {
+        "summary": "16 damage",
+        "stats": {
+          "damage": 16
+        }
+      },
+      "3": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "4": {
+        "summary": "32 damage",
+        "stats": {
+          "damage": 32
+        }
+      },
+      "5": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      },
+      "6": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "7": {
+        "summary": "56 damage",
+        "stats": {
+          "damage": 56
+        }
+      },
+      "8": {
+        "summary": "64 damage",
+        "stats": {
+          "damage": 64
+        }
+      },
+      "9": {
+        "summary": "72 damage",
+        "stats": {
+          "damage": 72
+        }
+      },
+      "10": {
+        "summary": "80 damage",
+        "stats": {
+          "damage": 80
+        }
+      }
     }
   },
   {
@@ -1335,6 +8671,68 @@
     "price": 40,
     "stats": {
       "critChance": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% crit chance",
+        "stats": {
+          "critChance": 0.15
+        }
+      }
     }
   },
   {
@@ -1349,6 +8747,98 @@
       "curse": {
         "duration": 20,
         "damagePerTick": 12
+      }
+    },
+    "stars": {
+      "1": {
+        "summary": "24 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 24,
+            "duration": 20
+          }
+        }
+      },
+      "2": {
+        "summary": "48 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 48,
+            "duration": 20
+          }
+        }
+      },
+      "3": {
+        "summary": "72 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 72,
+            "duration": 20
+          }
+        }
+      },
+      "4": {
+        "summary": "96 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 96,
+            "duration": 20
+          }
+        }
+      },
+      "5": {
+        "summary": "120 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 120,
+            "duration": 20
+          }
+        }
+      },
+      "6": {
+        "summary": "144 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 144,
+            "duration": 20
+          }
+        }
+      },
+      "7": {
+        "summary": "168 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 168,
+            "duration": 20
+          }
+        }
+      },
+      "8": {
+        "summary": "192 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 192,
+            "duration": 20
+          }
+        }
+      },
+      "9": {
+        "summary": "216 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 216,
+            "duration": 20
+          }
+        }
+      },
+      "10": {
+        "summary": "240 curse damage per tick",
+        "effects": {
+          "curse": {
+            "damagePerTick": 240,
+            "duration": 20
+          }
+        }
       }
     }
   },
@@ -1369,7 +8859,119 @@
         "count": 2
       }
     },
-    "subtype": "axe"
+    "subtype": "axe",
+    "stars": {
+      "1": {
+        "summary": "6 damage and 1 additional hits",
+        "stats": {
+          "damage": 6
+        },
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "12 damage and 2 additional hits",
+        "stats": {
+          "damage": 12
+        },
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "18 damage and 3 additional hits",
+        "stats": {
+          "damage": 18
+        },
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "24 damage and 4 additional hits",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "30 damage and 5 additional hits",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "36 damage and 6 additional hits",
+        "stats": {
+          "damage": 36
+        },
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "42 damage and 7 additional hits",
+        "stats": {
+          "damage": 42
+        },
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "48 damage and 8 additional hits",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "54 damage and 9 additional hits",
+        "stats": {
+          "damage": 54
+        },
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "60 damage and 10 additional hits",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "earth_shaker",
@@ -1388,7 +8990,119 @@
         "count": 2
       }
     },
-    "subtype": "axe"
+    "subtype": "axe",
+    "stars": {
+      "1": {
+        "summary": "8 damage and 1 additional hits",
+        "stats": {
+          "damage": 8
+        },
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "16 damage and 2 additional hits",
+        "stats": {
+          "damage": 16
+        },
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "24 damage and 3 additional hits",
+        "stats": {
+          "damage": 24
+        },
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "32 damage and 4 additional hits",
+        "stats": {
+          "damage": 32
+        },
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "40 damage and 5 additional hits",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "48 damage and 6 additional hits",
+        "stats": {
+          "damage": 48
+        },
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "56 damage and 7 additional hits",
+        "stats": {
+          "damage": 56
+        },
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "64 damage and 8 additional hits",
+        "stats": {
+          "damage": 64
+        },
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "72 damage and 9 additional hits",
+        "stats": {
+          "damage": 72
+        },
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "80 damage and 10 additional hits",
+        "stats": {
+          "damage": 80
+        },
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
+    }
   },
   {
     "id": "stone_skin",
@@ -1400,6 +9114,68 @@
     "price": 60,
     "stats": {
       "shield": 150
+    },
+    "stars": {
+      "1": {
+        "summary": "60 shield",
+        "stats": {
+          "shield": 60
+        }
+      },
+      "2": {
+        "summary": "120 shield",
+        "stats": {
+          "shield": 120
+        }
+      },
+      "3": {
+        "summary": "180 shield",
+        "stats": {
+          "shield": 180
+        }
+      },
+      "4": {
+        "summary": "240 shield",
+        "stats": {
+          "shield": 240
+        }
+      },
+      "5": {
+        "summary": "300 shield",
+        "stats": {
+          "shield": 300
+        }
+      },
+      "6": {
+        "summary": "360 shield",
+        "stats": {
+          "shield": 360
+        }
+      },
+      "7": {
+        "summary": "420 shield",
+        "stats": {
+          "shield": 420
+        }
+      },
+      "8": {
+        "summary": "480 shield",
+        "stats": {
+          "shield": 480
+        }
+      },
+      "9": {
+        "summary": "540 shield",
+        "stats": {
+          "shield": 540
+        }
+      },
+      "10": {
+        "summary": "600 shield",
+        "stats": {
+          "shield": 600
+        }
+      }
     }
   },
   {
@@ -1414,6 +9190,78 @@
       "cooldown": 5,
       "shield": 300,
       "block": 0.15
+    },
+    "stars": {
+      "1": {
+        "summary": "120 shield and 2% block",
+        "stats": {
+          "shield": 120,
+          "block": 0.02
+        }
+      },
+      "2": {
+        "summary": "240 shield and 4% block",
+        "stats": {
+          "shield": 240,
+          "block": 0.04
+        }
+      },
+      "3": {
+        "summary": "360 shield and 7% block",
+        "stats": {
+          "shield": 360,
+          "block": 0.07
+        }
+      },
+      "4": {
+        "summary": "480 shield and 9% block",
+        "stats": {
+          "shield": 480,
+          "block": 0.09
+        }
+      },
+      "5": {
+        "summary": "600 shield and 11% block",
+        "stats": {
+          "shield": 600,
+          "block": 0.11
+        }
+      },
+      "6": {
+        "summary": "720 shield and 14% block",
+        "stats": {
+          "shield": 720,
+          "block": 0.14
+        }
+      },
+      "7": {
+        "summary": "840 shield and 16% block",
+        "stats": {
+          "shield": 840,
+          "block": 0.16
+        }
+      },
+      "8": {
+        "summary": "960 shield and 18% block",
+        "stats": {
+          "shield": 960,
+          "block": 0.18
+        }
+      },
+      "9": {
+        "summary": "1080 shield and 20% block",
+        "stats": {
+          "shield": 1080,
+          "block": 0.2
+        }
+      },
+      "10": {
+        "summary": "1200 shield and 22% block",
+        "stats": {
+          "shield": 1200,
+          "block": 0.22
+        }
+      }
     }
   },
   {
@@ -1426,6 +9274,68 @@
     "price": 30,
     "stats": {
       "damage": 20
+    },
+    "stars": {
+      "1": {
+        "summary": "8 damage",
+        "stats": {
+          "damage": 8
+        }
+      },
+      "2": {
+        "summary": "16 damage",
+        "stats": {
+          "damage": 16
+        }
+      },
+      "3": {
+        "summary": "24 damage",
+        "stats": {
+          "damage": 24
+        }
+      },
+      "4": {
+        "summary": "32 damage",
+        "stats": {
+          "damage": 32
+        }
+      },
+      "5": {
+        "summary": "40 damage",
+        "stats": {
+          "damage": 40
+        }
+      },
+      "6": {
+        "summary": "48 damage",
+        "stats": {
+          "damage": 48
+        }
+      },
+      "7": {
+        "summary": "56 damage",
+        "stats": {
+          "damage": 56
+        }
+      },
+      "8": {
+        "summary": "64 damage",
+        "stats": {
+          "damage": 64
+        }
+      },
+      "9": {
+        "summary": "72 damage",
+        "stats": {
+          "damage": 72
+        }
+      },
+      "10": {
+        "summary": "80 damage",
+        "stats": {
+          "damage": 80
+        }
+      }
     }
   },
   {
@@ -1440,6 +9350,88 @@
       "multihit": {
         "count": 5
       }
+    },
+    "stars": {
+      "1": {
+        "summary": "1 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "2 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "3 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "4 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "5 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "6 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "7 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "8 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "9 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "10 additional hits",
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
     }
   },
   {
@@ -1452,6 +9444,68 @@
     "price": 70,
     "stats": {
       "attackSpeed": 0.05
+    },
+    "stars": {
+      "1": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "2": {
+        "summary": "1% haste",
+        "stats": {
+          "attackSpeed": 0.01
+        }
+      },
+      "3": {
+        "summary": "2% haste",
+        "stats": {
+          "attackSpeed": 0.02
+        }
+      },
+      "4": {
+        "summary": "3% haste",
+        "stats": {
+          "attackSpeed": 0.03
+        }
+      },
+      "5": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "6": {
+        "summary": "4% haste",
+        "stats": {
+          "attackSpeed": 0.04
+        }
+      },
+      "7": {
+        "summary": "5% haste",
+        "stats": {
+          "attackSpeed": 0.05
+        }
+      },
+      "8": {
+        "summary": "6% haste",
+        "stats": {
+          "attackSpeed": 0.06
+        }
+      },
+      "9": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      },
+      "10": {
+        "summary": "7% haste",
+        "stats": {
+          "attackSpeed": 0.07
+        }
+      }
     }
   },
   {
@@ -1464,6 +9518,68 @@
     "price": 90,
     "stats": {
       "shield": 250
+    },
+    "stars": {
+      "1": {
+        "summary": "100 shield",
+        "stats": {
+          "shield": 100
+        }
+      },
+      "2": {
+        "summary": "200 shield",
+        "stats": {
+          "shield": 200
+        }
+      },
+      "3": {
+        "summary": "300 shield",
+        "stats": {
+          "shield": 300
+        }
+      },
+      "4": {
+        "summary": "400 shield",
+        "stats": {
+          "shield": 400
+        }
+      },
+      "5": {
+        "summary": "500 shield",
+        "stats": {
+          "shield": 500
+        }
+      },
+      "6": {
+        "summary": "600 shield",
+        "stats": {
+          "shield": 600
+        }
+      },
+      "7": {
+        "summary": "700 shield",
+        "stats": {
+          "shield": 700
+        }
+      },
+      "8": {
+        "summary": "800 shield",
+        "stats": {
+          "shield": 800
+        }
+      },
+      "9": {
+        "summary": "900 shield",
+        "stats": {
+          "shield": 900
+        }
+      },
+      "10": {
+        "summary": "1000 shield",
+        "stats": {
+          "shield": 1000
+        }
+      }
     }
   },
   {
@@ -1476,6 +9592,68 @@
     "price": 40,
     "stats": {
       "critChance": 0.1
+    },
+    "stars": {
+      "1": {
+        "summary": "1% crit chance",
+        "stats": {
+          "critChance": 0.01
+        }
+      },
+      "2": {
+        "summary": "3% crit chance",
+        "stats": {
+          "critChance": 0.03
+        }
+      },
+      "3": {
+        "summary": "4% crit chance",
+        "stats": {
+          "critChance": 0.04
+        }
+      },
+      "4": {
+        "summary": "6% crit chance",
+        "stats": {
+          "critChance": 0.06
+        }
+      },
+      "5": {
+        "summary": "7% crit chance",
+        "stats": {
+          "critChance": 0.07
+        }
+      },
+      "6": {
+        "summary": "9% crit chance",
+        "stats": {
+          "critChance": 0.09
+        }
+      },
+      "7": {
+        "summary": "10% crit chance",
+        "stats": {
+          "critChance": 0.1
+        }
+      },
+      "8": {
+        "summary": "12% crit chance",
+        "stats": {
+          "critChance": 0.12
+        }
+      },
+      "9": {
+        "summary": "14% crit chance",
+        "stats": {
+          "critChance": 0.14
+        }
+      },
+      "10": {
+        "summary": "15% crit chance",
+        "stats": {
+          "critChance": 0.15
+        }
+      }
     }
   },
   {
@@ -1495,6 +9673,136 @@
         "count": 3
       }
     },
-    "subtype": "spear"
+    "subtype": "spear",
+    "stars": {
+      "1": {
+        "summary": "10 damage and 1 additional hits",
+        "stats": {
+          "damage": 10
+        },
+        "effects": {
+          "multihit": {
+            "count": 1
+          }
+        }
+      },
+      "2": {
+        "summary": "20 damage and 2 additional hits",
+        "stats": {
+          "damage": 20
+        },
+        "effects": {
+          "multihit": {
+            "count": 2
+          }
+        }
+      },
+      "3": {
+        "summary": "30 damage and 3 additional hits",
+        "stats": {
+          "damage": 30
+        },
+        "effects": {
+          "multihit": {
+            "count": 3
+          }
+        }
+      },
+      "4": {
+        "summary": "40 damage and 4 additional hits",
+        "stats": {
+          "damage": 40
+        },
+        "effects": {
+          "multihit": {
+            "count": 4
+          }
+        }
+      },
+      "5": {
+        "summary": "50 damage and 5 additional hits",
+        "stats": {
+          "damage": 50
+        },
+        "effects": {
+          "multihit": {
+            "count": 5
+          }
+        }
+      },
+      "6": {
+        "summary": "60 damage and 6 additional hits",
+        "stats": {
+          "damage": 60
+        },
+        "effects": {
+          "multihit": {
+            "count": 6
+          }
+        }
+      },
+      "7": {
+        "summary": "70 damage and 7 additional hits",
+        "stats": {
+          "damage": 70
+        },
+        "effects": {
+          "multihit": {
+            "count": 7
+          }
+        }
+      },
+      "8": {
+        "summary": "80 damage and 8 additional hits",
+        "stats": {
+          "damage": 80
+        },
+        "effects": {
+          "multihit": {
+            "count": 8
+          }
+        }
+      },
+      "9": {
+        "summary": "90 damage and 9 additional hits",
+        "stats": {
+          "damage": 90
+        },
+        "effects": {
+          "multihit": {
+            "count": 9
+          }
+        }
+      },
+      "10": {
+        "summary": "100 damage and 10 additional hits",
+        "stats": {
+          "damage": 100
+        },
+        "effects": {
+          "multihit": {
+            "count": 10
+          }
+        }
+      }
+    }
+  },
+  {
+    "id": "star_shard",
+    "name": "Star Shard",
+    "icon": "⭐",
+    "type": "consumable",
+    "rarity": "rare",
+    "price": 50,
+    "description": "Drag & drop onto an item to give it +1 Star."
+  },
+  {
+    "id": "reroll_token",
+    "name": "Fortune Coin",
+    "icon": "🪙",
+    "type": "utility",
+    "rarity": "rare",
+    "price": 40,
+    "description": "Grants 4 free shop rerolls when purchased."
   }
 ]

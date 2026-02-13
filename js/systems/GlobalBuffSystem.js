@@ -64,9 +64,6 @@ export class GlobalBuffSystem {
     }
 
     getBuffsForLevel(level) {
-        if (level >= 7) {
-            return this.buffDefinitions.generic;
-        }
         return this.buffDefinitions[level] || this.buffDefinitions.generic;
     }
 
